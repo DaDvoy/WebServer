@@ -14,6 +14,8 @@ struct query_str
 class Request
 {
 	public:
+		Request();
+		~Request();
 		query_str	query;
 		std::string	body
 		std::map<std::string, std::string>	head;
