@@ -1,12 +1,33 @@
-#include "ConfigParser.hpp"
+#include "ConfigParser.hpp"//fcarl
+
+void	ConfigParser::parseOneField(std::string &field, Configs &config)
+{
+	std::cerr << field << "|" << std::endl;
+	std::vector<std::string>	str_split = split(field, ' ');
+	str_split[1].erase(str_split[1].length());
+	if (str_split[0] == "server_name")
+		config.server_name = str_split[1].erase(str_split[1].length() - 1);
+	else if (str_split[0] == "error_page")
+		config.error_page = str_split[1].erase(str_split[1].length() - 1);
+	else if (str_split[0] == "listen")
+		config.port = std::stoi(str_split[1].erase(str_split[1].length() - 1));
+	else if (str_split[0] == "client_max_body_size")
+		config.client_max_body_size = std::stoi(str_split[1].erase(str_split[1].length() - 1));
+	else if (str_split[0] == "root")
+		config.root = str_split[1].erase(str_split[1].length() - 1);
+}
 
 void	ConfigParser::parseLocation(Configs &config)
 {
-	std::cerr << "in location==============================\n";
-	config.is_location = true;
-	while (it != it_end || *it != "}")
+	std::cerr << "\nin location==============================\n";
+	std::string str;
+
+	config.count_locations++;
+	while (it != it_end)
 	{
-		std::cerr << *it << "|" << std::endl;
+		str = ft_trimmer("\t\n\v\f\r ", *it);
+		if (*it == "}")
+			break;
 		it++;
 	}
 }
@@ -15,30 +36,37 @@ void	ConfigParser::parseLocation(Configs &config)
 Configs	ConfigParser::parseConfig()
 {
 	Configs	newConfig;
+	std::string str;
+
 	it++;
-	*it = ft_trimmer('\n', *it);
+	*it = ft_trimmer("\t\n\v\f\r ", *it);
 	if (*it != "{")
 	{
 		std::cerr << *it << ": parse error server starter quotes is missing\n";
 		exit(-1);
 	}
-	while (it != it_end)
+	while (++it != it_end)
 	{
-		*it = ft_trimmer('\n', *it);
-		// *it = ft_trimmer('\t', *it);
-		// *it = ft_trimmer('\v', *it);
-		// *it = ft_trimmer('\f', *it);
-		// *it = ft_trimmer('\r', *it);
-		std::cerr << *it << "|" << std::endl;
-		if ((*it).substr(0, strlen("location")) == "location")
-		{
-			it++;
-			newConfig.is_location = true;
-			parseLocation(newConfig);
-		}
+		str = ft_trimmer("\t\n\v\f\r ", *it);
+		if (*it == "")
+			continue;
 		if (*it == "}")
 			break;
-		it++;
+
+		if (str.substr(0, strlen("location")) == "location")
+		{
+			it++;
+			str = ft_trimmer("\t\n\v\f\r ", *it);
+			if (str == "{")
+				parseLocation(newConfig);
+			else
+			{
+				std::cerr << str << ": parse error location starter quotes is missing\n";
+				exit(0);
+			}
+		}
+		if (str != "{")
+			parseOneField(str, newConfig);
 	}
 	return (newConfig);
 }
@@ -64,6 +92,11 @@ ConfigParser::ConfigParser(std::string const &configName)
 		it++;
 	}
 	std::cout << std::endl;
+}
+
+std::list<Configs> &ConfigParser::GetConfig()
+{
+	return (config);
 }
 
 ConfigParser::ConfigParser()

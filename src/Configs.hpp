@@ -1,4 +1,4 @@
-#ifndef CONFIGS_HPP
+#ifndef CONFIGS_HPP//fcarl
 # define CONFIGS_HPP
 
 #include <map>
@@ -16,7 +16,7 @@ class Configs
 		int			port;
 		int			auto_index;
 		int			client_max_body_size;
-		bool		is_location;
+		int			count_locations;
 		std::string	server_name;
 		std::string	autoindex;
 		std::string	index;

@@ -1,20 +1,20 @@
 #include "includes.hpp"
 
-std::string& ltrim(std::string& str, char chars)
+std::string& ltrim(std::string& str, std::string const &symbs)
 {
-    str.erase(0, str.find_first_not_of(chars));
+    str.erase(0, str.find_first_not_of(symbs));
     return str;
 }
 
-std::string& rtrim(std::string& str, char chars)
+std::string& rtrim(std::string& str, std::string const &symbs)
 {
-    str.erase(str.find_last_not_of(chars) + 1);
+    str.erase(str.find_last_not_of(symbs) + 1);
     return str;
 }
 
-std::string &ft_trimmer(char symb_trim, std::string& string_trim)
+std::string					&ft_trimmer(std::string const &symbs, std::string &string_trim)
 {
-    return ltrim(rtrim(string_trim, symb_trim), symb_trim);
+    return ltrim(rtrim(string_trim, symbs), symbs);
 }
 
 std::vector<std::string>	ft_split(char symb_split, std::string string_split)
@@ -33,4 +33,16 @@ std::vector<std::string>	ft_split(char symb_split, std::string string_split)
 		}
 	}
 	return (vector_split);
+}
+
+std::vector<std::string> split(std::string strToSplit, char delimeter)
+{
+    std::stringstream ss(strToSplit);
+    std::string item;
+    std::vector<std::string> splittedStrings;
+    while (std::getline(ss, item, delimeter))
+    {
+        splittedStrings.push_back(item);
+    }
+    return splittedStrings;
 }
