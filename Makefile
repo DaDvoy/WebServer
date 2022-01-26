@@ -1,16 +1,16 @@
-SRCS		= main.cpp Request.cpp
-
-SRCS_DIR	= ./src/
+SRCS		=  ${shell find ./src -name "*.cpp"} main.cpp
 
 OBJS		= ${addprefix ${SRCS_DIR}, ${SRCS:.cpp=.o}}
 
 NAME		= gulugulu
 
+HEADERS		= ${shell find . -name "*.hpp"}
+
 
 CC = clang++
 RM = rm -f
 
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -std=c++98
 
 # COLORS
 
@@ -26,7 +26,7 @@ SHALLOW = \033[0m
 
 all:		${NAME}
 
-%.o:%.cpp		
+%.o:%.cpp	${HEADERS}
 			${CC} ${CFLAGS} -c $< -o ${<:.cpp=.o}
 
 

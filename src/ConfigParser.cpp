@@ -3,6 +3,7 @@
 void	ConfigParser::parseLocation(Configs &config)
 {
 	std::cerr << "in location==============================\n";
+	config.is_location = true;
 	while (it != it_end || *it != "}")
 	{
 		std::cerr << *it << "|" << std::endl;

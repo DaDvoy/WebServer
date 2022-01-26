@@ -1,5 +1,5 @@
-#include "includes.hpp"
-#include "ConfigParser.hpp"
+#include "./src/includes.hpp"
+#include "./src/ConfigParser.hpp"
 
 int main(int argc, char **argv)
 {

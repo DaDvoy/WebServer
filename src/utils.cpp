@@ -1,4 +1,4 @@
-#include "../includes.hpp"
+#include "includes.hpp"
 
 std::string& ltrim(std::string& str, char chars)
 {
@@ -23,7 +23,7 @@ std::vector<std::string>	ft_split(char symb_split, std::string string_split)
 	int	start = 0;
 	std::vector<std::string> vector_split;
 
-	for (int i = 0; i < string_split.length(); i++)
+	for (int i = 0; i < (int)string_split.length(); i++)
 	{
 		if (string_split[i] == symb_split)
 		{
