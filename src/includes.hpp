@@ -10,6 +10,8 @@
 #include <netinet/in.h>
 #include <cstdlib> // For exit() and EXIT_FAILURE
 #include <unistd.h> // For read
+#include <string>
+#define READ_BUFFER 32768
 
 
 

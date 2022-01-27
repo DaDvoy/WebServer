@@ -9,7 +9,7 @@ struct query_str
 	std::string  method;
 	std::string  address;
 	std::string  protocol;
-}
+};
 
 class Request
 {
@@ -17,7 +17,7 @@ class Request
 		Request();
 		~Request();
 		query_str	query;
-		std::string	body
+		std::string	body;
 		std::map<std::string, std::string>	head;
 };
 

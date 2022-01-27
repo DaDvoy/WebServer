@@ -11,7 +11,7 @@ class Client
 	public:
 		Request		request;
 		Response	response;
-		RequestParser RequestParser;
+		RequestParser requestParser;
 };
 
 #endif

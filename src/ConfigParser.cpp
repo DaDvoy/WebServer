@@ -76,7 +76,7 @@ ConfigParser::ConfigParser(std::string const &configName)
 	std::ifstream config_file(configName);
 	if (config_file.fail())
 	{
-		std::cerr << config_file << ": open error\n";
+		std::cerr << configName << ": open error\n";
 		exit(0);
 	}
 	std::string parseString((std::istreambuf_iterator<char>(config_file)), std::istreambuf_iterator<char>());

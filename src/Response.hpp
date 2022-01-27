@@ -1,9 +1,9 @@
-#ifndef RESPONCE_HPP
-# define RESPONCE_HPP
+#ifndef RESPONSE_HPP
+# define RESPONSE_HPP
 
 #include "includes.hpp"
 
-class Responce
+class Response
 {
 	private:
 
@@ -11,6 +11,8 @@ class Responce
 		std::string	body;
 		unsigned int status;
 	public:
+		Response();
+		~Response();
 };
 
 #endif
