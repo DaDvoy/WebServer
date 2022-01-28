@@ -18,10 +18,10 @@ class ConfigParser
 		std::list<Configs> &GetConfig();
 		
 	private:
-		std::list<Configs>			config;
-		std::vector<std::string>::iterator it;
-		std::vector<std::string>::iterator it_end;
-		std::vector<std::string>	parseLines;
+		std::list<Configs>					config;
+		std::vector<std::string>::iterator	it;
+		std::vector<std::string>::iterator	it_end;
+		std::vector<std::string>			parseLines;
 
 		Configs						parseConfig();
 		void						parseLocation(Configs &config);

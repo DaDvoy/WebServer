@@ -2,6 +2,7 @@
 #define REQUEST_HPP
 
 #include "includes.hpp"
+#include <map>
 
 struct query_str
 {

@@ -6,6 +6,7 @@
 #include "Response.hpp"
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <map>
 
 class RequestParser
 {
@@ -21,9 +22,11 @@ class RequestParser
         std::vector<std::string> parseLines;
 	private:
 		int	count;
+		std::string saver;
+
 		int ReadRequest(int sock);
 		void ParseRequest();
-		std::string saver;
+		void ParseQuery(std::string &query);
 };
 
 #endif
