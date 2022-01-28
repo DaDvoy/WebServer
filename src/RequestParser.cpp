@@ -20,14 +20,15 @@ RequestParser::RequestParser(int sock)
 		std::cerr << "error read sock in requestparser\n";
 		exit(0);
 	}
+	// saver += "\n\n";
 	ParseRequest();
-	std::map<std::string, std::string>::iterator it = request.head.begin();
-	while (it != request.head.end())
-	{
-		if ((*it).first != "")
-			std::cout << (*it).first << ": " << (*it).second << std::endl;
-		it++;
-	}
+	// std::map<std::string, std::string>::iterator it = request.head.begin();
+	// while (it != request.head.end())
+	// {
+	// 	if ((*it).first != "")
+	// 		std::cout << (*it).first << ": " << (*it).second << std::endl;
+	// 	it++;
+	// }
 }
 
 RequestParser::~RequestParser()
@@ -67,17 +68,33 @@ void RequestParser::ParseRequest()
 	std::vector<std::string>::iterator it = parseLines.begin();
 	std::string	str;
 
-	ParseQuery(*it);
+	ParseQuery(*it); // строка запроса
+
 	std::vector<std::string> head_split;
-	while (++it != parseLines.end())	
+	while (++it != parseLines.end()) // заголовки запроса
 	{
-		std::cout << *it << std::endl;
-		head_split = split_str(*it, ": ");
 		if (*it == "")
 			break;
+		head_split = split_str(*it, ": ");
+		std::cout << head_split[0] << std::endl;
+		if (head_split[0] == "" || head_split[1] == "")
+		{
+			++count;
+			continue;
+		}
 		request.head.insert(std::pair<std::string, std::string>(head_split[0], head_split[1]));
 		++count;
 	}
-	if (*it == "")
-		std::cout << "body parsing\n";
+	std::cout << "\ntest=========================\n";
+	// it++;
+	// if (*it == "") // тело запроса
+	// {
+	// 	while (++it != parseLines.end())
+	// 	{
+	// 		request.body += *it;
+	// 		request.body += "\n";
+	// 	}
+	// 	std::cout << "body start\n";
+	// 	std::cout << request.body;
+	// }
 }
