@@ -7,6 +7,7 @@
 #include <map>
 #include <sstream>
 #include <sys/socket.h>
+#include <sys/types.h>
 #include <netinet/in.h>
 #include <cstdlib> // For exit() and EXIT_FAILURE
 #include <unistd.h> // For read

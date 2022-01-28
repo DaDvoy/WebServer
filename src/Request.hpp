@@ -18,7 +18,7 @@ class Request
 		~Request();
 		query_str	query;
 		std::string	body;
-		std::map<std::string, std::string>	head;
+		std::map<std::string, std::string> headers;
 };
 
 #endif

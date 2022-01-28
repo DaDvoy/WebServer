@@ -11,7 +11,7 @@ int main(int argc, char  *argv[])
 		std::cerr << "Wrong params!\n";
 		std::cerr << "help: ./gulugulu src/config/Default.conf\n";
 		return (-1);
-	}	
+	}
 	ConfigParser parsing(argv[1]);
 
 	std::list<Configs>::iterator config = parsing.GetConfig().begin();
@@ -24,9 +24,29 @@ int main(int argc, char  *argv[])
     int server_fd, new_socket;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
-    
+
     std::string hello = "Hello from server";
-    char hello_there[18] = "Hello from server";
+    char hello_there[] =    "HTTP/1.1 200 OK\n"
+                            "Date: Mon, 27 Jul 2009 12:28:53 GMT\n"
+                            "Server:Gulu Gulu\n"
+                            "Last-Modified: Wed, 22 Jul 2009 19:15:56 GMT\n"
+                            "Content-Length: 88\n"
+                            "Content-Type: text/html\n"
+                            "Connection: Closed\n\n"
+                            "<html>\n"
+                            "<head>\n"
+                            "    <title>What do you want?</title>\n"
+                            "</head>\n"
+                            "<body>\n"
+                            "<H1>Me ne comprene vin((</H1>\n"
+                            "<P> Это простейший пример HTML-документа. </P>\n"
+                            "<P> Этот *.html-файл может быть одновременно открыт и в Notepad, и в Netscape. Сохранив изменения в Notepad, просто нажмите кнопку Reload ('перезагрузить') в Netscape, чтобы увидеть эти изменения реализованными в HTML-документе. </P>\n"
+                            "</body>\n"
+                            "</head>\n"
+                            "<body>\n"
+                            "<p><img src=\"![](src/images/teapot.jpeg)\" alt=\"Альтернативный текст\"\n<p>>"
+                            "</body>\n"
+                            "</html>\n\n";
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
     {
         perror("In socket");

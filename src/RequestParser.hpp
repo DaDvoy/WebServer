@@ -4,6 +4,8 @@
 #include "Configs.hpp"
 #include "Server.hpp"
 #include "Response.hpp"
+#include <sys/socket.h>
+#include <sys/types.h>
 
 class RequestParser
 {
@@ -15,9 +17,9 @@ class RequestParser
 		Request request;
 		Response response;
 		Configs	*config;
-		Server	*server;	
+		Server	*server;
+        std::vector<std::string> parseLines;
 	private:
-		std::vector<std::string> parseLines;
 		int	count;
 		int ReadRequest(int sock);
 		void ParseRequest();
