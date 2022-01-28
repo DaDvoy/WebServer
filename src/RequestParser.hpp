@@ -4,6 +4,7 @@
 #include "Configs.hpp"
 #include "Server.hpp"
 #include "Response.hpp"
+#include <map>
 
 class RequestParser
 {
@@ -19,9 +20,11 @@ class RequestParser
 	private:
 		std::vector<std::string> parseLines;
 		int	count;
+		std::string saver;
+
 		int ReadRequest(int sock);
 		void ParseRequest();
-		std::string saver;
+		void ParseQuery(std::string &query);
 };
 
 #endif

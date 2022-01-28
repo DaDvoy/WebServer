@@ -46,3 +46,20 @@ std::vector<std::string> split(std::string strToSplit, char delimeter)
     }
     return splittedStrings;
 }
+
+std::vector<std::string> split_str(std::string stringToBeSplitted, std::string delimeter)
+{
+	std::vector<std::string> splittedString;
+
+	size_t pos = 0;
+	std::string token;
+
+	while ((pos = stringToBeSplitted.find(delimeter)) != std::string::npos)
+	{
+		token = stringToBeSplitted.substr(0, pos);
+		splittedString.push_back(token);
+		stringToBeSplitted.erase(0, pos + delimeter.length());
+	}
+	splittedString.push_back(stringToBeSplitted);
+	return (splittedString);
+}
