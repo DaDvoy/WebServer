@@ -20,12 +20,11 @@ RequestParser::RequestParser(int sock)
 		std::cerr << "error read sock in requestparser\n";
 		exit(0);
 	}
-	// saver += "\n\n";
 	ParseRequest();
 	// std::map<std::string, std::string>::iterator it = request.head.begin();
 	// while (it != request.head.end())
 	// {
-	// 	if ((*it).first != "")
+	// 	if ((*it).first == "Accept")
 	// 		std::cout << (*it).first << ": " << (*it).second << std::endl;
 	// 	it++;
 	// }
@@ -52,14 +51,19 @@ int RequestParser::ReadRequest(int sock)
 	return 0;
 }
 
-void RequestParser::ParseQuery(std::string &query)
+void RequestParser::ParseQuery(std::string &query) // строка запроса
 {
-	request.query.query_string = query;
 	std::vector<std::string> query_split = split(query, ' ');
+	std::vector<std::string> args;
 
 	request.query.method = query_split[0];
-	request.query.address = query_split[1];
-	request.query.protocol = query_split[2];
+	args = split_one(query_split[1], "?");
+	request.query.address = args[0];
+	request.query.query_string = args[1];
+	if (query_split.size() == 3)
+		request.query.protocol = query_split[2];
+	else
+		request.query.protocol = "1.1";
 }
 
 void RequestParser::ParseRequest()
@@ -75,17 +79,10 @@ void RequestParser::ParseRequest()
 	{
 		if (*it == "")
 			break;
-		head_split = split_str(*it, ": ");
-		std::cout << head_split[0] << std::endl;
-		if (head_split[0] == "" || head_split[1] == "")
-		{
-			++count;
-			continue;
-		}
+		head_split = split_one(*it, ": ");
 		request.head.insert(std::pair<std::string, std::string>(head_split[0], head_split[1]));
 		++count;
 	}
-	std::cout << "\ntest=========================\n";
 	// it++;
 	// if (*it == "") // тело запроса
 	// {

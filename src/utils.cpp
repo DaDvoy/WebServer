@@ -51,12 +51,14 @@ std::vector<std::string> split(std::string strToSplit, char delimeter)
     return splittedStrings;
 }
 
-std::vector<std::string> split_str(std::string stringToBeSplitted, std::string delimeter)
+std::vector<std::string> split_one(std::string stringToBeSplitted, std::string delimeter)
 {
 	std::vector<std::string> splittedString;
 
 	int index;
 	index = stringToBeSplitted.find_first_of(delimeter, 0);
+	std::cout << "index: " << index << ":  " << stringToBeSplitted << std::endl;
+
 	splittedString.push_back(stringToBeSplitted.substr(0, index));
 	splittedString.push_back(stringToBeSplitted.substr(index + 2, stringToBeSplitted.size() - 1));
 	return (splittedString);

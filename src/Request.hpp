@@ -16,6 +16,8 @@ class Request
 {
 	public:
 		Request();
+		Request(Request &other);
+		Request &operator=(Request &other);
 		~Request();
 		query_str	query;
 		std::string	body;

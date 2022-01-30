@@ -13,6 +13,7 @@ int main(int argc, char  *argv[])
 		return (-1);
 	}	
 	ConfigParser parsing(argv[1]);
+    std::cout << "------------------Configs-------------------\n";
 
 	std::list<Configs>::iterator config = parsing.GetConfig().begin();
 	std::cout << "server_name: " << config->server_name << std::endl;
@@ -57,9 +58,32 @@ int main(int argc, char  *argv[])
             perror("In accept");
             exit(EXIT_FAILURE);
         }
-        RequestParser requestParser(new_socket);
+
+
+        std::cout << "\n+++++++ Starting request parser ++++++++\n\n";
+        RequestParser requestParser(new_socket); // старт парсера запроса
+        
+        std::cout << "\n+++++++ Query string ++++++++\n\n";
+
+        std::cout << requestParser.request.query.query_string << std::endl;
+        std::cout << requestParser.request.query.method << std::endl;
+        std::cout << requestParser.request.query.address << std::endl;
+        std::cout << requestParser.request.query.protocol << std::endl << std::endl;
+
+        std::cout << "\n+++++++ HEADERS ++++++++\n\n";
+
+        std::map<std::string, std::string>::iterator it = requestParser.request.head.begin();
+        std::map<std::string, std::string>::iterator it_end = requestParser.request.head.end();
+
+        while (it != it_end) // вывод заголовков
+        {
+            std::cout << it->first << ": " << it->second<< std::endl;
+            it++;
+        }
+        std::cout << "\n\n+++++++ Ending request parser ++++++++\n";
+
         write(new_socket , hello_there , strlen(hello_there));
-        printf("------------------Hello message sent-------------------\n");
+        printf("------------------Response sent-------------------\n");
         close(new_socket);
     }
   return 0;
