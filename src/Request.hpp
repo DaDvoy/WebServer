@@ -19,7 +19,7 @@ class Request
 		~Request();
 		query_str	query;
 		std::string	body;
-		std::map<std::string, std::string> headers;
+		std::map<std::string, std::string> head;
 };
 
 #endif

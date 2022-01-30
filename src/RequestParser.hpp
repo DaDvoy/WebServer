@@ -4,6 +4,7 @@
 #include "Configs.hpp"
 #include "Server.hpp"
 #include "Response.hpp"
+#include "Request.hpp"
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <map>
