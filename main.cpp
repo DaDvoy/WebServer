@@ -61,7 +61,7 @@ int main(int argc, char  *argv[])
 "line-height: calc(100% + 8px);\n"
 "}\n"
         ".take-more-info {\n"
-        "color: rgb(240, 230, 140);\n"
+        "color: rgb(255, 250, 250);\n"
         "text-decoration: none;\n"  //если это строку закоментить, то переход на 418 будет подчеркнут
         "}\n"
 
@@ -113,7 +113,14 @@ int main(int argc, char  *argv[])
         "padding: 8px 48px 24px;\n"
     "}\n"
 
+    "#some-text em {\n"
+    "display: block;\n"
+    "}\n"
 
+    "em {\n"
+    "color: #FFDEAD;\n"
+    "font-style: normal;\n"
+    "}\n"
 
 
 "p {\n"
@@ -140,12 +147,34 @@ int main(int argc, char  *argv[])
     "<div class=\"content\">\n"
     "<div class=\"icon\" role=\"presentation\" alt></div>\n"
                             "<h1>Mi ne comprene vin</h1>\n"
-                            "<p id=\"subtitle\">\n"
-                                            "<span>\n"
-                                            "Do you now how it works?"
-                                            "</span>\n"
-/*here are link for "take more info"*/      "<a class=\"take-more-info\" href=\"https://www.google.com/teapot\">take more info</a>\n"
-                           "</p>\n"
+                            "<div id=\"How it works:\">\n"
+                            "<div id=\"some-text\" >\n"
+                            "<em>Do you now how it works?</em>\n"
+                            "Okay, I trying to write this site about three days, seem I started getting it.\n"
+                                            "</div>\n"
+                                            "<div class=\"marker\">\n"
+                                            "Let's take a look at what I've learned \n"
+                                            "<ul>\n"
+
+                                            "<li>\n"
+//                                            "::marker\n"
+                                            "Nothing"
+                                            "</li>\n"
+
+                                            "<li>\n"
+//                                            "::marker\n"
+                                            "Try to copy and paste from different a sites \n"
+                                            "</li>\n"
+
+                                            "<li>\n"
+//                                            "::marker\n"
+                                            "Learn inspect of Chrome \n"
+                                            "</li>\n"
+
+                                            "</ul>\n"
+                                            "</div\n>"
+                            /*here are link for "take more info"*/      "<a class=\"take-more-info\" href=\"https://www.google.com/teapot\"> My favourite status code</a>\n"
+                           "</div>\n"
     "</div>\n"
     "</body>\n"
 "</html>\n\n";
