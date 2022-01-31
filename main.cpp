@@ -82,7 +82,7 @@ int main(int argc, char  *argv[])
         }
         std::cout << "\n\n+++++++ Ending request parser ++++++++\n";
 
-        write(new_socket , hello_there , strlen(hello_there));
+        write(new_socket , hello_there  , strlen(hello_there));
         printf("------------------Response sent-------------------\n");
         close(new_socket);
     }
