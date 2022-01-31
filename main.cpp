@@ -30,155 +30,9 @@ int main(int argc, char  *argv[])
                             "Date: Mon, 27 Jul 2009 12:28:53 GMT\n"
                             "Server:Gulu Gulu 2.0\n"
                             "Last-Modified: Wed, 22 Jul 2009 19:15:56 GMT\n"
-                            "Content-Length: 2500\n"
+                            "Content-Length: 22500\n"
                             "Content-Type: text/html\n"
-                            "Connection: Closed\n\n"
-
-"<html>\n"
-"<head>\n"
-"<meta charset=UTF-8\">\n"
-"<meta name=\"color-scheme\" content=\"light dark\">\n"
-
-
-"<style>\n"
-"<body> {"
-"-webkit-font-smoothing: antialiaseed;\n"
-"font-size: 100%;\n"
-"margin: 0;\n"
-"}\n"
-
-".content {\n"
-"background-color: rgb(0, 139, 139);\n"       //76, 146, 143
-"color: rgb(255, 245, 238);\n"
-//"font-size: calc(100% - 2px);\n"
-"line-height: calc(100% + 6px);\n"
-"min-width: 240px;\n"
-"}\n"
-
-"h1 {\n"
-"font-size:calc(100% + 8px);\n"
-"font-weight: 400;\n"
-"line-height: calc(100% + 8px);\n"
-"}\n"
-        ".take-more-info {\n"
-        "color: rgb(255, 250, 250);\n"
-        "text-decoration: none;\n"  //если это строку закоментить, то переход на 418 будет подчеркнут
-        "}\n"
-
-"@media (max-width: 100px), (max-height: 100px) {\n"
-".content {\n"
-"font-size: calc(100% - 4px);\n"
-"line-height: calc(100% + 6px);\n"
-"}\n"
-"h1 {\n"
-"font-size:calc(100% + 8px);\n"
-"font-weight: 400;\n"
-"line-height: calc(100% + 8px);\n"
-"}\n"
-"}\n"
-
-".content {\n"
-        "margin-inline-end: auto;\n"
-        "margin-inline-start: auto;\n"
-        "max-width: 300px;\n"
-    "}\n"
-
-    ".icon {\n"
-        "margin-inline-end: auto;\n"
-        "margin-inline-start: auto;\n"
-        "}\n"
-"h1 {\n"
-"text-aligin: canter;\n"
-"}\n"
-// format of location
-"@media (min-width: 720px) {\n"
-        ".icon,\n"
-        "h1,\n"
-  "#subtitle,\n"
-  ".learn-more-button {\n"
-            "margin-top: 0.5rem;\n"
-        "}\n"
-
-        ".icon,\n"
-        "h1,\n"
-  "#subtitle,\n"
-  ".bulletpoints,\n"
-  "#cookie-controls {\n"
-  "margin-bottom: 1.5rem;\n"
-    "}\n"
-
-    ".content {\n"
-    "margin-top: 40px;\n"
-        "min-width: 240px;\n"
-        "padding: 8px 48px 24px;\n"
-    "}\n"
-
-    "#some-text em {\n"
-    "display: block;\n"
-    "}\n"
-
-    "em {\n"
-    "color: #FFDEAD;\n"
-    "font-style: normal;\n"
-    "}\n"
-
-
-"p {\n"
-        "display: block;\n"
-        "margin-block-start: 1em;\n"
-        "margin-block-end: 1em;\n"
-        "margin-inline-start: 0px;\n"
-        "margin-inline-end: 0px;\n"
-        "}\n"
-
-
-
-"</style>\n"
-
-
-
-"</head>\n"
-"<head>\n"
-    "<meta charset=UTF-8\">\n"
-    "<meta name=\"color-scheme\" content=\"light dark\">\n"
-    "<title>What do you want?</title>\n"
-    "</head>\n"
-    "<body>\n"
-    "<div class=\"content\">\n"
-    "<div class=\"icon\" role=\"presentation\" alt></div>\n"
-                            "<h1>Mi ne comprene vin</h1>\n"
-                            "<div id=\"How it works:\">\n"
-                            "<div id=\"some-text\" >\n"
-                            "<em>Do you now how it works?</em>\n"
-                            "Okay, I trying to write this site about three days, seem I started getting it.\n"
-                                            "</div>\n"
-                                            "<div class=\"marker\">\n"
-                                            "Let's take a look at what I've learned \n"
-                                            "<ul>\n"
-
-                                            "<li>\n"
-//                                            "::marker\n"
-                                            "Nothing"
-                                            "</li>\n"
-
-                                            "<li>\n"
-//                                            "::marker\n"
-                                            "Try to copy and paste from different a sites \n"
-                                            "</li>\n"
-
-                                            "<li>\n"
-//                                            "::marker\n"
-                                            "Learn inspect of Chrome \n"
-                                            "</li>\n"
-
-                                            "</ul>\n"
-                                            "</div\n>"
-                            /*here are link for "take more info"*/      "<a class=\"take-more-info\" href=\"https://www.google.com/teapot\"> My favourite status code</a>\n"
-                           "</div>\n"
-    "</div>\n"
-    "</body>\n"
-"</html>\n\n";
-
+                            "Connection: Closed\n\n";
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
     {
         perror("In socket");
@@ -210,7 +64,7 @@ int main(int argc, char  *argv[])
             exit(EXIT_FAILURE);
         }
         RequestParser requestParser(new_socket);
-        write(new_socket , hello_there , strlen(hello_there));
+        write(new_socket , str , strlen(hello_there));
         printf("------------------Hello message sent-------------------\n");
         close(new_socket);
     }
