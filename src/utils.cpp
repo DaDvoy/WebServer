@@ -40,6 +40,7 @@ std::vector<std::string> split(std::string strToSplit, char delimeter)
     std::stringstream ss(strToSplit);
     std::string item;
     std::vector<std::string> splittedStrings;
+
     while (std::getline(ss, item, delimeter))
 	{
 		// if (item == "")
@@ -54,11 +55,9 @@ std::vector<std::string> split(std::string strToSplit, char delimeter)
 std::vector<std::string> split_one(std::string stringToBeSplitted, std::string delimeter)
 {
 	std::vector<std::string> splittedString;
-
 	int index;
-	index = stringToBeSplitted.find_first_of(delimeter, 0);
-	std::cout << "index: " << index << ":  " << stringToBeSplitted << std::endl;
 
+	index = stringToBeSplitted.find_first_of(delimeter, 0);
 	splittedString.push_back(stringToBeSplitted.substr(0, index));
 	splittedString.push_back(stringToBeSplitted.substr(index + 2, stringToBeSplitted.size() - 1));
 	return (splittedString);
