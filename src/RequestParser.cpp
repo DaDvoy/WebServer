@@ -20,10 +20,12 @@ RequestParser::RequestParser(int sock)
 		std::cerr << "error read sock in requestparser\n";
 		exit(0);
 	}
-	std::vector<std::string> tmp_str = split_one(saver, "\n\r\n");
 
-	request.body = tmp_str[1];
-	saver = tmp_str[0];
+	// std::vector<std::string> tmp_str = split_one(saver, "\n\r\n"); для тела реквеста
+	// request.body = tmp_str[1];
+	// saver = tmp_str[0];
+	// std::cout << tmp_str[1] << std::endl;
+
 	ParseRequest();
 	// std::map<std::string, std::string>::iterator it = request.head.begin();
 	// while (it != request.head.end())
@@ -83,6 +85,7 @@ void RequestParser::ParseRequest()
 	{
 		if (*it == "")
 			break;
+		// std::cout << *it << std::endl;
 		head_split = split_one(*it, ": ");
 		request.head.insert(std::pair<std::string, std::string>(head_split[0], head_split[1]));
 		++count;

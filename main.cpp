@@ -75,6 +75,7 @@ int main(int argc, char  *argv[])
         std::map<std::string, std::string>::iterator it = requestParser.request.head.begin();
         std::map<std::string, std::string>::iterator it_end = requestParser.request.head.end();
 
+        
         while (it != it_end) // вывод заголовков
         {
             std::cout << it->first << ": " << it->second<< std::endl;
