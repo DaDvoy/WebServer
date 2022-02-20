@@ -65,8 +65,8 @@ int main(int argc, char  *argv[])
         
         std::cout << "\n+++++++ Query string ++++++++\n\n";
 
-        std::cout << requestParser.request.query.query_string << std::endl;
-        std::cout << requestParser.request.query.method << std::endl;
+        std::cout << "query_string: " << requestParser.request.query.query_string << std::endl;
+        std::cout << "method: " << requestParser.request.query.method << std::endl;
         std::cout << requestParser.request.query.address << std::endl;
         std::cout << requestParser.request.query.protocol << std::endl << std::endl;
 
@@ -78,7 +78,7 @@ int main(int argc, char  *argv[])
         
         while (it != it_end) // вывод заголовков
         {
-            std::cout << it->first << ": " << it->second<< std::endl;
+            // std::cout << it->first << ": " <<  "|" << it->second << "|" << std::endl;
             it++;
         }
         std::cout << "\n\n+++++++ Ending request parser ++++++++\n";

@@ -23,9 +23,9 @@ class ConfigParser
 		std::vector<std::string>::iterator	it_end;
 		std::vector<std::string>			parseLines;
 
-		Configs						parseConfig();
-		void						parseLocation(Configs &config);
-		void						parseOneField(std::string &field, Configs &config);
+		Configs						ParseConfig();
+		void						ParseLocation(Configs &config);
+		void						ParseOneField(std::string &field, Configs &config);
 
 };
 
