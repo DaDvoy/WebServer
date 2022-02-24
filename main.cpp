@@ -1,10 +1,11 @@
 #include "./src/includes.hpp"
 #include "./src/ConfigParser.hpp"
 #include "./src/RequestParser.hpp"
+#include "./src/CommonGatewayInterface.hpp"
 
 #define PORT 8080
 
-int main(int argc, char  *argv[])
+int main(int argc, char  *argv[], char *env[])
 {
 		if (argc != 2)
 	{
@@ -13,6 +14,7 @@ int main(int argc, char  *argv[])
 		return (-1);
 	}	
 	ConfigParser parsing(argv[1]);
+    int countUsers = 10;
     std::cout << "------------------Configs-------------------\n";
 
 	std::list<Configs>::iterator config = parsing.GetConfig().begin();
@@ -27,7 +29,7 @@ int main(int argc, char  *argv[])
     int addrlen = sizeof(address);
     
     std::string hello = "Hello from server";
-    char hello_there[18] = "Hello from server";
+    char *hello_there;
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
     {
         perror("In socket");
@@ -45,7 +47,7 @@ int main(int argc, char  *argv[])
         perror("In bind");
         exit(EXIT_FAILURE);
     }
-    if (listen(server_fd, 10) < 0)
+    if (listen(server_fd, countUsers) < 0)
     {
         perror("In listen");
         exit(EXIT_FAILURE);
@@ -65,8 +67,8 @@ int main(int argc, char  *argv[])
         
         std::cout << "\n+++++++ Query string ++++++++\n\n";
 
-        std::cout << requestParser.request.query.query_string << std::endl;
-        std::cout << requestParser.request.query.method << std::endl;
+        std::cout << "query_string: " << requestParser.request.query.query_string << std::endl;
+        std::cout << "method: " << requestParser.request.query.method << std::endl;
         std::cout << requestParser.request.query.address << std::endl;
         std::cout << requestParser.request.query.protocol << std::endl << std::endl;
 
@@ -75,9 +77,10 @@ int main(int argc, char  *argv[])
         std::map<std::string, std::string>::iterator it = requestParser.request.head.begin();
         std::map<std::string, std::string>::iterator it_end = requestParser.request.head.end();
 
+        
         while (it != it_end) // вывод заголовков
         {
-            std::cout << it->first << ": " << it->second<< std::endl;
+            // std::cout << it->first << ": " <<  "|" << it->second << "|" << std::endl;
             it++;
         }
         std::cout << "\n\n+++++++ Ending request parser ++++++++\n";
