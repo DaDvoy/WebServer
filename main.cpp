@@ -28,8 +28,7 @@ int main(int argc, char  *argv[])
     struct sockaddr_in address;
     int addrlen = sizeof(address);
     
-    std::string hello = "Hello from server";
-    char *hello_there;
+    std::string  hello_there("Hello from server");
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
     {
         perror("In socket");
@@ -80,12 +79,12 @@ int main(int argc, char  *argv[])
         
         while (it != it_end) // вывод заголовков
         {
-            // std::cout << it->first << ": " <<  "|" << it->second << "|" << std::endl;
+             std::cout << it->first << ": " <<  "|" << it->second << "|" << std::endl;
             it++;
         }
         std::cout << "\n\n+++++++ Ending request parser ++++++++\n";
 
-        write(new_socket , hello_there  , strlen(hello_there));
+        write(new_socket , hello_there.c_str()  , strlen(hello_there.c_str()));
         printf("------------------Response sent-------------------\n");
         close(new_socket);
     }
