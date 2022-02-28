@@ -2,6 +2,7 @@
 #define REQUEST_HPP
 
 #include "includes.hpp"
+#include <map>
 
 struct query_str
 {
@@ -9,15 +10,17 @@ struct query_str
 	std::string  method;
 	std::string  address;
 	std::string  protocol;
-}
+};
 
 class Request
 {
 	public:
 		Request();
+		Request(Request &other);
+		Request &operator=(Request &other);
 		~Request();
 		query_str	query;
-		std::string	body
+		std::string	body;
 		std::map<std::string, std::string>	head;
 };
 

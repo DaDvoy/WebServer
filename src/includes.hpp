@@ -5,14 +5,21 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <sstream>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <cstdlib> // For exit() and EXIT_FAILURE
 #include <unistd.h> // For read
+#include <string>
+#define READ_BUFFER 32768
+
+
 
 std::vector<std::string>	ft_split(char symb_split, std::string string_split);
-std::string					&ft_trimmer(char symb_trim, std::string &string_trim);
-std::string					&ltrim(std::string& str, const std::string& chars);
-std::string					&rtrim(std::string& str, const std::string& chars);
+std::vector<std::string>	split(std::string strToSplit, char delimeter);
+std::vector<std::string>	split_one(std::string stringToBeSplitted, std::string delimeter);
+std::string					&ft_trimmer(std::string const &symbs, std::string &string_trim);
+std::string					&ltrim(std::string& str, std::string const &symbs);
+std::string					&rtrim(std::string& str, std::string const &symbs);
 
 #endif
