@@ -8,14 +8,18 @@
 class headlines
 {
 private:
-    std::string contentType;
-    std::string contentEncoding;
-    std::string contentLenght;
-    int intLenght;
+    std::string     contentType;
+    std::string     contentEncoding;
+    std::string     contentLenght;
+    std::string     lenght;
+    int             intLenght;
 public:
 
 
-    void        searchKey();
+    void            searchKey();
+    std::string     getType();
+    std::string     getEncoding();
+    int             getLenght();
 };
 
 
