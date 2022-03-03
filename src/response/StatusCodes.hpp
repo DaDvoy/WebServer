@@ -17,7 +17,7 @@ public:
 //    int         OK();
 //    int         PartialContent();
 //    int         MovedPermanently();
-//    int         Forbidden();
+//    int         BadRequest();
 //    int         NotFound();
 //    int         IamTeapot();
 //    int         InternalServerError();
