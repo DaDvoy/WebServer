@@ -20,20 +20,12 @@ RequestParser::RequestParser(int sock)
 		std::cerr << "error read sock in requestparser\n";
 		exit(0);
 	}
-	// std::cout << "all: " << saver << std::endl;
-	// std::vector<std::string> tmp_str = split_one(saver, "\n\r\n"); для тела реквеста
-	// request.body = tmp_str[1];
-	// saver = tmp_str[0];
-	// std::cout << tmp_str[1] << std::endl;
-
+	char *what = (char *)strstr(saver.c_str(), "\n\n");
+	if (what)
+		request.body = what;
+	else
+		request.body = "";
 	ParseRequest();
-	// std::map<std::string, std::string>::iterator it = request.head.begin();
-	// while (it != request.head.end())
-	// {
-	// 	if ((*it).first == "Accept")
-	// 		std::cout << (*it).first << ": " << (*it).second << std::endl;
-	// 	it++;
-	// }
 }
 
 RequestParser::~RequestParser()
@@ -43,11 +35,12 @@ RequestParser::~RequestParser()
 
 int RequestParser::ReadRequest(int sock)
 {
-	long valread;
+	long valueRead;
 
 	char *buffer = new char[READ_BUFFER + 1];
 	bzero(buffer, READ_BUFFER + 1);
-	if ((valread = read(sock , buffer, READ_BUFFER)) < 0)
+	valueRead = read(sock , buffer, READ_BUFFER);
+	if (valueRead < 0 || valueRead > READ_BUFFER + 1)
 	{
 		delete[] buffer;
 		return (-1);
@@ -74,11 +67,12 @@ void RequestParser::ParseQuery(std::string &query) // строка запрос�
 
 void RequestParser::ParseRequest()
 {
-	std::vector<std::string>::iterator it;
+	std::vector<std::string>::iterator	it;
+	// int	limitBody = 0;
+	// body_saver = split_one(saver, "\r\n\n");
 
 	parseLines = split(saver, '\n');
 	it = parseLines.begin();
-
 	ParseQuery(*it); // строка запроса
 
 	std::vector<std::string> head_split;
@@ -87,20 +81,8 @@ void RequestParser::ParseRequest()
 		if (*it == "")
 			break;
 		head_split = split_one(*it, ": ");
-		if (*it == "")
-			break;
 		request.head.insert(std::pair<std::string, std::string>(head_split[0], head_split[1]));
 		++count;
 	}
-	// it++;
-	// if (*it == "") // тело запроса
-	// {
-	// 	while (++it != parseLines.end())
-	// 	{
-	// 		request.body += *it;
-	// 		request.body += "\n";
-	// 	}
-	// 	std::cout << "body start\n";
-	// 	std::cout << request.body;
-	// }
+	request.body = ft_trimmer("\n\n", request.body);
 }

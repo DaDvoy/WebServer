@@ -15,11 +15,12 @@
 
 
 
-std::vector<std::string>	ft_split(char symb_split, std::string string_split);
-std::vector<std::string>	split(std::string strToSplit, char delimeter);
+std::vector<std::string>	ft_split(char symb_split, std::string &string_split);
+std::vector<std::string>	split(std::string &strToSplit, char delimeter);
 std::vector<std::string>	split_one(std::string stringToBeSplitted, std::string delimeter);
 std::string					&ft_trimmer(std::string const &symbs, std::string &string_trim);
-std::string					&ltrim(std::string& str, std::string const &symbs);
-std::string					&rtrim(std::string& str, std::string const &symbs);
+std::string					&LeftTrim(std::string& str, std::string const &symbs);
+std::string					&RightTrim(std::string& str, std::string const &symbs);
+std::string					ToupperStr(std::string const &strToUpper);
 
 #endif

@@ -1,9 +1,11 @@
 #include "CommonGatewayInterface.hpp"
 
-CommonGatewayInterface::CommonGatewayInterface(std::string const &path, char **env)
+CommonGatewayInterface::CommonGatewayInterface(std::string const &path, char **env, Request &request, sockaddr_in &addr, Configs &config)
 {
 	this->cgiPath = path;
 	this->env = env;
+
+	FillEnv(request, addr, config);
 }
 
 CommonGatewayInterface::CommonGatewayInterface(const CommonGatewayInterface &other)
@@ -24,7 +26,46 @@ CommonGatewayInterface &CommonGatewayInterface::operator=(const CommonGatewayInt
 	return (*this);
 }
 
-std::string	CommonGatewayInterface::ExecuteCGI(int sock_fd)
+void		CommonGatewayInterface::FillEnv(Request &request, sockaddr_in &addr, Configs &config)
+{
+	std::vector<std::string>	newEnv;
+
+	newEnv.push_back("QUERY_STRING=" + request.query.query_string);	
+	newEnv.push_back("QUERY_METHOD=" + request.query.method);	
+	newEnv.push_back("GATEWAY_INTEFACE=CGI/1.1");
+	newEnv.push_back("SERVER_SOFTWARE=*NIX");
+	newEnv.push_back("REMOTE_ADDR=127.0.0.1");
+	newEnv.push_back("REMOTE_HOST=" + std::to_string(addr.sin_port));
+	newEnv.push_back("SERVER_NAME=" + request.head["Host"]);
+	newEnv.push_back("SERVER_PORT=" + std::to_string(config.port));
+	newEnv.push_back("SERVER_ADDR=127.0.0.1");
+	newEnv.push_back("SERVER_PROTOCOL=HTTP/1.1");
+	newEnv.push_back("SCRIPT_NAME=" + request.query.address);
+	newEnv.push_back("REQUEST_URI=" + request.query.address);
+	newEnv.push_back("PATH_INFO=" + request.query.address);
+	// newEnv.push_back("SCRIPT_FILENAME=");
+	// newEnv.push_back("PATH_TRANSLATED=");
+	
+	if (!request.body.empty())
+	{
+		newEnv.push_back("CONTENT_TYPE=");
+		newEnv.push_back("CONTENT_LENGTH=");
+	}
+	
+	for (std::map<std::string, std::string>::iterator it = request.head.begin(); it != request.head.end(); it++)
+	{
+		newEnv.push_back(ToupperStr(it->first) + "=" + it->second);
+	}
+	std::cout << "================ENV================\n";
+	env[newEnv.size()] = nullptr;
+	for (int i = 0; i < (int)newEnv.size(); i++)
+	{
+		env[i] = (char*)newEnv[i].c_str();
+		std::cout << newEnv[i] << std::endl;
+	}
+}
+
+std::string	CommonGatewayInterface::ExecuteCGI()
 {
 	pid_t	pid;
 	std::string final_string = "";

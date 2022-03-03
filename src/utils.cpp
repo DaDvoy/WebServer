@@ -1,12 +1,12 @@
 #include "includes.hpp"
 
-std::string& ltrim(std::string& str, std::string const &symbs)
+std::string& LeftTrim(std::string& str, std::string const &symbs)
 {
     str.erase(0, str.find_first_not_of(symbs));
     return str;
 }
 
-std::string& rtrim(std::string& str, std::string const &symbs)
+std::string& RightTrim(std::string& str, std::string const &symbs)
 {
     str.erase(str.find_last_not_of(symbs) + 1);
     return str;
@@ -14,10 +14,10 @@ std::string& rtrim(std::string& str, std::string const &symbs)
 
 std::string					&ft_trimmer(std::string const &symbs, std::string &string_trim)
 {
-    return ltrim(rtrim(string_trim, symbs), symbs);
+    return LeftTrim(RightTrim(string_trim, symbs), symbs);
 }
 
-std::vector<std::string>	ft_split(char symb_split, std::string string_split)
+std::vector<std::string>	ft_split(char symb_split, std::string &string_split)
 {
 	int	end = 0;
 	int	start = 0;
@@ -35,7 +35,7 @@ std::vector<std::string>	ft_split(char symb_split, std::string string_split)
 	return (vector_split);
 }
 
-std::vector<std::string> split(std::string strToSplit, char delimeter)
+std::vector<std::string> split(std::string &strToSplit, char delimeter)
 {
     std::stringstream ss(strToSplit);
     std::string item;
@@ -61,4 +61,16 @@ std::vector<std::string> split_one(std::string stringToBeSplitted, std::string d
 	splittedString.push_back(stringToBeSplitted.substr(0, index));
 	splittedString.push_back(stringToBeSplitted.substr(index + 2, stringToBeSplitted.size() - 1));
 	return (splittedString);
+}
+
+std::string	ToupperStr(std::string const &strToUpper)
+{
+	std::string newStr;
+
+	for (int i = 0; i < (int)strToUpper.size(); i++)
+	{
+		newStr.push_back((char)std::toupper(strToUpper[i]));
+	}
+	
+	return (newStr);
 }
