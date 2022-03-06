@@ -2,26 +2,30 @@
 #define STATUSCODES_HPP
 
 #include "iostream"
+#include "../includes.hpp"
 
 class StatusCodes
 {
 private:
-    int         _code;
+    int             intCode;
+    std::string     strCode;
 public:
     StatusCodes();
     ~StatusCodes();
 
-    int         getCode() const;
-    void        setCode(int newCode) const;
+    int             getIntCode();
+    std::string     getStrCode();
+    void            setCode(int newCode);
+    void            intToStr();
 
-//    int         OK();
-//    int         PartialContent();
-//    int         MovedPermanently();
-//    int         BadRequest();
-//    int         NotFound();
-//    int         IamTeapot();
-//    int         InternalServerError();
-//    int         BadGateway();
+    void             OK();
+    void             PartialContent();
+    void             MovedPermanently();
+    void             BadRequest();
+    void             NotFound();
+    void             IamTeapot();
+    void             InternalServerError();
+    void             BadGateway();
 };
 
 

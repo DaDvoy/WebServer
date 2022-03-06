@@ -3,20 +3,21 @@
 
 #include "includes.hpp"
 #include "./response/StatusCodes.hpp"
+#include "./response/headlines.hpp"
 
 class Response
 {
 	private:
 
 		std::map<std::string, std::string> headers;
-//		std::string	body;
 		StatusCodes status;
-       // std::map<std::string> response;
+        std::string firstLine;
 	public:
 		Response();
 		~Response();
 
-    void        buildResponse();
+    void            buildResponse();
+    std::string     getFirstLine();
 };
 
 #endif
