@@ -1,31 +1,32 @@
-#ifndef CONFIGPARSER_HPP//fcarl
-# define CONFIGPARSER_HPP
+#ifndef CONFIGPARSER_HPP
+#define CONFIGPARSER_HPP
 
-#include <map>
 #include <list>
-#include <string>
-#include <iostream>
-#include <fstream>
-#include "includes.hpp"
-#include "Configs.hpp"
+#include <algorithm>
+#include "ConfigFile.hpp"
+
+using namespace std;
 
 class ConfigParser
 {
-	public:
-		ConfigParser();
-		ConfigParser(std::string const &configName);
-		~ConfigParser();
-		std::list<Configs> &GetConfig();
-		
-	private:
-		std::list<Configs>					config;
-		std::vector<std::string>::iterator	it;
-		std::vector<std::string>::iterator	it_end;
-		std::vector<std::string>			parseLines;
 
-		Configs						ParseConfig();
-		void						ParseLocation(Configs &config);
-		void						ParseOneField(std::string &field, Configs &config);
+public:
+
+    ConfigParser();
+    ~ConfigParser();
+
+    std::list<ConfigFile> GetServerConfigs(const std::string &configFileName);
+
+private:
+
+    int iter;
+    vector<string> configLines;
+    vector<string> GetKeyValue(string line);
+    ConfigFile ConfigParse();
+    void ParseOptionIntoConfig(ConfigFile &config);
+    void ParseLocationIntoConfig(ConfigFile &config, vector<string> &words);
+    void ParseWordsInMap(vector<string> words, map<string, string> &map, int i);
+    void ParseError();
 
 };
 

@@ -1,7 +1,7 @@
 #ifndef REQUESTPARSER_HPP
 # define REQUESTPARSER_HPP
 
-#include "Configs.hpp"
+#include "ConfigFile.hpp"
 #include "Server.hpp"
 #include "Response.hpp"
 #include <map>
@@ -15,7 +15,7 @@ class RequestParser
 
 		Request request;
 		Response response;
-		Configs	*config;
+		ConfigFile	*config;
 		Server	*server;	
 	private:
 		std::vector<std::string> parseLines;

@@ -1,114 +1,158 @@
-#include "ConfigParser.hpp"//fcarl
+#include "ConfigParser.hpp"
 
-void	ConfigParser::ParseOneField(std::string &field, Configs &config)
+ConfigParser::ConfigParser() {}
+ConfigParser::~ConfigParser() {}
+
+list<ConfigFile> ConfigParser::GetServerConfigs(const string &configFileName)
 {
-	// std::cerr << field << "|" << std::endl;
-	std::vector<std::string>	strSplit = split(field, ' ');
+    list<ConfigFile> configs;
 
-	strSplit[1].erase(strSplit[1].length());
+    string fileContent = FileGetContent(configFileName);
 
-	if (strSplit[0] == "server_name")
-		config.server_name = strSplit[1].erase(strSplit[1].length() - 1);
-	else if (strSplit[0] == "error_page")
-		config.error_page = strSplit[1].erase(strSplit[1].length() - 1);
-	else if (strSplit[0] == "listen")
-		config.port = std::stoi(strSplit[1].erase(strSplit[1].length() - 1));
-	else if (strSplit[0] == "client_max_body_size")
-		config.client_max_body_size = std::stoi(strSplit[1].erase(strSplit[1].length() - 1));
-	else if (strSplit[0] == "root")
-		config.root = strSplit[1].erase(strSplit[1].length() - 1);
+    configLines = split("\n", fileContent);
+
+    for (iter = 0; iter < (int)configLines.size(); iter++)
+    {
+        string line = trim(configLines[iter]);
+        if (line == "server")
+        {
+            iter++;
+            configs.push_back(ConfigParse());
+        }
+        else if (line == "")
+            continue;
+        else
+            ParseError();
+    }
+
+    list<ConfigFile>::iterator  iter = configs.begin();
+    while (iter != configs.end())
+    {
+        try
+        {
+            iter->ParseConfVar();
+        }
+        catch (exception)
+        {
+            cerr << "Invalid server fields";
+            exit(1);
+        }
+        iter++;
+    }
+
+    return configs;
 }
 
-void	ConfigParser::ParseLocation(Configs &config)
+void ConfigParser::ParseLocationIntoConfig(ConfigFile &config, vector<string> &words)
 {
-	std::cerr << "\nin location==============================\n";
-	std::string str;
+    string line = trim(configLines[iter]);
 
-	config.count_locations++;
+    if (*words[1].begin() != '/')
+        ParseError();
+    Location newLocation(words[1]);
 
-	while (it != it_end)
+    iter++;
+
+    while (trim(configLines[iter]) == "")
+        iter++;
+
+    if (trim(configLines[iter]) != "{")
+        ParseError();
+    else
+        iter++;
+
+    while (line != "}")
+    {
+        if (line != "")
+        {
+            string line = trim(configLines[iter]);
+
+            vector<string> words = GetKeyValue(line);
+
+            ParseWordsInMap(words, newLocation.confVar, iter);
+        }
+        iter++;
+        line = trim(configLines[iter]);
+    }
+
+    config.locations.push_back(newLocation);
+}
+
+bool isContains(string str)
+{
+	for (string::iterator it = str.begin(); it != str.end(); it++)
 	{
-		str = ft_trimmer("\t\n\v\f\r ", *it);
-		if (*it == "}")
-			break;
-		it++;
+		if (*it == ' ' || *it == '\n' || *it == '\t' || *it == '\r')
+			return true;
 	}
+    return false;
 }
 
-
-Configs	ConfigParser::ParseConfig()
+void ConfigParser::ParseOptionIntoConfig(ConfigFile &config)
 {
-	Configs	newConfig;
-	std::string str;
+    string line = trim(configLines[iter]);
 
-	it++;
-	*it = ft_trimmer("\t\n\v\f\r ", *it);
-	if (*it != "{")
-	{
-		std::cerr << *it << ": parse error server starter quotes is missing\n";
-		exit(-1);
-	}
-	while (++it != it_end)
-	{
-		str = ft_trimmer("\t\n\v\f\r ", *it);
-		if (*it == "")
-			continue;
-		if (*it == "}")
-			break;
+    vector<string> words = GetKeyValue(line);
 
-		if (str.substr(0, strlen("location")) == "location")
-		{
-			it++;
-			str = ft_trimmer("\t\n\v\f\r ", *it);
-			if (str == "{")
-				ParseLocation(newConfig);
-			else
-			{
-				std::cerr << str << ": parse error location starter quotes is missing\n";
-				exit(0);
-			}
-		}
-		if (str != "{")
-			ParseOneField(str, newConfig);
-	}
-	return (newConfig);
+    if (words.size() != 2)
+        ParseError();
+
+    if (isContains(words[1]))
+        ParseError();
+
+    if (words[0] != "location")
+    {
+        ParseWordsInMap(words, config.confVar, iter);
+    }
+    else
+    {
+        ParseLocationIntoConfig(config, words);
+    }
 }
 
-ConfigParser::ConfigParser(std::string const &configName)
+ConfigFile ConfigParser::ConfigParse()
 {
-	std::ifstream configFile(configName);
+    while (trim(configLines[iter]) == "")
+        iter++;
 
-	if (configFile.fail())
-	{
-		std::cerr << configName << ": open error\n";
-		exit(0);
-	}
-	std::string parseString((std::istreambuf_iterator<char>(configFile)), std::istreambuf_iterator<char>());
-	parseLines = ft_split('\n', parseString);
-	it = parseLines.begin();
-	it_end = parseLines.end();
-	while (it != it_end)
-	{
-		if (*it == "server")
-			config.push_back(ParseConfig());
-		else if (*it == "")
-			continue;
-		it++;
-	}
-	std::cout << std::endl;
+    if (trim(configLines[iter]) != "{")
+        ParseError();
+    else
+        iter++;
+
+    ConfigFile newConfig;
+    string line = trim(configLines[iter]);
+    while (line != "}")
+    {
+        if (line != "")
+            ParseOptionIntoConfig(newConfig);
+        iter++;
+        line = trim(configLines[iter]);
+    }
+    iter++;
+    return newConfig;
 }
 
-std::list<Configs> &ConfigParser::GetConfig()
+void ConfigParser::ParseWordsInMap(vector<string> words, map<string, string> &map, int i)
 {
-	return (config);
+    (void)i;
+    if (*(words[1].end() - 1) != ';')
+        ParseError();
+    words[1].erase(words[1].end() - 1);
+    map[words[0]] = words[1];
 }
 
-ConfigParser::ConfigParser()
+vector<string> ConfigParser::GetKeyValue(string line)
 {
-
+    vector<string>  words;
+    string::iterator endFirstWord = find_if(line.begin(), line.end(), isEmptySpace);
+    words.push_back(string(line.begin(), endFirstWord));
+    words.push_back(string(find_if_not(endFirstWord, line.end(), isEmptySpace), line.end()));
+    return words;
 }
 
-ConfigParser::~ConfigParser()
+void ConfigParser::ParseError()
 {
-
+    cerr << "Invalid config: " << iter + 1 << " line";
+    exit(1);
 }

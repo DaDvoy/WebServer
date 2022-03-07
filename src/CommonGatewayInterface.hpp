@@ -8,12 +8,12 @@
 #include <fstream>
 #include "includes.hpp"
 #include "Request.hpp"
-#include "Configs.hpp"
+#include "ConfigFile.hpp"
 
 class CommonGatewayInterface
 {
 	public:
-		CommonGatewayInterface(std::string const &path, char **env, Request &request, sockaddr_in &addr, Configs &config);
+		CommonGatewayInterface(std::string const &path, char **env, Request &request, sockaddr_in &addr, ConfigFile &config);
 		CommonGatewayInterface(CommonGatewayInterface const &other);
 		~CommonGatewayInterface();
 
@@ -23,7 +23,7 @@ class CommonGatewayInterface
 
 		char		**env;
 		std::string cgiPath;
-		void	FillEnv(Request &request, sockaddr_in &addr, Configs &config);
+		void	FillEnv(Request &request, sockaddr_in &addr, ConfigFile &config);
 
 };
 

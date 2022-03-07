@@ -1,6 +1,6 @@
 #include "CommonGatewayInterface.hpp"
 
-CommonGatewayInterface::CommonGatewayInterface(std::string const &path, char **env, Request &request, sockaddr_in &addr, Configs &config)
+CommonGatewayInterface::CommonGatewayInterface(std::string const &path, char **env, Request &request, sockaddr_in &addr, ConfigFile &config)
 {
 	this->cgiPath = path;
 	this->env = env;
@@ -26,7 +26,7 @@ CommonGatewayInterface &CommonGatewayInterface::operator=(const CommonGatewayInt
 	return (*this);
 }
 
-void		CommonGatewayInterface::FillEnv(Request &request, sockaddr_in &addr, Configs &config)
+void		CommonGatewayInterface::FillEnv(Request &request, sockaddr_in &addr, ConfigFile &config)
 {
 	std::vector<std::string>	newEnv;
 
