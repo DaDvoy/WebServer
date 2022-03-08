@@ -52,6 +52,8 @@ int RequestParser::ReadRequest(int sock)
 
 void RequestParser::ParseQuery(std::string &query) // строка запроса
 {
+	query = query.substr(0, query.find_first_of("\r\n"));
+	std::cout << "query: " << query << std::endl;
 	std::vector<std::string> query_split = split(query, ' ');
 	std::vector<std::string> args;
 
@@ -68,8 +70,6 @@ void RequestParser::ParseQuery(std::string &query) // строка запрос�
 void RequestParser::ParseRequest()
 {
 	std::vector<std::string>::iterator	it;
-	// int	limitBody = 0;
-	// body_saver = split_one(saver, "\r\n\n");
 
 	parseLines = split(saver, '\n');
 	it = parseLines.begin();
@@ -81,8 +81,13 @@ void RequestParser::ParseRequest()
 		if (*it == "")
 			break;
 		head_split = split_one(*it, ": ");
-		request.head.insert(std::pair<std::string, std::string>(head_split[0], head_split[1]));
+		if (head_split[0] == "" || head_split[1] == "")
+			break;
+		request.head.insert(std::pair<std::string, std::string>(head_split[0], head_split[1].substr(0, head_split[1].find_first_of("\r\n"))));
 		++count;
 	}
-	request.body = ft_trimmer("\n\n", request.body);
+	if (!request.body.empty())
+		request.body = ft_trimmer("\r\n\r\n", request.body);
+	else 
+		request.body = "";
 }
