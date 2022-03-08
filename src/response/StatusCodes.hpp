@@ -15,7 +15,7 @@ public:
 
     int             getIntCode();
     std::string     getStrCode();
-    void            setCode(int newCode);
+    void            setCode(int newCode, std::string clarification);
     void            intToStr();
 
     void             OK();

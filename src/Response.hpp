@@ -4,20 +4,24 @@
 #include "includes.hpp"
 #include "./response/StatusCodes.hpp"
 #include "./response/headlines.hpp"
+#include "Request.hpp"
 
 class Response
 {
-	private:
+private:
 
-		std::map<std::string, std::string> headers;
-		StatusCodes status;
-        std::string firstLine;
-	public:
+		StatusCodes                         status;
+        std::string                         firstLine;
+        std::string                         tmp;
+public:
 		Response();
 		~Response();
 
-    void            buildResponse();
+		std::map<std::string, std::string>  headers;
+    void            buildResponse(Request &req);
+    void            protocol(Request &req);
     std::string     getFirstLine();
+    std::string     getTMP();
 };
 
 #endif

@@ -10,22 +10,27 @@ headlines::headlines() {
 headlines::~headlines() {}
 
 
-void            headlines::searchKey() {
-    RequestParser requestParser; //todo: Maybe I need throw exception??
+void            headlines::searchKey(Request &req) {
+    int pos;
+    Response resp;
 
-    if (requestParser.request.head.find("Accept-Encoding") != requestParser.request.head.end())
-        contentEncoding = requestParser.request.head["Accept-Encoding"] + "/r/n"; // really?
-    if (!requestParser.request.body.empty()) {// if the request has body
-        intLenght = strlen(requestParser.request.body.c_str()); //todo: How I have to count lenght?
+    if (req.head.find("Accept-Encoding") != req.head.end()) {
+        contentEncoding = req.head["Accept-Encoding"];
+        pos = contentEncoding.find(",");
+        contentEncoding.erase(pos);
+    }
+    if (!req.body.empty()) {// if the request has body
+        intLenght = strlen(req.body.c_str()); //todo: How I have to count lenght?
         std::stringstream ss;
         ss << intLenght;
         contentLenght = ss.str();
+        std::cout << "CL: " << contentLenght << std::endl;
     }
-    if (requestParser.request.head.find("Accept") != requestParser.request.head.end())
-        contentType = requestParser.request.head["Accept"] + "/r/n";
-
-    //
-    // todo: server: gulu gulu
+    if (req.head.find("Accept") != req.head.end()) {
+        contentType = req.head["Accept"];
+        pos = contentType.find(",");
+        contentType.erase(pos);
+    }
 }
 
 std::string     headlines::getType() {

@@ -28,7 +28,11 @@ int main(int argc, char  *argv[])
     struct sockaddr_in address;
     int addrlen = sizeof(address);
     
-    std::string  hello_there("Hello from server");
+    std::string  hello_there("HTTP/1.1 200 OK\r\n"
+                             "content-encoding: gzip\r\n"
+                             "content-length: 80000\r\n"
+                             "content-type: text/html\r\n"
+                             "server: GuluGulu\r\n");
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
     {
         perror("In socket");
@@ -76,13 +80,26 @@ int main(int argc, char  *argv[])
         std::map<std::string, std::string>::iterator it = requestParser.request.head.begin();
         std::map<std::string, std::string>::iterator it_end = requestParser.request.head.end();
 
-        
         while (it != it_end) // вывод заголовков
         {
-             std::cout << it->first << ": " <<  "|" << it->second << "|" << std::endl;
+             std::cout << it->first << ": " <<  " " << it->second << std::endl;
             it++;
         }
         std::cout << "\n\n+++++++ Ending request parser ++++++++\n";
+
+        //
+        std::cout << "+++++++++++++++++++++++++\n";
+        Response resp;
+        resp.buildResponse(requestParser.request);
+        std::map<std::string, std::string>::iterator it_beg = resp.headers.begin();
+        std::map<std::string, std::string>::iterator it_en = resp.headers.end();
+        std::cout << resp.getFirstLine();
+        while (it_beg != it_en)
+        {
+            std::cout << it_beg->first << it_beg->second << std::endl;
+            it_beg++;
+        }
+        std::cout << "+++++++++++++++++++++++++\n";
 
         write(new_socket , hello_there.c_str()  , strlen(hello_there.c_str()));
         printf("------------------Response sent-------------------\n");

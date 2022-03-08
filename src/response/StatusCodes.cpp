@@ -2,13 +2,14 @@
 
 StatusCodes::StatusCodes() {
     this->intCode = 0;
-    this->strCode = "";
+    this->strCode = "0";
 }
 StatusCodes::~StatusCodes() {}
 
 
-void        StatusCodes::setCode(int newCode) {
+void        StatusCodes::setCode(int newCode, std::string clarification) {
     this->intCode = newCode;
+    this->strCode = clarification;
 }
 
 int         StatusCodes::getIntCode() {
@@ -23,24 +24,25 @@ std::string StatusCodes::getStrCode() {
 void        StatusCodes::intToStr() {
     std::stringstream ss;
     ss << this->intCode;
-    strCode = ss.str();
+    strCode.append(" ");
+    strCode.append(ss.str());
 }
 
 
 void         StatusCodes::OK() {
-    setCode(200);
+    setCode(200, "OK");
 }
 
 void         StatusCodes::PartialContent() { // Does it necessary?
-    setCode(206);;
+    setCode(206, "Partial Content");;
 }
 
 void         StatusCodes::MovedPermanently(){
-    setCode(301);
+    setCode(301, "Moved Permanently");
 }
 
 void         StatusCodes::BadRequest() {
-    setCode(400);
+    setCode(400, "Bad Request");
 }
 
 
@@ -53,17 +55,17 @@ void         StatusCodes::BadRequest() {
 // **короче, в случае чего, буду всегда кидать бэд реквест, хе-хе**
 
 void         StatusCodes::NotFound() {
-    setCode(404);
+    setCode(404, "Not Found");
 }
 
 void         StatusCodes::IamTeapot() {
-    setCode(418);
+    setCode(418, "I'm a Teapot");
 }
 
 void         StatusCodes::InternalServerError() {
-    setCode(500);
+    setCode(500, "Internal Server Error");
 }
 
 void         StatusCodes::BadGateway() {
-    setCode(502);
+    setCode(502, "Bad Gateway");
 }

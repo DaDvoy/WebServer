@@ -5,6 +5,7 @@
 #include "../includes.hpp"
 #include "../Response.hpp"
 #include "../RequestParser.hpp"
+#include "../Request.hpp"
 
 class headlines
 {
@@ -18,7 +19,7 @@ public:
     headlines();
     ~headlines();
 
-    void            searchKey();
+    void            searchKey(Request &req);
     std::string     getType();
     std::string     getEncoding();
     std::string     getLenght();
