@@ -1,10 +1,10 @@
 #ifndef REQUESTPARSER_HPP
 # define REQUESTPARSER_HPP
 
+#include <map>
 #include "ConfigFile.hpp"
 #include "Server.hpp"
 #include "Response.hpp"
-#include <map>
 
 class RequestParser
 {
@@ -14,7 +14,7 @@ class RequestParser
 		~RequestParser();
 
 		Request request;
-		Response response;
+//		Response response;
 		ConfigFile	*config;
 		Server	*server;	
 	private:

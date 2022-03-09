@@ -1,4 +1,5 @@
 #include "./src/includes.hpp"
+#include "./src/Response.hpp"
 #include "./src/ConfigParser.hpp"
 #include "./src/RequestParser.hpp"
 #include "./src/CommonGatewayInterface.hpp"
@@ -7,7 +8,7 @@
 
 #define PORT 8080
 
-int main(int argc, char  *argv[], char *env[])
+int main(int argc, char  *argv[])
 {
 		if (argc != 2)
 	{
@@ -29,8 +30,12 @@ int main(int argc, char  *argv[], char *env[])
     int server_fd, new_socket;
     sockaddr_in address;
     int addrlen = sizeof(address);
-    
-    std::string hello_there = "Hello from server";
+
+    std::string  hello_there("HTTP/1.1 200 OK\r\n"
+                             "content-encoding: gzip\r\n"
+                             "content-length: 80000\r\n"
+                             "content-type: text/html\r\n"
+                             "server: GuluGulu\r\n");
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
     {
         perror("In socket");
@@ -76,22 +81,31 @@ int main(int argc, char  *argv[], char *env[])
 
         std::cout << "\n+++++++ HEADERS ++++++++\n\n";
 
-        std::map<std::string, std::string>::iterator it = newRequest.head.begin(); //для итерации по мапе заголовков нужно использовать итераторы
-        std::map<std::string, std::string>::iterator it_end = newRequest.head.end();
+
+        std::map<std::string, std::string>::iterator it = requestParser.request.head.begin();
+        std::map<std::string, std::string>::iterator it_end = requestParser.request.head.end();
+
         while (it != it_end) // вывод заголовков
         {
-            std::cout << it->first << ": " << it->second << std::endl;
+             std::cout << it->first << ": " <<  " " << it->second << std::endl;
             it++;
         }
         std::cout << "\n+++++++ BODY ++++++++\n\n";
         std::cout << newRequest.body << std::endl; 
         std::cout << "\n\n+++++++ Ending request parser ++++++++\n";
-        (void)env;
+//        (void)env;
         // CommonGatewayInterface *cgi = new CommonGatewayInterface("cgi/test.cgi", env, newRequest, address, Configs);
         // cgi->ExecuteCGI(new_socket);
         //std::cout << "host: " << newRequest.head["Host"] << std::endl;
         // hello_there = (char *)cgi->ExecuteCGI().c_str();
-        write(new_socket, hello_there.c_str(), hello_there.length());
+
+        //
+        std::cout << "+++++++++++++++++++++++++\n";
+        Response resp(requestParser.request);
+        resp.buildResponse();
+        std::cout << "+++++++++++++++++++++++++\n";
+
+        write(new_socket , resp.getResponse().c_str()  , strlen(resp.getResponse().c_str()));
         printf("------------------Response sent-------------------\n");
         close(new_socket);
     }

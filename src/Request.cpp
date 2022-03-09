@@ -22,3 +22,10 @@ Request::~Request()
 {
 
 }
+
+// HTTP/1.1
+// status code
+//Content-type
+// Date (?)
+// Connection
+// Content-lenght
