@@ -87,10 +87,11 @@ int main(int argc, char  *argv[], char *env[])
         std::cout << newRequest.body << std::endl; 
         std::cout << "\n\n+++++++ Ending request parser ++++++++\n";
         (void)env;
-        // CommonGatewayInterface *cgi = new CommonGatewayInterface("cgi/test.cgi", env, newRequest, address, Configs);
-        // cgi->ExecuteCGI(new_socket);
-        //std::cout << "host: " << newRequest.head["Host"] << std::endl;
-        // hello_there = (char *)cgi->ExecuteCGI().c_str();
+        
+        CommonGatewayInterface *cgi = new CommonGatewayInterface("cgi/test.cgi", env, newRequest, address, (*Configs.begin()));
+        cgi->ExecuteCGI();
+        std::cout << "host: " << newRequest.head["Host"] << std::endl;
+        hello_there = (char *)cgi->ExecuteCGI().c_str();
         write(new_socket, hello_there.c_str(), hello_there.length());
         printf("------------------Response sent-------------------\n");
         close(new_socket);
