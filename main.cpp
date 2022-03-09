@@ -93,19 +93,20 @@ int main(int argc, char  *argv[])
         std::cout << "\n+++++++ BODY ++++++++\n\n";
         std::cout << newRequest.body << std::endl; 
         std::cout << "\n\n+++++++ Ending request parser ++++++++\n";
-//        (void)env;
-        // CommonGatewayInterface *cgi = new CommonGatewayInterface("cgi/test.cgi", env, newRequest, address, Configs);
-        // cgi->ExecuteCGI(new_socket);
-        //std::cout << "host: " << newRequest.head["Host"] << std::endl;
-        // hello_there = (char *)cgi->ExecuteCGI().c_str();
 
-        //
         std::cout << "+++++++++++++++++++++++++\n";
         Response resp(requestParser.request);
         resp.buildResponse();
         std::cout << "+++++++++++++++++++++++++\n";
 
-        write(new_socket , resp.getResponse().c_str()  , strlen(resp.getResponse().c_str()));
+       // todo: ready string for sent write(new_socket , resp.getResponse().c_str()  , strlen(resp.getResponse().c_str()));
+//        (void)env;
+        
+        CommonGatewayInterface *cgi = new CommonGatewayInterface("cgi/test.cgi", env, newRequest, address, (*Configs.begin()));
+        cgi->ExecuteCGI();
+        std::cout << "host: " << newRequest.head["Host"] << std::endl;
+        hello_there = (char *)cgi->ExecuteCGI().c_str();
+        write(new_socket, hello_there.c_str(), hello_there.length());
         printf("------------------Response sent-------------------\n");
         close(new_socket);
     }

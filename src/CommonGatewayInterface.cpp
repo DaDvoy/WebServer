@@ -59,10 +59,7 @@ void		CommonGatewayInterface::FillEnv(Request &request, sockaddr_in &addr, Confi
 	std::cout << "================ENV================\n";
 	env[newEnv.size()] = nullptr;
 	for (int i = 0; i < (int)newEnv.size(); i++)
-	{
 		env[i] = (char*)newEnv[i].c_str();
-		std::cout << newEnv[i] << std::endl;
-	}
 }
 
 std::string	CommonGatewayInterface::ExecuteCGI()
