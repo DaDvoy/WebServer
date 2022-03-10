@@ -10,19 +10,25 @@
 class headlines
 {
 private:
+    StatusCodes     _status;
     std::string     contentType;
     std::string     contentEncoding;
     std::string     contentLenght;
+    std::string     contentRange;
     int             intLenght;
 //    length
 public:
     headlines();
     ~headlines();
 
-    void            searchKey(Request &req);
+    Request         req;
+    void            searchKey(Request &requ);
+    void            processingRange();
+
     std::string     getType();
     std::string     getEncoding();
     std::string     getLenght();
+    std::string     getRange();
 };
 
 

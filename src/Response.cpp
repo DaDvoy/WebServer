@@ -23,6 +23,8 @@ void        Response::buildMap() {
 
     headline.searchKey(req);
     firstLine = req.query.protocol + status.getStrCode() + " " + "OK\r\n";
+    if (!headline.getRange().empty())
+        headers["content-range: "] = headline.getRange() + "\r\n";
     headers["content-encoding: "] = headline.getEncoding() + "\r\n";
     headers["content-length: "] = headline.getLenght() + "\r\n";
     headers["content-type: "] = headline.getType() + "\r\n";

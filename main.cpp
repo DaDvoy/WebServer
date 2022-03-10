@@ -8,7 +8,7 @@
 
 #define PORT 8080
 
-int main(int argc, char  *argv[])
+int main(int argc, char  *argv[], char **env)
 {
 		if (argc != 2)
 	{
@@ -106,7 +106,7 @@ int main(int argc, char  *argv[])
         cgi->ExecuteCGI();
         std::cout << "host: " << newRequest.head["Host"] << std::endl;
         hello_there = (char *)cgi->ExecuteCGI().c_str();
-        write(new_socket, hello_there.c_str(), hello_there.length());
+        write(new_socket, resp.getResponse().c_str(), resp.getResponse().length());
         printf("------------------Response sent-------------------\n");
         close(new_socket);
     }

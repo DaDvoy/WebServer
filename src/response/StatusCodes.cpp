@@ -58,6 +58,10 @@ void         StatusCodes::NotFound() {
     setCode(404, "Not Found");
 }
 
+void         StatusCodes::RangeNotSatisfiable() {
+    setCode(416, "Range Not Satisfiable");
+}
+
 void         StatusCodes::IamTeapot() {
     setCode(418, "I'm a Teapot");
 }
