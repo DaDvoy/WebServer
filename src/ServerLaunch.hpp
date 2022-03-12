@@ -9,6 +9,8 @@ class ServerLaunch
 	public:
 		ServerLaunch(list<ConfigFile> &config);
 
+		void	InitializeServer();
+		void	ExecuteServers();
 
 	private:
 		list<ConfigFile> config;

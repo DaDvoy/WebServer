@@ -8,12 +8,12 @@
 
 #define PORT 8080
 
-int main(int argc, char  *argv[])
+int main(int argc, char  *argv[], char *env[])
 {
 		if (argc != 2)
 	{
 		std::cerr << "Wrong params!\n";
-		std::cerr << "help: ./gulugulu src/config/Default.conf\n";
+		std::cerr << "help: ./gulugulu src/config/default_conf.conf\n";
 		return (-1);
 	}	
 	ConfigParser parsing;
@@ -105,7 +105,7 @@ int main(int argc, char  *argv[])
         CommonGatewayInterface *cgi = new CommonGatewayInterface("cgi/test.cgi", env, newRequest, address, (*Configs.begin()));
         cgi->ExecuteCGI();
         std::cout << "host: " << newRequest.head["Host"] << std::endl;
-        hello_there = (char *)cgi->ExecuteCGI().c_str();
+        // hello_there = (char *)cgi->ExecuteCGI().c_str();
         write(new_socket, hello_there.c_str(), hello_there.length());
         printf("------------------Response sent-------------------\n");
         close(new_socket);

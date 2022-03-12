@@ -55,6 +55,7 @@ void RequestParser::ParseQuery(std::string &query) // строка запрос�
 	query = query.substr(0, query.find_first_of("\r\n"));
 	std::cout << "query: " << query << std::endl;
 	std::vector<std::string> query_split = split(query, ' ');
+	std::cout << query_split.size() << std::endl;
 	std::vector<std::string> args;
 
 	request.query.method = query_split[0];
@@ -87,7 +88,7 @@ void RequestParser::ParseRequest()
 		++count;
 	}
 	if (!request.body.empty())
-		request.body = ft_trimmer("\r\n\r\n", request.body);
+		request.body = ft_trimmer(request.body);
 	else 
 		request.body = "";
 }
