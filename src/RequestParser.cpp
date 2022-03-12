@@ -39,7 +39,7 @@ int RequestParser::ReadRequest(int sock)
 
 	char *buffer = new char[READ_BUFFER + 1];
 	bzero(buffer, READ_BUFFER + 1);
-	valueRead = read(sock , buffer, READ_BUFFER);
+	valueRead = recv(sock , buffer, READ_BUFFER, 0);
 	if (valueRead < 0 || valueRead > READ_BUFFER + 1)
 	{
 		delete[] buffer;
@@ -55,7 +55,6 @@ void RequestParser::ParseQuery(std::string &query) // строка запрос�
 	query = query.substr(0, query.find_first_of("\r\n"));
 	std::cout << "query: " << query << std::endl;
 	std::vector<std::string> query_split = split(query, ' ');
-	std::cout << query_split.size() << std::endl;
 	std::vector<std::string> args;
 
 	request.query.method = query_split[0];

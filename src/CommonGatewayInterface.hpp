@@ -13,7 +13,7 @@
 class CommonGatewayInterface
 {
 	public:
-		CommonGatewayInterface(std::string const &path, char **env, Request &request, sockaddr_in &addr, ConfigFile &config);
+		CommonGatewayInterface(std::string const &path, Request &request, sockaddr_in &addr, ConfigFile &config);
 		CommonGatewayInterface(CommonGatewayInterface const &other);
 		~CommonGatewayInterface();
 

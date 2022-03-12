@@ -9,6 +9,7 @@
 class Client
 {
 	public:
+		Client();
 		Request		request;
 		Response	response;
 		RequestParser requestParser;
