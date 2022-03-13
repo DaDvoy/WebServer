@@ -16,7 +16,6 @@ private:
     std::string     contentLenght;
     std::string     contentRange;
     int             intLenght;
-//    length
 public:
     headlines();
     ~headlines();
@@ -24,6 +23,7 @@ public:
     Request         req;
     void            searchKey(Request &requ);
     void            processingRange();
+    void            processingEncoding();
 
     std::string     getType();
     std::string     getEncoding();

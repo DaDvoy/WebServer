@@ -10,6 +10,9 @@ headlines::headlines() {
 
 headlines::~headlines() {}
 
+//const int       headlines::NotAcceptable::what() const throw() {
+//    return (_status.setCode())
+//}
 
 void            headlines::processingRange() {
     std::map<std::string, std::string>::iterator it = req.head.begin();
@@ -30,19 +33,33 @@ void            headlines::processingRange() {
     }
 }
 
-void            headlines::searchKey(Request &requ) {
-    req = requ;
+void            headlines::processingEncoding() {
+    std::map<std::string, std::string>::iterator it = req.head.begin();
     int pos;
 
-    if (req.head.find("Accept-Encoding") != req.head.end()) {
+    it = req.head.find("Accept-Encoding");
+    if (!it->second.empty()) {
+        if (it->second.find("identity;q=0") || it->second.find("*;q=0"))
+            _status.NotAcceptable();
         contentEncoding = req.head["Accept-Encoding"];
         if (std::string::npos != contentEncoding.find(",")) {
             pos = contentEncoding.find(",");
             contentEncoding.erase(pos);
         }
     }
+    else
+        contentEncoding = "identity";
+}
+
+
+void            headlines::searchKey(Request &requ) {
+    req = requ;
+    int pos;
+
+    if (req.head.find("Accept-Encoding") != req.head.end())
+        processingEncoding();
     if (!req.body.empty()) {// if the request has body
-        intLenght = strlen(req.body.c_str()); //todo: How I have to count lenght?
+        intLenght = strlen(req.body.c_str());
         std::stringstream ss;
         ss << intLenght;
         contentLenght = ss.str();
