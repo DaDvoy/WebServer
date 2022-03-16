@@ -15,6 +15,7 @@ private:
         std::string                         response;
 public:
     Response(Request &request);
+    Response();
     ~Response();
 
     Request req;

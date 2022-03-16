@@ -1,31 +1,10 @@
 #include "RequestParser.hpp"
 
-RequestParser::RequestParser()
-{
-	saver = "";
-	config = nullptr;
-	server = nullptr;
-	count = 0;
-}
-
-RequestParser::RequestParser(int sock)
+RequestParser::RequestParser(const sockaddr_in addr) : addr(addr)
 {
 	saver = "";
 	count = 0;
 	config = nullptr;
-	server = nullptr;
-
-	if (ReadRequest(sock) < 0)
-	{
-		std::cerr << "error read sock in requestparser\n";
-		exit(0);
-	}
-	char *what = (char *)strstr(saver.c_str(), "\n\n");
-	if (what)
-		request.body = what;
-	else
-		request.body = "";
-	ParseRequest();
 }
 
 RequestParser::~RequestParser()
@@ -47,7 +26,14 @@ int RequestParser::ReadRequest(int sock)
 	}
 	saver += buffer;
 	delete[] buffer;
-	return 0;
+
+	char *what = (char *)strstr(saver.c_str(), "\n\n"); // зачем это
+	if (what)
+		request.body = what;
+	else
+		request.body = "";
+	ParseRequest();
+	return 1;
 }
 
 void RequestParser::ParseQuery(std::string &query) // строка запроса

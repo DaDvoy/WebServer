@@ -16,10 +16,15 @@ int main(int argc, char  *argv[])
 		std::cerr << "Wrong params!\n";
 		std::cerr << "help: ./gulugulu src/config/default_conf.conf\n";
 		return (-1);
-	}	
+	}
+		
 	ConfigParser parsing;
+
     list<ConfigFile> Configs = parsing.GetServerConfigs(argv[1]);
+
     ServerLaunch    launcher(Configs);
+
     launcher.ExecuteServers();
+	
     return 0;
 }

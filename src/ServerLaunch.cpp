@@ -7,108 +7,165 @@ ServerLaunch::~ServerLaunch()
 ServerLaunch::ServerLaunch(list<ConfigFile> &config)
 {
 	this->config = config;
+
+    timeoutMaster.tv_usec = 0;
+    timeoutMaster.tv_sec = 2;
+    maxFd = -1;
+
+    FD_ZERO(&fdRecv);
+    FD_ZERO(&fdSend);
+}
+
+void	ServerLaunch::InitializeListener()
+{
+    list<ConfigFile>::iterator  configIter = config.begin();
+    while (configIter != config.end())
+    {
+        Server newServer(*configIter);
+
+        vector<Listener>::iterator listenerIter = listener.begin();
+
+        while (listenerIter != listener.end())
+        {
+            if (listenerIter->getPort() == configIter->port)
+                break;
+            listenerIter++;
+        }
+
+        if (listenerIter == listener.end())
+        {
+            Listener newListener(configIter->port);
+            newListener.BindServer(newServer);
+            listener.push_back(newListener);
+        }
+        else
+            listenerIter->BindServer(newServer);
+        configIter++;
+    }
 }
 
 bool	ServerLaunch::ExecuteServers()
 {	
+    if (listener.size() > 0)
+    {
+        cerr << "Server already started\n";
+        exit(1);
+    }
+
 	if (config.size() == 0)
 		return false;
-	InitializeServers();
-    int countUsers = 10;
-    std::cout << "------------------config-------------------\n";
 
-	std::cout << "server_name: " << config.begin()->domain << std::endl;
-	std::cout << "port: " << config.begin()->port << std::endl;
-	std::cout << "error_page: " << config.begin()->errorPage << std::endl;
-	std::cout << "root: " << config.begin()->rootDirectory << std::endl;
-	std::cout << "client_max_body_size: " << config.begin()->limitClientBodySize << std::endl;
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    int server_fd, fd_send;
-    sockaddr_in address;
-    int addrlen = sizeof(address);
+	InitializeListener();
 
-    std::string  hello_there("HTTP/1.1 200 OK\r\n"
-                             "content-encoding: gzip\r\n"
-                             "content-length: 80000\r\n"
-                             "content-type: text/html\r\n"
-                             "server: GuluGulu\r\n");
-    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
-    {
-        perror("In socket");
-        exit(EXIT_FAILURE);
-    }
-
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons(config.begin()->port);
-
-    memset(address.sin_zero, '\0', sizeof address.sin_zero);
-
-    if (bind(server_fd, (sockaddr *)&address, sizeof(address))<0)
-    {
-        perror("In bind");
-        exit(EXIT_FAILURE);
-    }
-    if (listen(server_fd, countUsers) < 0)
-    {
-        perror("In listen");
-        exit(EXIT_FAILURE);
-    }
-    while(1)
-    {
-        printf("\n+++++++ Waiting for new connection ++++++++\n\n");
-        if ((fd_send = accept(server_fd, (sockaddr *)&address, (socklen_t*)&addrlen))<0)
-        {
-            perror("In accept");
-            exit(EXIT_FAILURE);
+    vector<Listener>::iterator listenerIter = listener.begin();
+    vector<Listener>::iterator listenerIterEnd = listener.end();
+    while (listenerIter != listenerIterEnd) {
+        if (!listenerIter->InitializePort()) {
+            exit(1);
         }
+        FD_SET(listenerIter->getSock(), &fdRecv);
+        if (listenerIter->getSock() > maxFd)
+            maxFd = listenerIter->getSock();
+        listenerIter++;
+    }
 
+    vector<Client*>::iterator clientIter;
 
-        std::cout << "\n+++++++ Starting request parser ++++++++\n\n";
-        RequestParser requestParser(fd_send); // старт парсера запроса
-        
-        std::cout << "\n+++++++ Query string ++++++++\n\n";
+    while(true)
+    {
+        timeval timeout = timeoutMaster;
+        fd_set recvSet;
+        fd_set sendSet;
+        FD_COPY(&fdRecv, &recvSet);
+        FD_COPY(&fdSend, &sendSet);
 
-        Request newRequest = requestParser.request; //так можно присвоить новый реквест объекту реквест для удобства
-        std::cout << "query_string: " << newRequest.query.query_string << std::endl;
-        std::cout << "method: " << newRequest.query.method << std::endl;
-        std::cout << "address: " << newRequest.query.address << std::endl;
-        std::cout << "protocol: " << newRequest.query.protocol << std::endl << std::endl;
+        int ret = select(maxFd + 1, &recvSet, &sendSet, nullptr, &timeout);
 
-        std::cout << "\n+++++++ HEADERS ++++++++\n\n";
+        // std::cout << "select value: " << ret << std::endl;
+        if (ret <= 0)
+            continue;
 
-
-        std::map<std::string, std::string>::iterator it = requestParser.request.head.begin();
-        std::map<std::string, std::string>::iterator it_end = requestParser.request.head.end();
-
-        while (it != it_end) // вывод заголовков
+        listenerIter = listener.begin();
+        listenerIterEnd = listener.end();
+        while (listenerIter != listenerIterEnd)
         {
-             std::cout << it->first << ": " <<  " " << it->second << std::endl;
-            it++;
+            // std::cout << "pass\n";
+            if (FD_ISSET(listenerIter->getSock(), &recvSet))
+            {
+                try
+                {
+                    Client *newClient = listenerIter->AcceptClient();
+
+                    if (newClient->getSock() > maxFd)
+                        maxFd = newClient->getSock();
+
+                    listenerIter->clients.push_back(newClient);
+                    // std::cout << "test2: " << listenerIter->clients.size() << std::endl;
+                    FD_SET(newClient->getSock(), &fdRecv);
+                    FD_SET(newClient->getSock(), &fdSend);
+                }
+                catch (exception)
+                {
+                    cerr << "Accept error: " << strerror(errno) << endl;
+                }
+            }
+            time_t currentTime;
+            time(&currentTime);
+
+            clientIter = listenerIter->clients.begin();
+            // std::cout << "test1: " << listenerIter->clients.size() << std::endl;
+            while (clientIter != listenerIter->clients.end())
+            {
+                // std::cerr << "pass" << std::endl;
+                // std::cout << "test" << (*clientIter)->getSock() << std::endl;
+                if ((*clientIter)->actualState == sendingResponse && FD_ISSET((*clientIter)->getSock(), &sendSet))
+                {
+                    int res = (*clientIter)->sendResponse();
+                    (*clientIter)->actualState = resetState;
+                    if (res <= 0)
+                    {
+                        closeClientConnection(*listenerIter, clientIter);
+                        continue;
+                    }
+                }
+                // std::cerr << "pass2" << std::endl;
+                if ((*clientIter)->actualState == requestParsing && FD_ISSET((*clientIter)->getSock(), &recvSet))
+                {
+                    int res = (*clientIter)->readRequest();
+                    std::cout << res << std::endl;
+                    if (res <= 0) {
+                        closeClientConnection(*listenerIter, clientIter);
+                        continue;
+                    }
+                }
+                // std::cerr << "pass3" << std::endl;
+
+                if ((*clientIter)->actualState == resetState)
+                {
+                    (*clientIter)->clear();
+                    continue;
+                }
+
+                if (difftime(currentTime, (*clientIter)->lastOperationTime) > OPERATION_TIMEOUT)
+                {
+                    closeClientConnection(*listenerIter, clientIter);
+                    continue;
+                }
+
+                clientIter++;
+            }
+            // std::cerr << "pass4" << std::endl;
+
+            listenerIter++;
         }
-        std::cout << "\n+++++++ BODY ++++++++\n\n";
-        std::cout << newRequest.body << std::endl; 
-        std::cout << "\n\n+++++++ Ending request parser ++++++++\n";
-
-        std::cout << "+++++++++++++++++++++++++\n";
-        Response resp(requestParser.request);
-        resp.buildResponse();
-        std::cout << "+++++++++++++++++++++++++\n";
-
-       // todo: ready string for sent write(fd_send , resp.getResponse().c_str()  , strlen(resp.getResponse().c_str()));
-//        (void)env;
-        
-        // CommonGatewayInterface *cgi = new CommonGatewayInterface("cgi/test.cgi", newRequest, address, (*config.begin()));
-        // cgi->ExecuteCGI();
-        std::cout << "host: " << newRequest.head["Host"] << std::endl;
-        // hello_there = (char *)cgi->ExecuteCGI().c_str();
-        send(fd_send, hello_there.c_str(), hello_there.length(), 0);
-        printf("------------------Response sent-------------------\n");
-        close(fd_send);
     }
 }
 
-void	ServerLaunch::InitializeServers()
+void ServerLaunch::closeClientConnection(Listener &listener, vector<Client *>::iterator &clientIter)
 {
-
+    FD_CLR((*clientIter)->getSock(), &fdSend);
+    FD_CLR((*clientIter)->getSock(), &fdRecv);
+    close((*clientIter)->getSock());
+    delete *clientIter;
+    listener.clients.erase(clientIter);
 }

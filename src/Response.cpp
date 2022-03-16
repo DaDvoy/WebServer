@@ -6,6 +6,11 @@ Response::Response(Request &request) {
     req = request;
 }
 
+Response::Response() {
+    this->firstLine = "";
+    this->response = "";
+}
+
 Response::~Response()
 {
 
