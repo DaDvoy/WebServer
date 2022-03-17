@@ -1,6 +1,7 @@
 #ifndef RESPONSE_HPP
 # define RESPONSE_HPP
 
+#pragma once
 #include "includes.hpp"
 #include "./response/StatusCodes.hpp"
 #include "./response/headlines.hpp"
@@ -19,7 +20,7 @@ public:
     ~Response();
 
     Request req;
-
+    bool    isCgi;
 	std::map<std::string, std::string>  headers;
     void            buildMap();
     void            buildResponse();

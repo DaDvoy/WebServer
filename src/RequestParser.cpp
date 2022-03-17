@@ -12,7 +12,7 @@ RequestParser::~RequestParser()
 
 }
 
-int RequestParser::ReadRequest(int sock)
+int RequestParser::ReadRequest(int sock, Listener &listener)
 {
 	long valueRead;
 
@@ -33,6 +33,8 @@ int RequestParser::ReadRequest(int sock)
 	else
 		request.body = "";
 	ParseRequest();
+	server = &listener.FindServer(request.head["Host"]);
+	server = server.GetLocationServer(request.query.address);
 	return 1;
 }
 
@@ -49,8 +51,8 @@ void RequestParser::ParseQuery(std::string &query) // строка запрос�
 	request.query.query_string = args[1];
 	if (query_split.size() == 3)
 		request.query.protocol = query_split[2];
-	else
-		request.query.protocol = "1.1";
+	if (request.query.protocol != "1.1")
+		status.BadRequest();
 }
 
 void RequestParser::ParseRequest()

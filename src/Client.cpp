@@ -48,11 +48,11 @@ Client::Client()
 
 }
 
-int Client::readRequest()
+int Client::readRequest(Listener &listener)
 {
     time(&lastOperationTime);
 	// usleep(1750);
-    int ret = requestParser->ReadRequest(sock);
+    int ret = requestParser->ReadRequest(sock, listener);
     
     if (ret == -1)
     {
@@ -76,13 +76,47 @@ int Client::getSock()
     return (sock);
 }
 
-int Client::sendResponse()
-{
+int Client::sendResponse() {
     time(&lastOperationTime);
-    responseBuffer = "Hello\n";
-    int sended = send(sock, responseBuffer.c_str(), responseBuffer.length(), 0);
-    std::cout << responseBuffer << ": " << sended << std::endl;
+
+
+    // if (responseBuffer.empty() && sendBuffer.empty())
+    // {
+    // 	if (response.headers("Transfer-Encoding") == "chunked")
+	//     {
+	// 	    responseIsChunked = true;
+	// 	    responseBuffer = response.body();
+	// 	    response.body("");
+	// 	    sendBuffer = response.toString();
+	//     } else {
+	// 	    sendBuffer = response.toString();
+    // 	}
+    // }
+    // if (responseIsChunked && sendBuffer.empty())
+    // {
+	//     int message_size = std::min<int>(responseBuffer.length(), READ_BUFFER);
+	//     sendBuffer = itoa(message_size, 16) + "\r\n" + responseBuffer.substr(0, message_size) + "\r\n";
+	//     responseBuffer.erase(0, message_size);
+	//     if (responseBuffer.empty())
+	// 	    sendBuffer += "0\r\n\r\n";
+    // }
+    sendBuffer =    "HTTP/1.1 200 OK\r\n"
+                    "Content-Type: text/plain\r\n"
+                    "Transfer-Encoding: chunked\r\n"
+                    "\n"
+                    "7\r\n"
+                    "Mozilla\r\n"
+                    "9\r\n"
+                    "Developer\r\n"
+                    "7\r\n"
+                    "Network\r\n"
+                    "0\r\n"
+                    "\r\n";
+    int sended = send(sock, sendBuffer.c_str(), sendBuffer.length(), 0);
     if (sended <= 0)
         return sended;
+	// sendBuffer.erase(0, sended);
+    if (responseBuffer.empty() && sendBuffer.empty())
+        actualState = resetState;
     return 1;
 }

@@ -1,11 +1,15 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
-#include "RequestParser.hpp"
-#include "Request.hpp"
-#include "Response.hpp"
+#pragma once
 #include "Location.hpp"
+#include "Server.hpp"
 #include "ConfigFile.hpp"
+#include "includes.hpp"
+#include "Response.hpp"
+#include "Request.hpp"
+
+class Response;
 
 class Server
 {
@@ -20,6 +24,8 @@ class Server
 		bool operator==(Server other);
 		std::string	&getName();
 		~Server();
+		Server &GetLocationServer(string &uri);
+		Response getHttpResponse(const sockaddr_in &addr, Request *request, ConfigFile *config);
 
 		ConfigFile	configServer;
 };

@@ -1,6 +1,7 @@
 #ifndef SERVERLAUNCH_HPP
 # define SERVERLAUNCH_HPP
 
+#pragma once
 #include "ConfigFile.hpp"
 #include <list>
 #include "includes.hpp"
@@ -10,6 +11,7 @@
 #include "Listener.hpp"
 #include <sys/select.h>
 #include "CommonGatewayInterface.hpp"
+
 #define OPERATION_TIMEOUT 10
 
 class ServerLaunch

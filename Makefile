@@ -2,7 +2,7 @@ SRCS		=  ${shell find ./src -name "*.cpp"} main.cpp
 
 OBJS		= ${addprefix ${SRCS_DIR}, ${SRCS:.cpp=.o}}
 
-NAME		= gulugulu
+NAME		= webserv
 
 HEADERS		= ${shell find . -name "*.hpp"}
 

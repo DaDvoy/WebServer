@@ -1,11 +1,13 @@
 #ifndef CLIENT_HPP
 # define CLIENT_HPP
 
+#pragma once
 #include "Response.hpp"
 #include "Request.hpp"
 #include "RequestParser.hpp"
 #include "Server.hpp"
 #include "ConfigFile.hpp"
+#include "Listener.hpp"
 
 enum state
 {
@@ -14,6 +16,8 @@ enum state
 	resetState
 };
 
+class Listener;
+
 class Client
 {
 	public:
@@ -21,7 +25,8 @@ class Client
 		Client();
 		Client(const Client &other);
 		Client &operator=(const Client &other);
-    	int readRequest();
+		
+    	int readRequest(Listener &listener);
     	int sendResponse();
 		int getSock();
 		~Client();

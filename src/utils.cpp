@@ -13,6 +13,49 @@ string FileGetContent(const string& path)
     return str;
 }
 
+int     file_put_contents(string filename, int fd, int rights)
+{
+	int        index;
+	int             target;
+	int             count;
+	unsigned char   buf[10240] = {0};
+
+	if (filename.empty())
+		return -1;
+	filename = abs_path(filename);
+	if (!is_file(filename)) {
+		if (is_dir(filename))
+			return -1;
+		index = filename.find_last_of('/');
+		if (index != -1)
+			if (create_dir(filename.substr(0, index)) == -1)
+				return pError("mkdir");
+	}
+	target = open(filename.c_str(), O_CREAT | O_WRONLY | O_TRUNC, rights);
+	if (target == -1)
+		return pError("open");
+
+	do {
+		count = read(fd, buf, 10239);
+		if (count == -1)
+			unlink(filename.c_str());
+		if (!count)
+			continue;
+		if (write(target, buf, count) == -1)
+		{
+			pError("write");
+			if (unlink(filename.c_str()) < 0)
+				pError("unlink");
+
+			close(target);
+			return -1;
+		}
+		memset(buf, 0, 10240);
+	} while (count != 0);
+	close(target);
+	return 0;
+}
+
 vector<string> split(string needle, string str)
 {
 	size_t len = str.length();
@@ -31,6 +74,14 @@ vector<string> split(string needle, string str)
 	return result;
 };
 
+bool exists(string const&path)
+{
+	struct stat buf;
+	bzero(&buf, sizeof(struct stat));
+	if (stat(path.c_str(), &buf) == -1)
+		return false;
+	return true;
+}
 
 bool isContain(string str)
 {
@@ -128,4 +179,53 @@ std::string	ToupperStr(std::string const &strToUpper)
 	}
 	
 	return (newStr);
+}
+
+string  abs_path(string path)
+{
+	string  result;
+	string  tmp;
+	char    buf[512] = {};
+	vector<string> folders;
+
+	if (path[0] == '/')
+		return path;
+	getcwd(buf, sizeof(buf));
+	result = buf;
+	folders = split("/", path);
+
+	for (unsigned i = 0; i < folders.size(); i++) {
+		tmp = folders[i];
+		if (tmp == "..")
+			result.erase(result.find_last_of('/'), result.size());
+		else if (tmp == "." || tmp.empty())
+			continue ;
+		else
+			result += "/" + tmp;
+	}
+	return result;
+}
+
+int pError(string const&program)
+{
+	std::cerr << program << ": " << strerror(errno) << std::endl;
+	return -1;
+}
+
+bool is_file(string const&path)
+{
+	struct stat buf;
+	bzero(&buf, sizeof(struct stat));
+	if (stat(path.c_str(), &buf) == -1)
+		return false;
+	return S_ISREG(buf.st_mode);
+}
+
+bool is_dir(string const&path)
+{
+	struct stat buf;
+	bzero(&buf, sizeof(struct stat));
+	if (stat(path.c_str(), &buf) == -1)
+		return false;
+	return S_ISDIR(buf.st_mode);
 }

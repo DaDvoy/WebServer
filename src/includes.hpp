@@ -13,6 +13,7 @@
 #include <unistd.h> // For read
 #include <fstream>
 #include <algorithm>
+#include "sys/stat.h"
 #define READ_BUFFER 32768
 
 
@@ -29,9 +30,13 @@ string& 					LeftTrim(string& str, const string& chars = "\t\n\v\f\r ");
 string& 					RightTrim(string& str, const string& chars = "\t\n\v\f\r ");
 string& 					ft_trimmer(string& str, const string& chars = "\t\n\v\f\r ");
 
+bool						exists(string const&path);
 int 						match(const char *s1, const char *s2);
 bool						isEmptySpace(int c);
 bool						isContain(string str);
-
+bool						is_dir(string const&path);
+bool						is_file(string const&path);
+int							pError(string const&program);
+string						abs_path(string path);
 
 #endif

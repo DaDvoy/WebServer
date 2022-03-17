@@ -40,15 +40,23 @@ Client	*Listener::AcceptClient()
     return newClient;
 }
 
-// Server	&Listener::FindServer(const std::string host)
-// {
-// 	tempHost = host;
-// 	list<Server>::iterator serverIterator = find_if(serverList.begin(), serverList.end(), IsServerNameEqualHost);
-// 	if (serverIterator == serverList.end())
-// 		return *serverList.begin();
-// 	else
-// 		return *serverIterator;
-// }
+string tempHost;
+bool IsServerNameEqualHost(Server server)
+{
+    tempHost = string(tempHost.begin(), find(tempHost.begin(), tempHost.end(), ':'));
+	tempHost.erase(tempHost.find_last_not_of(" \n\r\t")+1);
+    return server.getName() == tempHost;
+}
+
+Server	&Listener::FindServer(const std::string host)
+{
+	tempHost = host;
+	list<Server>::iterator serverIterator = find_if(serverList.begin(), serverList.end(), IsServerNameEqualHost);
+	if (serverIterator == serverList.end())
+		return *serverList.begin();
+	else
+		return *serverIterator;
+}
 
 bool Listener::BindServer(Server &server)
 {
