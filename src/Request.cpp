@@ -10,7 +10,7 @@ Request::Request(Request &other)
 	*this = other;
 }
 
-Request &Request::operator=(Request &other)
+Request &Request::operator=(const Request &other)
 {
 	body = other.body;
 	head = other.head;

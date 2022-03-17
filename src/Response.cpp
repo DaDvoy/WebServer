@@ -6,6 +6,11 @@ Response::Response(Request &request) {
     req = request;
 }
 
+Response::Response() {
+    this->firstLine = "";
+    this->response = "";
+}
+
 Response::~Response()
 {
 
@@ -28,6 +33,7 @@ void        Response::buildMap() {
     headers["content-encoding: "] = headline.getEncoding() + "\r\n";
     headers["content-length: "] = headline.getLenght() + "\r\n";
     headers["content-type: "] = headline.getType() + "\r\n";
+    headers["expires: "] = headline.getExpires() + "\r\n";
     headers["server: "] = "Gulu-Gulu/2.0\r\n";
 
 }

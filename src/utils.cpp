@@ -47,21 +47,21 @@ bool isEmptySpace(int c)
 	return (c == ' ' || c == '\n' || c == '\t' || c == '\r');
 }
 
-std::string& ltrim(std::string& str, const std::string& chars)
+std::string& LeftTrim(std::string& str, const std::string& chars)
 {
     str.erase(0, str.find_first_not_of(chars));
     return str;
 }
 
-std::string& rtrim(std::string& str, const std::string& chars)
+std::string& RightTrim(std::string& str, const std::string& chars)
 {
     str.erase(str.find_last_not_of(chars) + 1);
     return str;
 }
 
-std::string& trim(std::string& str, const std::string& chars)
+std::string& ft_trimmer(std::string& str, const std::string& chars)
 {
-    return ltrim(rtrim(str, chars), chars);
+    return LeftTrim(RightTrim(str, chars), chars);
 }
 
 int		match(const char *s1, const char *s2)
@@ -75,25 +75,6 @@ int		match(const char *s1, const char *s2)
 	if (*s1 == '\0' && *s2 == '\0')
 		return (1);
 	return (0);
-}
-
-#include "includes.hpp"
-
-std::string& LeftTrim(std::string& str, std::string const &symbs)
-{
-    str.erase(0, str.find_first_not_of(symbs));
-    return str;
-}
-
-std::string& RightTrim(std::string& str, std::string const &symbs)
-{
-    str.erase(str.find_last_not_of(symbs) + 1);
-    return str;
-}
-
-std::string					&ft_trimmer(std::string const &symbs, std::string &string_trim)
-{
-    return LeftTrim(RightTrim(string_trim, symbs), symbs);
 }
 
 std::vector<std::string>	ft_split(char symb_split, std::string &string_split)
@@ -121,13 +102,8 @@ std::vector<std::string> split(std::string &strToSplit, char delimeter)
     std::vector<std::string> splittedStrings;
 
     while (std::getline(ss, item, delimeter))
-	{
-		// if (item == "")
-		// {
-		// 	continue;
-		// }
         splittedStrings.push_back(item);
-	}
+
     return splittedStrings;
 }
 

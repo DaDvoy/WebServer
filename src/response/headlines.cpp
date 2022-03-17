@@ -5,6 +5,7 @@ headlines::headlines() {
     this->contentEncoding = "";
     this->contentLenght = "";
     this->contentRange = "";
+    this->expires = "";
     intLenght = 0;
 }
 
@@ -13,6 +14,55 @@ headlines::~headlines() {}
 //const int       headlines::NotAcceptable::what() const throw() {
 //    return (_status.setCode())
 //}
+
+
+std::string     headlines::sortData(std::string tmp) {
+    int         pos;
+    std::string final;
+    std::string day, month, number, time, year;
+    std::string probel = " ";
+
+    tmp.append(" ");
+    if (tmp.find(probel) != std::string::npos) {
+        pos = tmp.find(probel);
+        day = tmp.substr(0, pos);
+        tmp.erase(0, day.size() + 1);
+    }
+    if (tmp.find(probel) != std::string::npos) {
+        pos = tmp.find(probel);
+        month = tmp.substr(0, pos);
+        tmp.erase(0, month.size() + 1);
+    }
+    if (tmp.find(probel) != std::string::npos) {
+        pos = tmp.find(probel);
+        number = tmp.substr(0, pos);
+        tmp.erase(0, number.size() + 1);
+    }
+    if (tmp.find(probel) != std::string::npos) {
+        pos = tmp.find(probel);
+        time = tmp.substr(0, pos);
+        tmp.erase(0, time.size() + 1);
+    }
+    if (tmp.find(probel) != std::string::npos) {
+        pos = tmp.find(probel);
+        year = tmp.substr(0, pos - 1);
+        tmp.erase(0, year.size());
+    }
+    final = day + ", " + number + " " + month + " " + year + " " + time + " GMT";
+    return (final);
+}
+
+void            headlines::expiresTime() {
+    time_t now = time(0);
+    std::string tmp;
+
+    char* dt = ctime(&now);
+    tm *gmtm = gmtime(&now);
+    dt = asctime(gmtm);
+    tmp = dt;
+    expires = sortData(tmp);
+}
+
 
 void            headlines::processingRange() {
     std::map<std::string, std::string>::iterator it = req.head.begin();
@@ -71,6 +121,11 @@ void            headlines::searchKey(Request &requ) {
             contentType.erase(pos);
         }
     }
+    if (!contentType.empty()) {
+        if (contentType == "image/png" || contentType == "image/jpeg" || \
+            contentType == "image/gif" || contentType == "text/html" || contentType == "application/javascript")
+                expiresTime();
+    }
     if (req.head.find("Accept-Ranges") != req.head.end())
         processingRange();
 }
@@ -89,4 +144,8 @@ std::string     headlines::getLenght() {
 
 std::string     headlines::getRange() {
     return (this->contentRange);
+}
+
+std::string     headlines::getExpires() {
+    return (this->expires);
 }

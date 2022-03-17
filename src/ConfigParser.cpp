@@ -13,7 +13,7 @@ list<ConfigFile> ConfigParser::GetServerConfigs(const string &configFileName)
 
     for (iter = 0; iter < (int)configLines.size(); iter++)
     {
-        string line = trim(configLines[iter]);
+        string line = ft_trimmer(configLines[iter]);
         if (line == "server")
         {
             iter++;
@@ -45,7 +45,7 @@ list<ConfigFile> ConfigParser::GetServerConfigs(const string &configFileName)
 
 void ConfigParser::ParseLocationIntoConfig(ConfigFile &config, vector<string> &words)
 {
-    string line = trim(configLines[iter]);
+    string line = ft_trimmer(configLines[iter]);
 
     if (*words[1].begin() != '/')
         ParseError();
@@ -53,10 +53,10 @@ void ConfigParser::ParseLocationIntoConfig(ConfigFile &config, vector<string> &w
 
     iter++;
 
-    while (trim(configLines[iter]) == "")
+    while (ft_trimmer(configLines[iter]) == "")
         iter++;
 
-    if (trim(configLines[iter]) != "{")
+    if (ft_trimmer(configLines[iter]) != "{")
         ParseError();
     else
         iter++;
@@ -65,14 +65,14 @@ void ConfigParser::ParseLocationIntoConfig(ConfigFile &config, vector<string> &w
     {
         if (line != "")
         {
-            string line = trim(configLines[iter]);
+            string line = ft_trimmer(configLines[iter]);
 
             vector<string> words = GetKeyValue(line);
 
             ParseWordsInMap(words, newLocation.confVar, iter);
         }
         iter++;
-        line = trim(configLines[iter]);
+        line = ft_trimmer(configLines[iter]);
     }
 
     config.locations.push_back(newLocation);
@@ -90,7 +90,7 @@ bool isContains(string str)
 
 void ConfigParser::ParseOptionIntoConfig(ConfigFile &config)
 {
-    string line = trim(configLines[iter]);
+    string line = ft_trimmer(configLines[iter]);
 
     vector<string> words = GetKeyValue(line);
 
@@ -112,22 +112,22 @@ void ConfigParser::ParseOptionIntoConfig(ConfigFile &config)
 
 ConfigFile ConfigParser::ConfigParse()
 {
-    while (trim(configLines[iter]) == "")
+    while (ft_trimmer(configLines[iter]) == "")
         iter++;
 
-    if (trim(configLines[iter]) != "{")
+    if (ft_trimmer(configLines[iter]) != "{")
         ParseError();
     else
         iter++;
 
     ConfigFile newConfig;
-    string line = trim(configLines[iter]);
+    string line = ft_trimmer(configLines[iter]);
     while (line != "}")
     {
         if (line != "")
             ParseOptionIntoConfig(newConfig);
         iter++;
-        line = trim(configLines[iter]);
+        line = ft_trimmer(configLines[iter]);
     }
     iter++;
     return newConfig;

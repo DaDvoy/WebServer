@@ -9,20 +9,19 @@
 class RequestParser
 {
 	public:
-		RequestParser();
-		RequestParser(int sock);
+		RequestParser(const sockaddr_in addr);
 		~RequestParser();
+		int ReadRequest(int sock);
 
-		Request request;
-//		Response response;
-		ConfigFile	*config;
-		Server	*server;	
+		Request 			request;
+		ConfigFile			*config;
+		const sockaddr_in   addr;
+
 	private:
 		std::vector<std::string> parseLines;
 		int	count;
 		std::string saver;
 
-		int ReadRequest(int sock);
 		void ParseRequest();
 		void ParseQuery(std::string &query);
 };

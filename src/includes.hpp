@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 #include <sstream>
+#include <list>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <cstdlib> // For exit() and EXIT_FAILURE
@@ -17,19 +18,16 @@
 
 using namespace std;
 
-std::vector<std::string>	ft_split(char symb_split, std::string &string_split);
-std::vector<std::string>	split(std::string &strToSplit, char delimeter);
-std::vector<std::string>	split_one(std::string stringToBeSplitted, std::string delimeter);
-std::string					&ft_trimmer(std::string const &symbs, std::string &string_trim);
-std::string					&LeftTrim(std::string& str, std::string const &symbs);
-std::string					&RightTrim(std::string& str, std::string const &symbs);
-std::string					ToupperStr(std::string const &strToUpper);
+vector<string>				ft_split(char symb_split, string &string_split);
+vector<string>				split(string &strToSplit, char delimeter);
+vector<string>				split_one(string stringToBeSplitted, string delimeter);
+string						ToupperStr(string const &strToUpper);
 string  					FileGetContent(const string& path);
 vector<string> 				split(string needle, string str);
 
-string& 					ltrim(string& str, const string& chars = "\t\n\v\f\r ");
-string& 					rtrim(string& str, const string& chars = "\t\n\v\f\r ");
-string& 					trim(string& str, const string& chars = "\t\n\v\f\r ");
+string& 					LeftTrim(string& str, const string& chars = "\t\n\v\f\r ");
+string& 					RightTrim(string& str, const string& chars = "\t\n\v\f\r ");
+string& 					ft_trimmer(string& str, const string& chars = "\t\n\v\f\r ");
 
 int 						match(const char *s1, const char *s2);
 bool						isEmptySpace(int c);
