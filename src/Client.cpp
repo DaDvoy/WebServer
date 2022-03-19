@@ -80,9 +80,8 @@ int Client::sendResponse()
 {
     time(&lastOperationTime);
     response.buildResponse();
-    responseBuffer = response.getResponse();
-    int sended = send(sock, responseBuffer.c_str(), responseBuffer.length(), 0);
-    std::cout << responseBuffer << ": " << sended << std::endl;
+    int sended = send(sock, response.getResponse().c_str(), response.getResponse().size(), 0);
+    // std::cout << response.getResponse().c_str() << ": " << sended << std::endl;
     if (sended <= 0)
         return sended;
     return 1;
