@@ -7,32 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6339c941-1cb5-485c-b246-d7b2191f41f0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Configs.o" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Listener.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Listener.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Client.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CommonGatewayInterface.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/CommonGatewayInterface.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CommonGatewayInterface.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/CommonGatewayInterface.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ConfigParser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/ConfigParser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Request.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Request.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Request.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Request.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RequestParser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/RequestParser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RequestParser.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/RequestParser.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Response.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Response.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Response.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Response.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Server.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ServerLaunch.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServerLaunch.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ServerLaunch.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServerLaunch.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/Default.conf" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/Default.conf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config/default_conf.conf" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/default_conf.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/response/headlines.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/response/headlines.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/response/headlines.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/response/headlines.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +98,11 @@
       <workItem from="1647259523014" duration="3000" />
       <workItem from="1647328516313" duration="469000" />
       <workItem from="1647419574868" duration="332000" />
-      <workItem from="1647501920690" duration="11380000" />
+      <workItem from="1647501920690" duration="12644000" />
+      <workItem from="1647610765630" duration="1259000" />
+      <workItem from="1647617495741" duration="2000" />
+      <workItem from="1647678346562" duration="897000" />
+      <workItem from="1647688048733" duration="275000" />
     </task>
     <servers />
   </component>

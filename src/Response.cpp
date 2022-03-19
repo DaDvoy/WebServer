@@ -15,13 +15,6 @@ Response::~Response()
 {
 
 }
-//
-//void        Response::protocol(Request &req) {
-//    this->firstLine = req.query.protocol;
-//    this->firstLine.append(" ");
-//    //status.getStr
-//    firstLine.append(status.getStrCode());
-//}
 
 void        Response::buildMap() {
     headlines headline;
