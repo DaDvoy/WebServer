@@ -7,22 +7,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6339c941-1cb5-485c-b246-d7b2191f41f0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/WebServer.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/response/StatusCodes.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/response/StatusCodes.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/response/headlines.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/response/headlines.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Configs.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Listener.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Listener.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Client.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CommonGatewayInterface.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/CommonGatewayInterface.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CommonGatewayInterface.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/CommonGatewayInterface.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ConfigParser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/ConfigParser.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Request.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Request.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Request.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Request.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RequestParser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/RequestParser.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RequestParser.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/RequestParser.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Response.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Response.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Response.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Response.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Server.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ServerLaunch.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServerLaunch.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ServerLaunch.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServerLaunch.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config/Default.conf" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/Default.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/default_conf.conf" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/default_conf.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/response/headlines.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/response/headlines.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/response/headlines.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/response/headlines.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,6 +108,20 @@
       <workItem from="1646733969880" duration="7404000" />
       <workItem from="1646754067093" duration="1154000" />
       <workItem from="1646824562127" duration="5535000" />
+      <workItem from="1646912654292" duration="27000" />
+      <workItem from="1646912803272" duration="4748000" />
+      <workItem from="1646925018684" duration="1372000" />
+      <workItem from="1646997945175" duration="2000" />
+      <workItem from="1647097801209" duration="448000" />
+      <workItem from="1647104855015" duration="925000" />
+      <workItem from="1647173722056" duration="1241000" />
+      <workItem from="1647181581593" duration="90000" />
+      <workItem from="1647181820282" duration="938000" />
+      <workItem from="1647188088737" duration="2769000" />
+      <workItem from="1647259523014" duration="3000" />
+      <workItem from="1647328516313" duration="469000" />
+      <workItem from="1647419574868" duration="332000" />
+      <workItem from="1647501920690" duration="11380000" />
     </task>
     <servers />
   </component>

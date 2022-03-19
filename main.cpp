@@ -23,7 +23,6 @@ int main(int argc, char  *argv[])
     list<ConfigFile> Configs = parsing.GetServerConfigs(argv[1]);
 
     ServerLaunch    launcher(Configs);
-
     launcher.ExecuteServers();
 	
     return 0;

@@ -23,9 +23,12 @@ public:
     void             MovedPermanently();
     void             BadRequest();
     void             NotFound();
+    void             NotAcceptable();
+    void             RangeNotSatisfiable();
     void             IamTeapot();
     void             InternalServerError();
     void             BadGateway();
+
 };
 
 

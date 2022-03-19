@@ -81,6 +81,7 @@ int Client::sendResponse()
     time(&lastOperationTime);
     response.buildResponse();
     int sended = send(sock, response.getResponse().c_str(), response.getResponse().size(), 0);
+    // std::cout << response.getResponse().c_str() << ": " << sended << std::endl;
     if (sended <= 0)
         return sended;
     return 1;
