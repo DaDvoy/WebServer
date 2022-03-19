@@ -39,7 +39,7 @@ int RequestParser::ReadRequest(int sock)
 void RequestParser::ParseQuery(std::string &query) // строка запроса
 {
 	query = query.substr(0, query.find_first_of("\r\n"));
-	std::cout << "query: " << query << std::endl;
+	// std::cout << "query: " << query << std::endl;
 	std::vector<std::string> query_split = split(query, ' ');
 	std::vector<std::string> args;
 
@@ -49,8 +49,6 @@ void RequestParser::ParseQuery(std::string &query) // строка запрос�
 	request.query.query_string = args[1];
 	if (query_split.size() == 3)
 		request.query.protocol = query_split[2];
-	else
-		request.query.protocol = "1.1";
 }
 
 void RequestParser::ParseRequest()

@@ -41,12 +41,46 @@ void        Response::buildResponse() {
     std::map<std::string, std::string>::iterator it_end = headers.end();
 
     response = firstLine;
+    std::cout << "addr: " << req.query.address << std::endl;
     while (it_beg != it_end) {
         response.append(it_beg->first);
         response.append(it_beg->second);
         it_beg++;
     }
-    std::cout << response;
+    if (req.query.address == "/")
+    {
+        if (access("public/index.html", 0))
+        {
+            response += FileGetContent("public/index.html");
+            response += "\r\n\r\n";
+        }
+        //else {error 404}
+    }
+    if (req.query.address == "/put-file")
+    {
+        if (access("/public/post", 0))
+        {
+            response += FileGetContent("/public/post");
+            response += "\r\n\r\n";
+        }
+    }
+    if (req.query.address == "/error")
+    {
+        if (access("/public/error.html", 0))
+        {
+            response += FileGetContent("public/error.html");
+            // response = "TEST";
+            response += "\r\n\r\n";
+        }
+    }
+    // if (req.query.address == "/favicon.ico")
+    // {
+    //     if (access("/public/favicon.ico", 0))
+    //     {
+    //         response += FileGetContent("public/favicon.ico");
+    //         response += "\r\n\r\n";
+    //     }
+    // }
 }
 
 std::string     Response::getFirstLine() {

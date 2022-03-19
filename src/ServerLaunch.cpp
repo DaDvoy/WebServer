@@ -132,7 +132,7 @@ bool	ServerLaunch::ExecuteServers()
                 if ((*clientIter)->actualState == requestParsing && FD_ISSET((*clientIter)->getSock(), &recvSet))
                 {
                     int res = (*clientIter)->readRequest();
-                    std::cout << res << std::endl;
+                    // std::cout << res << std::endl;
                     if (res <= 0) {
                         closeClientConnection(*listenerIter, clientIter);
                         continue;

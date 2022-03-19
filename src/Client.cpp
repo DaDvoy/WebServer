@@ -79,9 +79,8 @@ int Client::getSock()
 int Client::sendResponse()
 {
     time(&lastOperationTime);
-    responseBuffer = "Hello\n";
-    int sended = send(sock, responseBuffer.c_str(), responseBuffer.length(), 0);
-    std::cout << responseBuffer << ": " << sended << std::endl;
+    response.buildResponse();
+    int sended = send(sock, response.getResponse().c_str(), response.getResponse().size(), 0);
     if (sended <= 0)
         return sended;
     return 1;
