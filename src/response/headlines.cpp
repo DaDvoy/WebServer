@@ -108,8 +108,8 @@ void            headlines::searchKey(Request &requ) {
 
     if (req.head.find("Accept-Encoding") != req.head.end())
         processingEncoding();
-    if (!req.body.empty()) {// if the request has body
-        intLenght = strlen(req.body.c_str());
+    if (!req.query.address.empty()) {
+        intLenght = strlen(FileGetContent("public/index.html").c_str());
         std::stringstream ss;
         ss << intLenght;
         contentLenght = ss.str();

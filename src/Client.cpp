@@ -61,6 +61,7 @@ int Client::readRequest()
     }
     actualState = sendingResponse;
     response.req = requestParser->request;
+    std::cout << "CHECK!!!:" << response.req.query.address << std::endl;
     return (ret);    
 }
 

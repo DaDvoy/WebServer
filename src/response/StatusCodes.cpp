@@ -1,8 +1,8 @@
 #include "StatusCodes.hpp"
 
 StatusCodes::StatusCodes() {
-    this->intCode = 0;
-    this->strCode = "";
+    this->intCode = 200;
+    this->strCode = "OK";
 }
 StatusCodes::~StatusCodes() {}
 

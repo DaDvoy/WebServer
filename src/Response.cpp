@@ -20,13 +20,18 @@ void        Response::buildMap() {
     headlines headline;
 
     headline.searchKey(req);
-    firstLine = req.query.protocol + status.getStrCode() + " " + "OK\r\n";
+    firstLine = req.query.protocol + " 200 OK\r\n";
     if (!headline.getRange().empty())
         headers["content-range: "] = headline.getRange() + "\r\n";
-    headers["content-encoding: "] = headline.getEncoding() + "\r\n";
+//    headers["content-encoding: "] = headline.getEncoding() + "\r\n";
     headers["content-length: "] = headline.getLenght() + "\r\n";
-    headers["content-type: "] = headline.getType() + "\r\n";
+//    headers["content-length: "] = headline.getLenght() + "\r\n";
+    headers["content-type: "] = headline.getType() + "; charset=UTF-8\r\n";
     headers["expires: "] = headline.getExpires() + "\r\n";
+//    Connection: Closed\n\n
+//    headers["date: "] = "Mon, 27 Jul 2009 12:28:53 GMT\r\n";
+//    headers["last-modified: "] = "Wed, 22 Jul 2009 19:15:56 GMT\r\n";
+//    headers["connection: "] = "Closed\r\n";
     headers["server: "] = "Gulu-Gulu/2.0\r\n";
 
 }
@@ -37,24 +42,30 @@ void        Response::buildResponse() {
     std::map<std::string, std::string>::iterator it_end = headers.end();
 
     response = firstLine;
-    std::cout << "addr: " << req.query.address << std::endl;
+//    std::cout << "addr: " << req.query.address << std::endl;
     while (it_beg != it_end) {
         response.append(it_beg->first);
         response.append(it_beg->second);
+//        std::cout << it_beg->first << it_beg->second;
         it_beg++;
     }
+    response += "\n";
     if (req.query.address == "/")
     {
-        if (access("public/index.html", 0))
+        std::cout << "ret: " << access("public/index.html", 0) << std::endl;
+        if (!access("public/index.html", 0))
         {
+//            response += "test";
             response += FileGetContent("public/index.html");
             response += "\r\n\r\n";
         }
-        //else {error 404}
+        else {
+            status.NotFound();
+        }
     }
     if (req.query.address == "/put-file")
     {
-        if (access("/public/post", 0))
+        if (!access("public/post", 0))
         {
             response += FileGetContent("/public/post");
             response += "\r\n\r\n";
@@ -62,9 +73,11 @@ void        Response::buildResponse() {
     }
     if (req.query.address == "/error")
     {
-        if (access("/public/error.html", 0))
+        if (!access("public/error.html", 0))
         {
+            std::cout << "pass\n";
             response += FileGetContent("public/error.html");
+//            response += "error";
             // response = "TEST";
             response += "\r\n\r\n";
         }
@@ -77,6 +90,7 @@ void        Response::buildResponse() {
     //         response += "\r\n\r\n";
     //     }
     // }
+    std::cout << response;
 }
 
 std::string     Response::getFirstLine() {

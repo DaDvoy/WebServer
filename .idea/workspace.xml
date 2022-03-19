@@ -8,8 +8,13 @@
   <component name="ChangeListManager">
     <list default="true" id="6339c941-1cb5-485c-b246-d7b2191f41f0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/error.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/error.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Response.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Response.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config/default_conf.conf" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/default_conf.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/response/StatusCodes.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/response/StatusCodes.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/response/headlines.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/response/headlines.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +107,7 @@
       <workItem from="1647610765630" duration="1259000" />
       <workItem from="1647617495741" duration="2000" />
       <workItem from="1647678346562" duration="897000" />
-      <workItem from="1647688048733" duration="275000" />
+      <workItem from="1647688048733" duration="5183000" />
     </task>
     <servers />
   </component>
