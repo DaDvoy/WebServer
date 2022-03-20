@@ -23,9 +23,7 @@ std::string StatusCodes::getStrCode() {
 
 void        StatusCodes::intToStr() {
     std::stringstream ss;
-    ss << this->intCode;
-    strCode.append(" ");
-    strCode.append(ss.str());
+    strCode = std::to_string(this->intCode) + " " + strCode;
 }
 
 
