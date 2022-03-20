@@ -23,7 +23,6 @@ void        Response::buildMap() {
 
 
     std::string path = config.rootDirectory + req.query.address;
-    headline.searchKey(req, path);
     if (req.query.address == "/") {
         path = config.rootDirectory + config.index;
         if (!access(path.c_str(), 0))
@@ -35,6 +34,7 @@ void        Response::buildMap() {
         status.OK();
     else
         status.NotFound();
+    headline.searchKey(req, path);
     firstLine = req.query.protocol + " " + status.getStrCode() + "\r\n";
     if (!headline.getRange().empty())
         headers["content-range: "] = headline.getRange() + "\r\n";
