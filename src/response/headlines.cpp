@@ -81,26 +81,6 @@ void            Headlines::processingRange() {
     }
 }
 
-//void            Headlines::processingEncoding() {
-//    std::map<std::string, std::string>::iterator it = req.head.begin();
-//    int pos;
-//
-//    it = req.head.find("Accept-Encoding");
-//    if (!it->second.empty()) {
-//        contentEncoding = req.head["Accept-Encoding"];
-//        if (it->second.find("identity;q=0") || it->second.find("*;q=0"))
-//            _status.NotAcceptable();
-//        else if (this->typeEncoding == "jpeg")
-//            contentEncoding.erase(0);
-//        else if (std::string::npos != contentEncoding.find(",")) {
-//            pos = contentEncoding.find(",");
-//            contentEncoding.erase(pos);
-//        }
-//    }
-//    else
-//        contentEncoding = "identity";
-//}
-
 
 //void            Headlines::processingChunk() {
 //    int             time;
@@ -138,14 +118,8 @@ void            Headlines::searchKey(Request &requ) {
         if (std::string::npos != contentType.find(",")) {
             pos = contentType.find(",");
             contentType.erase(pos);
-//            if (contentType.find("/")) {
-//                pos = contentType.find("/");
-//                typeEncoding = contentType.substr(pos);
             }
         }
-//    if (req.head.find("Accept-Encoding") != req.head.end())
-//        processingEncoding();
-//    }
     if (!contentType.empty()) {
         if (contentType == "image/png" || contentType == "image/jpeg" || \
             contentType == "image/gif" || contentType == "text/html" || contentType == "application/javascript")

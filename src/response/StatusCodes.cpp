@@ -22,7 +22,6 @@ std::string StatusCodes::getStrCode() {
 }
 
 void        StatusCodes::intToStr() {
-    std::stringstream ss;
     strCode = std::to_string(this->intCode) + " " + strCode;
 }
 
