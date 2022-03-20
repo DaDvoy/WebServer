@@ -2,7 +2,7 @@
 # define HEADLINES_HPP
 
 #include <ctime>
-#include <iostreams>
+#include <iostream>
 #include "../includes.hpp"
 #include "../Response.hpp"
 #include "../RequestParser.hpp"

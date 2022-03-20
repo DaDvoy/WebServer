@@ -120,7 +120,7 @@ bool	ServerLaunch::ExecuteServers()
                 // std::cout << "test" << (*clientIter)->getSock() << std::endl;
                 if ((*clientIter)->actualState == sendingResponse && FD_ISSET((*clientIter)->getSock(), &sendSet))
                 {
-                    int res = (*clientIter)->sendResponse();
+                    int res = (*clientIter)->sendResponse(*listenerIter);
                     (*clientIter)->actualState = resetState;
                     if (res <= 0)
                     {

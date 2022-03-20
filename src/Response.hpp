@@ -5,6 +5,10 @@
 #include "./response/StatusCodes.hpp"
 #include "./response/headlines.hpp"
 #include "Request.hpp"
+#include "Server.hpp"
+#include "ConfigFile.hpp"
+
+class Server;
 
 class Response
 {
@@ -14,6 +18,7 @@ private:
         std::string                         firstLine;
         std::string                         response;
 public:
+    Server                          *server;
     Response(Request &request);
     Response();
     ~Response();
@@ -22,7 +27,7 @@ public:
 
 	std::map<std::string, std::string>  headers;
     void            buildMap();
-    void            buildResponse();
+    void            buildResponse(Server *server);
 //    void            protocol(Request &req);
     std::string     getFirstLine();
     std::string     getResponse();

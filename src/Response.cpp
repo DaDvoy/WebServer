@@ -4,6 +4,7 @@ Response::Response(Request &request) {
     this->firstLine = "";
     this->response = "";
     req = request;
+    this->server = nullptr;
 }
 
 Response::Response() {
@@ -32,60 +33,45 @@ void        Response::buildMap() {
 
 }
 
-void        Response::buildResponse() {
+void        Response::buildResponse(Server *server) {
     buildMap();
     std::map<std::string, std::string>::iterator it_beg = headers.begin();
     std::map<std::string, std::string>::iterator it_end = headers.end();
+    ConfigFile  config = server->configServer;
 
     response = firstLine;
 //    std::cout << "addr: " << req.query.address << std::endl;
     while (it_beg != it_end) {
         response.append(it_beg->first);
         response.append(it_beg->second);
-//        std::cout << it_beg->first << it_beg->second;
         it_beg++;
     }
+
     response += "\n";
-    if (req.query.address == "/")
-    {
-        std::cout << "ret: " << access("public/index.html", 0) << std::endl;
-        if (!access("public/index.html", 0))
-        {
-//            response += "test";
-            response += FileGetContent("public/index.html");
-            response += "\r\n\r\n";
-        }
-        else {
-            status.NotFound();
-        }
+    std::string path = config.rootDirectory + req.query.address;
+    if (req.query.address == "/") {
+        path = config.rootDirectory + config.index;
+        response += FileGetContent(path.c_str());
+        response += "\r\n\r\n";
     }
-    if (req.query.address == "/put-file")
+    else if (!access(path.c_str(), 0))
     {
-        if (!access("public/post", 0))
-        {
-            response += FileGetContent("/public/post");
-            response += "\r\n\r\n";
-        }
+        response += FileGetContent(path.c_str());
+        response += "\r\n\r\n";
     }
-    if (req.query.address == "/error")
+    else
     {
-        if (!access("public/error.html", 0))
-        {
-            std::cout << "pass\n";
-            response += FileGetContent("public/error.html");
-//            response += "error";
-            // response = "TEST";
-            response += "\r\n\r\n";
-        }
+        response += FileGetContent(config.errorPage);
+        response += "\r\n\r\n";
     }
-     if (req.query.address == "/favicon.ico")
-     {
-         if (access("/public/favicon.ico", 0))
-         {
-             response += FileGetContent("public/favicon.ico");
-             response += "\r\n\r\n";
-         }
-     }
+//     if (req.query.address == "/favicon.ico")
+//     {
+//         if (access("/public/favicon.ico", 0))
+//         {
+//             response += FileGetContent("public/favicon.ico");
+//             response += "\r\n\r\n";
+//         }
+//     }
     std::cout << response;
 }
 

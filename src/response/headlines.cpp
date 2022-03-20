@@ -102,17 +102,17 @@ void            headlines::processingRange() {
 //}
 
 
-void            headlines::processingChunk() {
-    int             time;
-    std::string     tmp;
-    std::ifstream   from("../public/index.html") // todo: file html
-
-    if (from.is_open()) {
-        while ((time == intLenght / conf.limitClientBodySize) > 0) {
-            while (getline(tmp, ))
-            intLenght -= conf.limitClientBodySize;
-        }
-    }
+//void            headlines::processingChunk() {
+//    int             time;
+//    std::string     tmp;
+//    std::ifstream   from("../public/index.html") // todo: file html
+//
+//    if (from.is_open()) {
+//        while ((time == intLenght / conf.limitClientBodySize) > 0) {
+//            while (getline(tmp, ))
+//            intLenght -= conf.limitClientBodySize;
+//        }
+//    }
 
 
 void            headlines::searchKey(Request &requ) {
@@ -121,17 +121,17 @@ void            headlines::searchKey(Request &requ) {
 
     if (!req.query.address.empty()) { // todo: сделать нормальную проверку
         intLenght = strlen(FileGetContent("public/index.html").c_str());
-        if (intLenght > conf.limitClientBodySize) {
-            transferEncoding = "chunked";
-            processingChunk();
-            // todo: method for chunked response
-        }
-        else {
+//        if (intLenght > conf.limitClientBodySize) {
+//            transferEncoding = "chunked";
+//            processingChunk();
+//            // todo: method for chunked response
+//        }
+//        else {
             std::stringstream ss;
             ss << intLenght;
             contentLenght = ss.str();
         }
-    }
+//    }
     if (req.head.find("Accept") != req.head.end()) {
         contentType = req.head["Accept"];
         if (std::string::npos != contentType.find(",")) {
@@ -140,7 +140,7 @@ void            headlines::searchKey(Request &requ) {
 //            if (contentType.find("/")) {
 //                pos = contentType.find("/");
 //                typeEncoding = contentType.substr(pos);
-//            }
+            }
         }
 //    if (req.head.find("Accept-Encoding") != req.head.end())
 //        processingEncoding();

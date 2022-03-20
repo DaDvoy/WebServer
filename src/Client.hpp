@@ -6,7 +6,10 @@
 #include "RequestParser.hpp"
 #include "Server.hpp"
 #include "ConfigFile.hpp"
+#include "Listener.hpp"
 #include "includes.hpp"
+
+class Listener;
 
 enum state
 {
@@ -23,7 +26,7 @@ class Client
 		Client(const Client &other);
 		Client &operator=(const Client &other);
     	int readRequest();
-    	int sendResponse();
+    	int sendResponse(Listener &listener);
 		int getSock();
 		~Client();
 		void clear();
