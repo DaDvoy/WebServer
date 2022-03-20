@@ -24,6 +24,13 @@ void        Response::buildMap() {
 
     headline.searchKey(req);
     std::string path = config.rootDirectory + req.query.address;
+    if (req.query.address == "/") {
+        path = config.rootDirectory + config.index;
+        if (!access(path.c_str(), 0))
+            status.OK();
+        else
+            status.NotFound();
+    }
     if (!access(path.c_str(), 0))
         status.OK();
     else
@@ -55,11 +62,20 @@ void        Response::buildResponse(Server *server) {
     }
 
     response += "\n";
+
     std::string path = config.rootDirectory + req.query.address;
     if (req.query.address == "/") {
         path = config.rootDirectory + config.index;
-        response += FileGetContent(path.c_str());
-        response += "\r\n\r\n";
+        if (!access(path.c_str(), 0))
+        {
+            response += FileGetContent(path.c_str());
+            response += "\r\n\r\n";
+        }
+        else
+        {
+            response += FileGetContent(config.errorPage);
+            response += "\r\n\r\n";
+        }
     }
     else if (!access(path.c_str(), 0))
     {
@@ -71,15 +87,7 @@ void        Response::buildResponse(Server *server) {
         response += FileGetContent(config.errorPage);
         response += "\r\n\r\n";
     }
-//     if (req.query.address == "/favicon.ico")
-//     {
-//         if (access("/public/favicon.ico", 0))
-//         {
-//             response += FileGetContent("public/favicon.ico");
-//             response += "\r\n\r\n";
-//         }
-//     }
-    std::cout << response;
+    // std::cout << response;
 }
 
 std::string     Response::getFirstLine() {
