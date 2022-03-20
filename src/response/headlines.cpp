@@ -6,14 +6,12 @@ headlines::headlines() {
     this->contentLenght = "";
     this->contentRange = "";
     this->expires = "";
+    this->typeEncoding = "";
+    this->transferEncoding = "";
     intLenght = 0;
 }
 
 headlines::~headlines() {}
-
-//const int       headlines::NotAcceptable::what() const throw() {
-//    return (_status.setCode())
-//}
 
 
 std::string     headlines::sortData(std::string tmp) {
@@ -83,44 +81,70 @@ void            headlines::processingRange() {
     }
 }
 
-void            headlines::processingEncoding() {
-    std::map<std::string, std::string>::iterator it = req.head.begin();
-    int pos;
+//void            headlines::processingEncoding() {
+//    std::map<std::string, std::string>::iterator it = req.head.begin();
+//    int pos;
+//
+//    it = req.head.find("Accept-Encoding");
+//    if (!it->second.empty()) {
+//        contentEncoding = req.head["Accept-Encoding"];
+//        if (it->second.find("identity;q=0") || it->second.find("*;q=0"))
+//            _status.NotAcceptable();
+//        else if (this->typeEncoding == "jpeg")
+//            contentEncoding.erase(0);
+//        else if (std::string::npos != contentEncoding.find(",")) {
+//            pos = contentEncoding.find(",");
+//            contentEncoding.erase(pos);
+//        }
+//    }
+//    else
+//        contentEncoding = "identity";
+//}
 
-    it = req.head.find("Accept-Encoding");
-    if (!it->second.empty()) {
-        if (it->second.find("identity;q=0") || it->second.find("*;q=0"))
-            _status.NotAcceptable();
-        contentEncoding = req.head["Accept-Encoding"];
-        if (std::string::npos != contentEncoding.find(",")) {
-            pos = contentEncoding.find(",");
-            contentEncoding.erase(pos);
+
+void            headlines::processingChunk() {
+    int             time;
+    std::string     tmp;
+    std::ifstream   from("../public/index.html") // todo: file html
+
+    if (from.is_open()) {
+        while ((time == intLenght / conf.limitClientBodySize) > 0) {
+            while (getline(tmp, ))
+            intLenght -= conf.limitClientBodySize;
         }
     }
-    else
-        contentEncoding = "identity";
-}
 
 
 void            headlines::searchKey(Request &requ) {
     req = requ;
     int pos;
 
-    if (req.head.find("Accept-Encoding") != req.head.end())
-        processingEncoding();
-    if (!req.query.address.empty()) {
+    if (!req.query.address.empty()) { // todo: сделать нормальную проверку
         intLenght = strlen(FileGetContent("public/index.html").c_str());
-        std::stringstream ss;
-        ss << intLenght;
-        contentLenght = ss.str();
+        if (intLenght > conf.limitClientBodySize) {
+            transferEncoding = "chunked";
+            processingChunk();
+            // todo: method for chunked response
+        }
+        else {
+            std::stringstream ss;
+            ss << intLenght;
+            contentLenght = ss.str();
+        }
     }
     if (req.head.find("Accept") != req.head.end()) {
         contentType = req.head["Accept"];
         if (std::string::npos != contentType.find(",")) {
             pos = contentType.find(",");
             contentType.erase(pos);
+//            if (contentType.find("/")) {
+//                pos = contentType.find("/");
+//                typeEncoding = contentType.substr(pos);
+//            }
         }
-    }
+//    if (req.head.find("Accept-Encoding") != req.head.end())
+//        processingEncoding();
+//    }
     if (!contentType.empty()) {
         if (contentType == "image/png" || contentType == "image/jpeg" || \
             contentType == "image/gif" || contentType == "text/html" || contentType == "application/javascript")

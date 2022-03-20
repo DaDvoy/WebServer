@@ -23,15 +23,11 @@ void        Response::buildMap() {
     firstLine = req.query.protocol + " 200 OK\r\n";
     if (!headline.getRange().empty())
         headers["content-range: "] = headline.getRange() + "\r\n";
-//    headers["content-encoding: "] = headline.getEncoding() + "\r\n";
+//    if (!headline.getEncoding().empty())
+//        headers["content-encoding: "] = headline.getEncoding() + "\r\n";
     headers["content-length: "] = headline.getLenght() + "\r\n";
-//    headers["content-length: "] = headline.getLenght() + "\r\n";
-    headers["content-type: "] = headline.getType() + "; charset=UTF-8\r\n";
+    headers["content-type: "] = headline.getType() + "\r\n";//"; charset=UTF-8\r\n";
     headers["expires: "] = headline.getExpires() + "\r\n";
-//    Connection: Closed\n\n
-//    headers["date: "] = "Mon, 27 Jul 2009 12:28:53 GMT\r\n";
-//    headers["last-modified: "] = "Wed, 22 Jul 2009 19:15:56 GMT\r\n";
-//    headers["connection: "] = "Closed\r\n";
     headers["server: "] = "Gulu-Gulu/2.0\r\n";
 
 }
@@ -82,14 +78,14 @@ void        Response::buildResponse() {
             response += "\r\n\r\n";
         }
     }
-    // if (req.query.address == "/favicon.ico")
-    // {
-    //     if (access("/public/favicon.ico", 0))
-    //     {
-    //         response += FileGetContent("public/favicon.ico");
-    //         response += "\r\n\r\n";
-    //     }
-    // }
+     if (req.query.address == "/favicon.ico")
+     {
+         if (access("/public/favicon.ico", 0))
+         {
+             response += FileGetContent("public/favicon.ico");
+             response += "\r\n\r\n";
+         }
+     }
     std::cout << response;
 }
 
