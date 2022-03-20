@@ -99,8 +99,7 @@ void            Headlines::searchKey(Request &requ, std::string path) {
     req = requ;
     int pos;
 
-    std::string checkString = FileGetContent(path.c_str());
-    if (!checkString.empty()) {
+    if (!access(path.c_str(), 0)) {
         intLenght = strlen(FileGetContent(path).c_str());
 //        if (intLenght > conf.limitClientBodySize) { //todo: от чего зависит чанк?
 //            transferEncoding = "chunked";

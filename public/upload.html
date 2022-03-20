@@ -6,28 +6,22 @@
 
 
     <style>
-        body {
-            -webkit-font-smoothing: antialiased;
-            font-size: 100%;
-            margin: 0;
-        }
 
         .content {
-            background-color: rgb(0, 139, 139);       //76, 146, 143
-        color: rgb(255, 245, 238);
-        //"font-size: calc(100% - 2px);
-        line-height: calc(100% + 6px);
+            background-color: rgb(135, 206, 235);       //76, 146, 143
+            color: rgb(255, 245, 238);
+            line-height: calc(100% + 6px);
             min-width: 240px;
         }
 
         .icon {
-            content: url(https://xn-----6kckiwadblcgjxwwirci4z.xn--p1ai/media/posts_admins/dinozavry/dinozavr-rex-plachet.jpg); /*here are Dino*/
+            content: url(https://pbs.twimg.com/media/EkAGC4YXkAEXF9C.jpg); /*here are Dino*/
             height: 120px;
             width: 120px;
         }
 
         h1 {
-            font-size:calc(100% + 8px);
+            font-size:calc(100% + 10px);
             font-weight: 400;
             line-height: calc(100% + 8px);
         }
@@ -38,8 +32,8 @@
         }
 
         .take-more-info {
-            color: rgb(255, 250, 250);
-            text-decoration: none;  /*если это строку закоментить, то переход на 418 будет подчеркнут*/
+            color: rgb(0, 0, 0);
+            /* text-decoration: none;  если это строку закоментить, то переход на 418 будет подчеркнут */
         }
 
         @media (max-width: 100px), (max-height: 100px) {
@@ -95,17 +89,8 @@
             }
 
             em {
-                color: #FFDEAD;
+                color: #16559a;
                 font-style: normal;
-            }
-
-
-            p {
-                display: block;
-                margin-block-start: 1em;
-                margin-block-end: 1em;
-                margin-inline-start: 0px;
-                margin-inline-end: 0px;
             }
             input[type=file] {
                 padding: 10px;
@@ -123,7 +108,7 @@
                 padding:10px;
                 border:0;
                 padding: 0.375rem 0.75rem;
-                box-shadow:0 0 15px 4px rgb(0, 128, 128);
+                box-shadow:0 0 15px 4px rgb(91, 155, 155);
                 border-radius: 0.75rem;
                 transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
             }
@@ -134,7 +119,7 @@
                 padding:10px;
                 border:0;
                 padding: 0.375rem 0.75rem;
-                box-shadow:0 0 15px 4px rgb(0, 139, 139);
+                box-shadow:0 0 15px 4px rgb(29, 136, 169);
                 border-radius: 0.75rem;
                 transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
             }
@@ -144,26 +129,15 @@
             input[type=submit]:focus {
                 border: 3px solid #555;
             }
-            input[type=file] {
-                -webkit-transition: width 0.4s ease-in-out;
-                transition: width 0.4s ease-in-out;
-            }
 
-            input[type=file]:focus {
-                width: 100%;
-            }
             input[type=submit]{
-                background-color: #20B2AA;
+                background-color: #20accb;
                 border: none;
                 color: MintCream;
                 padding: 6px 12px;
                 text-decoration: none;
                 margin: 4px 2px;
                 cursor: pointer;
-            }
-
-            input[type=file] {
-                align-items: center;
             }
 
     </style>
@@ -176,33 +150,15 @@
     <meta name="color-scheme" content="light dark">
     <title>What do you want?</title>
 </head>
-<body bgcolor="#008B8B">
+<body bgcolor="#87CEEB">
 <div class="content">
     <div class="icon" role="presentation" alt></div>
-    <h1>Mi ne comprene vin</h1>
+    <h1>Let's try to upload your file</h1>
     <div id="How it works:">
         <div id="some-text" >
-            <em>Do you now how it works?</em>
-            Okay, I trying to write this site about three days, seem I started getting it.
+            <em>Do you want to see something?</em>
+            Just send with the help "buttom".
         </div>
-        <div class="marker">
-            Let's take a look at what I've learned
-            <ul>
-                <li>
-                    Nothing;
-                </li>
-                <li>
-                    Try to copy and paste from different a sites;
-                </li>
-                <li>
-                    Learn inspect of Chrome.
-                </li>
-            </ul>
-        </div>
-        <p id="subtitle">
-            <a class="take-more-info" href="https://www.google.com/teapot"> My favourite status code</a>  <!-- /*here are link for "take more info"/*-->
-        </p>
-    </div>
 
     <div class="input">
         <form action="upload" method="POST" enctype="multipart/form-data">
@@ -216,5 +172,3 @@
 </div>
 </body>
 </html>
-
-/* https://w7.pngwing.com/pngs/874/1000/png-transparent-velociraptor-mosasaurus-dinosaur-drawing-jurassic-park-dinosaur-fauna-terrestrial-animal-claw.png */

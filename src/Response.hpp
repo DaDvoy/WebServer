@@ -17,6 +17,8 @@ private:
 //		StatusCodes                         status;
         std::string                         firstLine;
         std::string                         response;
+        bool                                isPathLocation;
+        std::string                         pathLocation;
 public:
     Server                          *server;
     Response(Request &request);

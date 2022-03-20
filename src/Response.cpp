@@ -21,20 +21,24 @@ void        Response::buildMap() {
     Headlines   headline;
     StatusCodes status;
 
-
     std::string path = config.rootDirectory + req.query.address;
     if (req.query.address == "/") {
         path = config.rootDirectory + config.index;
-        if (!access(path.c_str(), 0))
+        if (!access(path.c_str(), 0)) {
             status.OK();
+            isPathLocation = true;
+        }
         else
             status.NotFound();
     }
-    if (!access(path.c_str(), 0))
+    if (!access(path.c_str(), 0)) {
         status.OK();
+        isPathLocation = true;
+    }
     else
         status.NotFound();
     headline.searchKey(req, path);
+//    std::cout << "pass\n";
     firstLine = req.query.protocol + " " + status.getStrCode() + "\r\n";
     if (!headline.getRange().empty())
         headers["content-range: "] = headline.getRange() + "\r\n";
