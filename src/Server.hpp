@@ -20,6 +20,7 @@ class Server
 		bool operator==(Server other);
 		std::string	&getName();
 		~Server();
+        Server &GetLocationServer(string &uri); //если есть локейшины, попробует найти его по uri
 
 		ConfigFile	configServer;
 };

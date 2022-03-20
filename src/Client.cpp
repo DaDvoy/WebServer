@@ -61,7 +61,6 @@ int Client::readRequest()
     }
     actualState = sendingResponse;
     response.req = requestParser->request;
-    std::cout << "CHECK!!!:" << response.req.query.address << std::endl;
     return (ret);    
 }
 
@@ -77,10 +76,13 @@ int Client::getSock()
     return (sock);
 }
 
-int Client::sendResponse()
+int Client::sendResponse(Listener &listener)
 {
     time(&lastOperationTime);
-    response.buildResponse();
+    string host = request.head["Host"];
+    server = &listener.FindServerByHost(host);
+    server = &server->GetLocationServer(response.req.query.address);
+    response.buildResponse(server);
     int sended = send(sock, response.getResponse().c_str(), response.getResponse().size(), 0);
     // std::cout << response.getResponse().c_str() << ": " << sended << std::endl;
     if (sended <= 0)
