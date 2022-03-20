@@ -1,8 +1,8 @@
 #include "StatusCodes.hpp"
 
 StatusCodes::StatusCodes() {
-    this->intCode = 200; // todo: need to do normally constructor and status codefor initilisation
-    this->strCode = "OK";
+    this->intCode = 0; // todo: need to do normally constructor and status codefor initilisation
+    this->strCode = "";
 }
 StatusCodes::~StatusCodes() {}
 

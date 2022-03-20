@@ -1,15 +1,15 @@
-#ifndef HEADLINES_HPP
-# define HEADLINES_HPP
+#ifndef Headlines_HPP
+# define Headlines_HPP
 
 #include <ctime>
 #include <iostream>
 #include "../includes.hpp"
-#include "../Response.hpp"
 #include "../RequestParser.hpp"
 #include "../Request.hpp"
 #include "../ConfigFile.hpp"
 
-class headlines
+
+class Headlines
 {
 private:
     StatusCodes     _status;
@@ -22,8 +22,8 @@ private:
     std::string     expires;
     int             intLenght;
 public:
-    headlines();
-    ~headlines();
+    Headlines();
+    ~Headlines();
 
     Request         req;
     ConfigFile      conf;

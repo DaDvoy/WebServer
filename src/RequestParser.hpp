@@ -5,6 +5,7 @@
 #include "ConfigFile.hpp"
 #include "Server.hpp"
 #include "Response.hpp"
+#include "Request.hpp"
 
 class RequestParser
 {

@@ -18,10 +18,17 @@ Response::~Response()
 }
 
 void        Response::buildMap() {
-    headlines headline;
+    Headlines   headline;
+    StatusCodes status;
+
 
     headline.searchKey(req);
-    firstLine = req.query.protocol + " 200 OK\r\n";
+    std::string path = config.rootDirectory + req.query.address;
+    if (!access(path.c_str(), 0))
+        status.OK();
+    else
+        status.NotFound();
+    firstLine = req.query.protocol + " " + status.getStrCode() + "\r\n";
     if (!headline.getRange().empty())
         headers["content-range: "] = headline.getRange() + "\r\n";
 //    if (!headline.getEncoding().empty())
@@ -34,10 +41,10 @@ void        Response::buildMap() {
 }
 
 void        Response::buildResponse(Server *server) {
+    config = server->configServer;
     buildMap();
     std::map<std::string, std::string>::iterator it_beg = headers.begin();
     std::map<std::string, std::string>::iterator it_end = headers.end();
-    ConfigFile  config = server->configServer;
 
     response = firstLine;
 //    std::cout << "addr: " << req.query.address << std::endl;

@@ -1,6 +1,6 @@
-#include "headlines.hpp"
+#include "Headlines.hpp"
 
-headlines::headlines() {
+Headlines::Headlines() {
     this->contentType = "";
     this->contentEncoding = "";
     this->contentLenght = "";
@@ -11,10 +11,10 @@ headlines::headlines() {
     intLenght = 0;
 }
 
-headlines::~headlines() {}
+Headlines::~Headlines() {}
 
 
-std::string     headlines::sortData(std::string tmp) {
+std::string     Headlines::sortData(std::string tmp) {
     int         pos;
     std::string final;
     std::string day, month, number, time, year;
@@ -50,7 +50,7 @@ std::string     headlines::sortData(std::string tmp) {
     return (final);
 }
 
-void            headlines::expiresTime() {
+void            Headlines::expiresTime() {
     time_t now = time(0);
     std::string tmp;
 
@@ -62,7 +62,7 @@ void            headlines::expiresTime() {
 }
 
 
-void            headlines::processingRange() {
+void            Headlines::processingRange() {
     std::map<std::string, std::string>::iterator it = req.head.begin();
     std::string tmp;
     int pos;
@@ -81,7 +81,7 @@ void            headlines::processingRange() {
     }
 }
 
-//void            headlines::processingEncoding() {
+//void            Headlines::processingEncoding() {
 //    std::map<std::string, std::string>::iterator it = req.head.begin();
 //    int pos;
 //
@@ -102,7 +102,7 @@ void            headlines::processingRange() {
 //}
 
 
-//void            headlines::processingChunk() {
+//void            Headlines::processingChunk() {
 //    int             time;
 //    std::string     tmp;
 //    std::ifstream   from("../public/index.html") // todo: file html
@@ -115,9 +115,10 @@ void            headlines::processingRange() {
 //    }
 
 
-void            headlines::searchKey(Request &requ) {
+void            Headlines::searchKey(Request &requ) {
     req = requ;
     int pos;
+
 
     if (!req.query.address.empty()) { // todo: сделать нормальную проверку
         intLenght = strlen(FileGetContent("public/index.html").c_str());
@@ -154,22 +155,22 @@ void            headlines::searchKey(Request &requ) {
         processingRange();
 }
 
-std::string     headlines::getType() {
+std::string     Headlines::getType() {
     return (this->contentType);
 }
 
-std::string     headlines::getEncoding() {
+std::string     Headlines::getEncoding() {
     return (this->contentEncoding);
 }
 
-std::string     headlines::getLenght() {
+std::string     Headlines::getLenght() {
     return (this->contentLenght);
 }
 
-std::string     headlines::getRange() {
+std::string     Headlines::getRange() {
     return (this->contentRange);
 }
 
-std::string     headlines::getExpires() {
+std::string     Headlines::getExpires() {
     return (this->expires);
 }

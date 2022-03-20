@@ -3,7 +3,7 @@
 
 #include "includes.hpp"
 #include "./response/StatusCodes.hpp"
-#include "./response/headlines.hpp"
+#include "./response/Headlines.hpp"
 #include "Request.hpp"
 #include "Server.hpp"
 #include "ConfigFile.hpp"
@@ -14,7 +14,7 @@ class Response
 {
 private:
 
-		StatusCodes                         status;
+//		StatusCodes                         status;
         std::string                         firstLine;
         std::string                         response;
 public:
@@ -24,7 +24,8 @@ public:
     ~Response();
 
     Request req;
-
+    ConfigFile  config;
+//    Headlines headline;
 	std::map<std::string, std::string>  headers;
     void            buildMap();
     void            buildResponse(Server *server);
