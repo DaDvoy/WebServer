@@ -33,5 +33,8 @@ int 						match(const char *s1, const char *s2);
 bool						isEmptySpace(int c);
 bool						isContain(string str);
 
+string						getIP(unsigned long ip);
+string						abs_path(string path);
+
 
 #endif

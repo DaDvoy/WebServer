@@ -39,7 +39,6 @@ int RequestParser::ReadRequest(int sock)
 void RequestParser::ParseQuery(std::string &query) // строка запроса
 {
 	query = query.substr(0, query.find_first_of("\r\n"));
-	// std::cout << "query: " << query << std::endl;
 	std::vector<std::string> query_split = split(query, ' ');
 	std::vector<std::string> args;
 
@@ -72,6 +71,4 @@ void RequestParser::ParseRequest()
 	}
 	if (!request.body.empty())
 		request.body = ft_trimmer(request.body);
-	else 
-		request.body = "";
 }

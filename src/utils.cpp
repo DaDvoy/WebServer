@@ -129,3 +129,39 @@ std::string	ToupperStr(std::string const &strToUpper)
 	
 	return (newStr);
 }
+
+string getIP(unsigned long ip)
+{
+	string result = "";
+
+//	cout << (ip & 0xFF000000);
+	result += to_string(ip & 0xFF) + '.';
+	result += to_string(ip >> 8 & 0xFF) + '.';
+	result += to_string(ip >> 16 & 0xFF) + '.';
+	result += to_string(ip >> 24 & 0xFF);
+	return result;
+}
+
+string  abs_path(string path) {
+	string  result;
+	string  tmp;
+	char    buf[512] = {};
+	vector<string> folders;
+
+	if (path[0] == '/')
+		return path;
+	getcwd(buf, sizeof(buf));
+	result = buf;
+	folders = split("/", path);
+
+	for (unsigned i = 0; i < folders.size(); i++) {
+		tmp = folders[i];
+		if (tmp == "..")
+			result.erase(result.find_last_of('/'), result.size());
+		else if (tmp == "." || tmp.empty())
+			continue ;
+		else
+			result += "/" + tmp;
+	}
+	return result;
+}

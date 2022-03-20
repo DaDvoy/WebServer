@@ -21,6 +21,7 @@ class CommonGatewayInterface
 		std::string	ExecuteCGI();
 	private:
 
+		std::vector<std::string>	newEnv;
 		char		**env;
 		std::string cgiPath;
 		void	FillEnv(Request &request, sockaddr_in &addr, ConfigFile &config);

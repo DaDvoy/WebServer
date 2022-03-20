@@ -61,7 +61,7 @@ int Client::readRequest()
     }
     actualState = sendingResponse;
     response.req = requestParser->request;
-    std::cout << response.req.body << std::endl;
+    // std::cout << response.req.body << std::endl;
     return (ret);    
 }
 
@@ -88,13 +88,13 @@ int Client::sendResponse(Listener &listener)
     {
         CommonGatewayInterface cgi(server->configServer.cgiPath, response.req, this->addr, server->configServer);
         this->responseBuffer = cgi.ExecuteCGI();
-        sended = send(sock, responseBuffer.c_str(), responseBuffer.size(), 0);
     }
     else
     {
         response.buildResponse(server);
-        sended = send(sock, response.getResponse().c_str(), response.getResponse().size(), 0);
+        this->responseBuffer = response.getResponse();
     }
+    sended = send(sock, responseBuffer.c_str(), responseBuffer.size(), 0);
     
     // std::cout << response.getResponse().c_str() << ": " << sended << std::endl;
     if (sended <= 0)
