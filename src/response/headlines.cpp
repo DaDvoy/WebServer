@@ -95,14 +95,14 @@ void            Headlines::processingRange() {
 //    }
 
 
-void            Headlines::searchKey(Request &requ) {
+void            Headlines::searchKey(Request &requ, std::string path) {
     req = requ;
     int pos;
 
-
-    if (!req.query.address.empty()) { // todo: сделать нормальную проверку
-        intLenght = strlen(FileGetContent("public/index.html").c_str());
-//        if (intLenght > conf.limitClientBodySize) {
+    std::string checkString = FileGetContent(path.c_str());
+    if (!checkString.empty()) {
+        intLenght = strlen(FileGetContent(path).c_str());
+//        if (intLenght > conf.limitClientBodySize) { //todo: от чего зависит чанк?
 //            transferEncoding = "chunked";
 //            processingChunk();
 //            // todo: method for chunked response

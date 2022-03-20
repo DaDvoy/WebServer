@@ -22,8 +22,8 @@ void        Response::buildMap() {
     StatusCodes status;
 
 
-    headline.searchKey(req);
     std::string path = config.rootDirectory + req.query.address;
+    headline.searchKey(req, path);
     if (req.query.address == "/") {
         path = config.rootDirectory + config.index;
         if (!access(path.c_str(), 0))
