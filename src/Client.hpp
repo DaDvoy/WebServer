@@ -8,6 +8,7 @@
 #include "ConfigFile.hpp"
 #include "Listener.hpp"
 #include "includes.hpp"
+#include "CommonGatewayInterface.hpp"
 
 class Listener;
 
