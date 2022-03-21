@@ -5,6 +5,8 @@ Response::Response(Request &request) {
     this->response = "";
     req = request;
     this->server = nullptr;
+    this->status = "";
+    isPathLocation = false;
 }
 
 Response::Response() {
@@ -17,38 +19,45 @@ Response::~Response()
 
 }
 
-void        Response::buildMap() {
-    Headlines   headline;
+std::string Response::ResponseStatusCode()
+{
     StatusCodes status;
 
-    std::string path = config.rootDirectory + req.query.address;
     if (req.query.address == "/") {
-        path = config.rootDirectory + config.index;
-        if (!access(path.c_str(), 0)) {
+        pathLocation = config.rootDirectory + config.index;
+        if (!access(pathLocation.c_str(), 0)) {
             status.OK();
             isPathLocation = true;
         }
         else
             status.NotFound();
     }
-    if (!access(path.c_str(), 0)) {
+    if (!access(pathLocation.c_str(), 0)) {
         status.OK();
         isPathLocation = true;
     }
     else
         status.NotFound();
-    headline.searchKey(req, path);
-//    std::cout << "pass\n";
-    firstLine = req.query.protocol + " " + status.getStrCode() + "\r\n";
+
+    return (status.getStrCode());
+}
+
+void        Response::buildMap() {
+    Headlines   headline;
+
+    pathLocation = config.rootDirectory + req.query.address;
+    status = ResponseStatusCode();
+    headline.searchKey(req, pathLocation);
+    firstLine = req.query.protocol + " " + status + "\r\n";
     if (!headline.getRange().empty())
         headers["content-range: "] = headline.getRange() + "\r\n";
+   std::cout << "pass\n";
 //    if (!headline.getEncoding().empty())
 //        headers["content-encoding: "] = headline.getEncoding() + "\r\n";
     headers["content-length: "] = headline.getLenght() + "\r\n";
     headers["content-type: "] = headline.getType() + "\r\n";//"; charset=UTF-8\r\n";
     headers["expires: "] = headline.getExpires() + "\r\n";
-    headers["server: "] = "Gulu-Gulu/2.0\r\n";
-
+    headers["server: "] = req.head["host"] + "\r\n";
 }
 
 void        Response::buildResponse(Server *server) {

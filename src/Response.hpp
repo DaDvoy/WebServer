@@ -19,6 +19,8 @@ private:
         std::string                         response;
         bool                                isPathLocation;
         std::string                         pathLocation;
+        std::string                         status;
+        std::string                         serverName;
 public:
     Server                          *server;
     Response(Request &request);
@@ -31,6 +33,7 @@ public:
 	std::map<std::string, std::string>  headers;
     void            buildMap();
     void            buildResponse(Server *server);
+    std::string     ResponseStatusCode();
 //    void            protocol(Request &req);
     std::string     getFirstLine();
     std::string     getResponse();

@@ -99,7 +99,7 @@ bool	ServerLaunch::ExecuteServers()
                         maxFd = newClient->getSock();
 
                     listenerIter->clients.push_back(newClient);
-                    // std::cout << "test2: " << listenerIter->clients.size() << std::endl;
+
                     FD_SET(newClient->getSock(), &fdRecv);
                     FD_SET(newClient->getSock(), &fdSend);
                 }
@@ -112,11 +112,8 @@ bool	ServerLaunch::ExecuteServers()
             time(&currentTime);
 
             clientIter = listenerIter->clients.begin();
-            // std::cout << "test1: " << listenerIter->clients.size() << std::endl;
             while (clientIter != listenerIter->clients.end())
             {
-                // std::cerr << "pass" << std::endl;
-                // std::cout << "test" << (*clientIter)->getSock() << std::endl;
                 if ((*clientIter)->actualState == sendingResponse && FD_ISSET((*clientIter)->getSock(), &sendSet))
                 {
                     int res = (*clientIter)->sendResponse(*listenerIter);
@@ -127,17 +124,14 @@ bool	ServerLaunch::ExecuteServers()
                         continue;
                     }
                 }
-                // std::cerr << "pass2" << std::endl;
                 if ((*clientIter)->actualState == requestParsing && FD_ISSET((*clientIter)->getSock(), &recvSet))
                 {
                     int res = (*clientIter)->readRequest();
-                    // std::cout << res << std::endl;
                     if (res <= 0) {
                         closeClientConnection(*listenerIter, clientIter);
                         continue;
                     }
                 }
-                // std::cerr << "pass3" << std::endl;
 
                 if ((*clientIter)->actualState == resetState)
                 {
@@ -153,7 +147,6 @@ bool	ServerLaunch::ExecuteServers()
 
                 clientIter++;
             }
-            // std::cerr << "pass4" << std::endl;
 
             listenerIter++;
         }
