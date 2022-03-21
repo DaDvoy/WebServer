@@ -57,7 +57,7 @@ void        Response::buildMap() {
     headers["content-length: "] = headline.getLenght() + "\r\n";
     headers["content-type: "] = headline.getType() + "\r\n";//"; charset=UTF-8\r\n";
     headers["expires: "] = headline.getExpires() + "\r\n";
-    headers["server: "] = req.head["host"] + "\r\n";
+    headers["server: "] = req.query.protocol + "\r\n";
 }
 
 void        Response::buildResponse(Server *server) {
