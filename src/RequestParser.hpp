@@ -23,8 +23,8 @@ class RequestParser
 		int	count;
 		std::string saver;
 
-		void ParseRequest();
-		void ParseQuery(std::string &query);
+		int		ParseRequest();
+		void	ParseQuery(std::string &query);
 };
 
 #endif

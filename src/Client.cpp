@@ -53,7 +53,6 @@ int Client::readRequest()
     time(&lastOperationTime);
 	// usleep(1750);
     int ret = requestParser->ReadRequest(sock);
-    
     if (ret == -1)
     {
         std::cerr << "request parser error" << std::endl;

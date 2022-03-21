@@ -32,7 +32,11 @@ int RequestParser::ReadRequest(int sock)
 		request.body = what;
 	else
 		request.body = "";
-	ParseRequest();
+	if (ParseRequest() == -1)
+	{
+		std::cout << "request parse error" << std::endl;
+		return (-1);
+	}
 	return 1;
 }
 
@@ -50,12 +54,14 @@ void RequestParser::ParseQuery(std::string &query) // строка запрос�
 		request.query.protocol = query_split[2];
 }
 
-void RequestParser::ParseRequest()
+int RequestParser::ParseRequest()
 {
 	std::vector<std::string>::iterator	it;
 
 	parseLines = split(saver, '\n');
 	it = parseLines.begin();
+	if (it == parseLines.end())
+		return -1;
 	ParseQuery(*it); // строка запроса
 
 	std::vector<std::string> head_split;
@@ -71,4 +77,5 @@ void RequestParser::ParseRequest()
 	}
 	if (!request.body.empty())
 		request.body = ft_trimmer(request.body);
+	return (0);
 }
