@@ -20,6 +20,7 @@ private:
         bool                                isPathLocation;
         std::string                         pathLocation;
         std::string                         status;
+        int                                 code;
         std::string                         serverName;
 public:
     Server                          *server;
@@ -28,11 +29,11 @@ public:
     ~Response();
 
     Request req;
-    ConfigFile  config;
+    ConfigFile  *config;
 //    Headlines headline;
 	std::map<std::string, std::string>  headers;
     void            buildMap();
-    void            buildResponse(Server *server);
+    void            buildResponse();
     std::string     ResponseStatusCode();
 //    void            protocol(Request &req);
     std::string     getFirstLine();
