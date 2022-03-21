@@ -60,7 +60,6 @@ int Client::readRequest()
     }
     actualState = sendingResponse;
     response.req = requestParser->request;
-    // std::cout << response.req.body << std::endl;
     return (ret);    
 }
 
@@ -72,17 +71,22 @@ void Client::clear()
 
 int Client::getSock()
 {
-    // std::cerr << "pass" << std::endl;
     return (sock);
 }
 
 int Client::sendResponse(Listener &listener)
 {
-    time(&lastOperationTime);
-    string host = request.head["Host"];
-    server = &listener.FindServerByHost(host);
-    server = &server->GetLocationServer(response.req.query.address);
     int sended = 0;
+
+    time(&lastOperationTime);
+
+    if (!this->server)
+    {
+        string host = request.head["Host"];
+        server = &listener.FindServerByHost(host);
+        server = &server->GetLocationServer(response.req.query.address);
+    }
+
     if (!server->configServer.cgiPath.empty())
     {
         CommonGatewayInterface cgi(server->configServer.cgiPath, response.req, this->addr, server->configServer);
@@ -90,12 +94,13 @@ int Client::sendResponse(Listener &listener)
     }
     else
     {
-        response.buildResponse(server);
+        response.config = &server->configServer;
+        response.buildResponse();
         this->responseBuffer = response.getResponse();
     }
+
     sended = send(sock, responseBuffer.c_str(), responseBuffer.size(), 0);
     
-    // std::cout << response.getResponse().c_str() << ": " << sended << std::endl;
     if (sended <= 0)
         return sended;
     return 1;

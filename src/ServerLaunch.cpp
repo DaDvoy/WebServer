@@ -81,7 +81,7 @@ bool	ServerLaunch::ExecuteServers()
 
         int ret = select(maxFd + 1, &recvSet, &sendSet, nullptr, &timeout);
 
-        std::cout << "select value: " << ret << std::endl;
+        // std::cout << "select value: " << ret << std::endl;
         if (ret <= 0)
             continue;
 
