@@ -17,19 +17,23 @@ private:
 //		StatusCodes                         status;
         std::string                         firstLine;
         std::string                         response;
-        bool                                isPathLocation;
+        bool                                isPathExist;
         std::string                         pathLocation;
         std::string                         status;
         int                                 code;
         std::string                         serverName;
+        bool                                isCGI;
+
+        std::string                         SetupAutoIndex();
 public:
     Server                          *server;
     Response(Request &request);
     Response();
     ~Response();
 
-    Request req;
-    ConfigFile  *config;
+    Request                             req;
+    ConfigFile                          *config;
+    std::string                         body;
 //    Headlines headline;
 	std::map<std::string, std::string>  headers;
     void            buildMap();

@@ -13,6 +13,8 @@
 #include <unistd.h> // For read
 #include <fstream>
 #include <algorithm>
+#include <sys/stat.h>
+#include <dirent.h>
 #define READ_BUFFER 32768
 
 
@@ -35,6 +37,8 @@ bool						isContain(string str);
 
 string						getIP(unsigned long ip);
 string						abs_path(string path);
-
+bool						exists(string const&path);
+vector<string>				*get_dir_content(string const &path);
+bool						is_file(string const&path);
 
 #endif

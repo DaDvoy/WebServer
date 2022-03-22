@@ -42,6 +42,7 @@ public:
 	~ConfigFile();
 	void        	ParseConfVar();
 	ConfigFile      &operator=(ConfigFile const& copy);
+	string			getIndexPath(string path);
 
 private:
 

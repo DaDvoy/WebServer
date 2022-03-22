@@ -27,7 +27,7 @@ public:
 
     Request         req;
     ConfigFile      conf;
-    void            searchKey(Request &requ, std::string path);
+    void            searchKey(Request &requ, std::string &path);
     void            processingRange();
     void            processingEncoding();
     void            expiresTime();

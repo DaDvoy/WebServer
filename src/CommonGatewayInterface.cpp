@@ -83,7 +83,7 @@ std::string	CommonGatewayInterface::ExecuteCGI()
 		close(pipe_fd[1]);
 		if (execve(this->cgiPath.c_str(), argc, env) == -1)
 		{
-			// std::cerr << this->cgiPath.c_str() << " " << errno << std::endl;
+			std::cerr << this->cgiPath.c_str() << " " << errno << std::endl;
 			exit(0);
 		}
 	}

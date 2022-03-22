@@ -90,14 +90,11 @@ int Client::sendResponse(Listener &listener)
     if (!server->configServer.cgiPath.empty())
     {
         CommonGatewayInterface cgi(server->configServer.cgiPath, response.req, this->addr, server->configServer);
-        this->responseBuffer = cgi.ExecuteCGI();
+        response.body = cgi.ExecuteCGI();
     }
-    else
-    {
-        response.config = &server->configServer;
-        response.buildResponse();
-        this->responseBuffer = response.getResponse();
-    }
+    response.config = &server->configServer;
+    response.buildResponse();
+    this->responseBuffer = response.getResponse();
 
     sended = send(sock, responseBuffer.c_str(), responseBuffer.size(), 0);
     

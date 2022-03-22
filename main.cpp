@@ -14,7 +14,7 @@ int main(int argc, char  *argv[])
 		if (argc != 2)
 	{
 		std::cerr << "Wrong params!\n";
-		std::cerr << "help: ./gulugulu src/config/default_conf.conf\n";
+		std::cerr << "help: ./gulugulu config/default_conf.conf\n";
 		return (-1);
 	}
 		

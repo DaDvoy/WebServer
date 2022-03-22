@@ -95,12 +95,11 @@ void            Headlines::processingRange() {
 //    }
 
 
-void            Headlines::searchKey(Request &requ, std::string path) {
+void            Headlines::searchKey(Request &requ, std::string &path) {
     req = requ;
     int pos;
 
-    std::cout << path;
-    if (!access(path.c_str(), 0)) {
+    if (exists(path)) {
         intLenght = strlen(FileGetContent(path).c_str());
 //        if (intLenght > conf.limitClientBodySize) { //todo: от чего зависит чанк?
 //            transferEncoding = "chunked";

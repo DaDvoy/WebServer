@@ -131,6 +131,34 @@ bool ConfigFile::parseFieldFromMap(map<string, string> &fieldMap, string fieldKe
     return true;
 }
 
+string ConfigFile::getIndexPath(string path)
+{
+	string absPath;
+	vector<string> indexes = split(" ", index);
+
+	string root = rootDirectory + path;
+
+	if (!exists(root))
+		return "";
+	if (is_file(root))
+		return root;
+
+	if (*(--path.end()) != '/')
+		root += '/';
+	
+	for (unsigned i = 0; i < indexes.size(); i++)
+	{
+		absPath = root + indexes[i];
+		if (exists(absPath))
+			break;
+		else
+			absPath = "";
+	}
+	if (absPath.empty() && exists(root))
+		return root;
+	return absPath;
+}
+
 ConfigFile &ConfigFile::operator=(ConfigFile const &copy)
 {
 	if (this != &copy)

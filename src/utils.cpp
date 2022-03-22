@@ -165,3 +165,39 @@ string  abs_path(string path) {
 	}
 	return result;
 }
+
+bool exists(string const&path)
+{
+	struct stat buf;
+	bzero(&buf, sizeof(struct stat));
+	if (stat(path.c_str(), &buf) == -1)
+		return false;
+	return true;
+}
+
+vector<string> *get_dir_content(string const &path)
+{
+	vector<string> *result;
+	DIR *dir = opendir(path.c_str());
+	struct dirent* dirent;
+
+	if (!dir)
+		return nullptr;
+
+	result = new vector<string>;
+	while ((dirent = readdir(dir)) != nullptr)
+		result->push_back(dirent->d_name);
+
+	closedir(dir);
+
+	return result;
+}
+
+bool is_file(string const&path)
+{
+	struct stat buf;
+	bzero(&buf, sizeof(struct stat));
+	if (stat(path.c_str(), &buf) == -1)
+		return false;
+	return S_ISREG(buf.st_mode);
+}
