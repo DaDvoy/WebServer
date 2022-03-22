@@ -100,7 +100,7 @@ void        Response::buildMap() {
         headers["content-length: "] = std::to_string(body.size()) + "\r\n";
     headers["content-type: "] = headline.getType() + "\r\n";//"; charset=UTF-8\r\n";
     headers["expires: "] = headline.getExpires() + "\r\n";
-    headers["server: "] = "gulugulu/v2.0\r\n";
+    headers["server: "] = "GuluGulu/v2.0\r\n";
 }
 
 void        Response::buildResponse() {
