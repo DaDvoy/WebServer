@@ -4,8 +4,10 @@ Response::Response(Request &request) {
     this->firstLine = "";
     this->response = "";
     req = request;
+    this->config = nullptr;
     this->server = nullptr;
     this->status = "";
+    isAutoIndex = false;
     body = "";
     isPathExist = false;
 }
@@ -23,16 +25,19 @@ Response::~Response()
 std::string Response::SetupAutoIndex()
 {
     pathLocation = config->getIndexPath(req.query.address);
+
     vector<string> *dirs = get_dir_content(pathLocation);
     std::string body;
+    
     if (dirs == nullptr){
-        response += FileGetContent("./public/error.html") + "\r\n\r\n";
+        response += FileGetContent("./public/error");
         return "";
     }
     std::string webPath = "<a href=\"" + req.query.address;
+
     if (*(--req.query.address.end()) != '/')
         webPath += '/';
-    std::cerr << dirs->size();
+
     for (unsigned i = 0; i < dirs->size(); i++) {
         body += webPath + (*dirs)[i] + "\">" + (*dirs)[i] + "</a><br>" ;
     }
@@ -69,21 +74,28 @@ void        Response::buildMap() {
     Headlines   headline;
 
     isCGI = config->cgiPath.empty();
-
+    isAutoIndex = false;
     if (req.query.address == "/")
     {
         pathLocation = config->rootDirectory + config->index;
+        if (!exists(pathLocation) && config->autoindex)
+        {
+            std::cout << "pass1" << std::endl;
+            body = SetupAutoIndex();
+            isAutoIndex = true;
+        }
     }
     else
         pathLocation = config->rootDirectory + req.query.address;
-    if (config->autoindex)
-        body = SetupAutoIndex();
-        
+
+
+    // std::cout << isAutoIndex << std::endl;
+
     isPathExist = exists(pathLocation);
     status = ResponseStatusCode();
 
     if (code < 200 || code >= 300)
-        pathLocation = "./public/error.html";  //убрать заглушку
+        pathLocation = config->errorPage;  //убрать заглушку
 
     isPathExist = exists(pathLocation);
 
@@ -100,11 +112,10 @@ void        Response::buildMap() {
         headers["content-length: "] = std::to_string(body.size()) + "\r\n";
     headers["content-type: "] = headline.getType() + "\r\n";//"; charset=UTF-8\r\n";
     headers["expires: "] = headline.getExpires() + "\r\n";
-    headers["server: "] = "GuluGulu/v2.0\r\n";
+    headers["server: "] = "GuluGulu/v2.0\r\n\r\n";
 }
 
 void        Response::buildResponse() {
-    
     buildMap();
 
     std::map<std::string, std::string>::iterator it_beg = headers.begin();
@@ -117,21 +128,20 @@ void        Response::buildResponse() {
         it_beg++;
     }
 
-    response += "\n";
-    if (!body.empty())
+    if (isAutoIndex)
     {
-        response += body + "\r\n\r\n";
+        response += body;
         return;
     }
-
-    if (req.query.method == "PUT" || req.query.method == "POST")
-            response += FileGetContent(pathLocation) + "\r\n\r\n";
+    if (req.query.method == "POST")
+            response += FileGetContent(pathLocation);
+    // else if (req.query.method == "DELETE")
+        // response += FileGetContent(pathLocation);
     else
     {
 	    if (isPathExist)
             response += FileGetContent(pathLocation);
     }
-    // std::cout << response;
 }
 
 std::string     Response::getFirstLine() {

@@ -142,7 +142,6 @@ string ConfigFile::getIndexPath(string path)
 		return "";
 	if (is_file(root))
 		return root;
-
 	if (*(--path.end()) != '/')
 		root += '/';
 	

@@ -23,17 +23,18 @@ private:
         int                                 code;
         std::string                         serverName;
         bool                                isCGI;
+        bool                                isAutoIndex;
 
         std::string                         SetupAutoIndex();
 public:
-    Server                          *server;
+    Server                                  *server;
     Response(Request &request);
     Response();
     ~Response();
 
-    Request                             req;
-    ConfigFile                          *config;
-    std::string                         body;
+    Request                                  req;
+    ConfigFile                               *config;
+    std::string                              body;
 //    Headlines headline;
 	std::map<std::string, std::string>  headers;
     void            buildMap();

@@ -98,6 +98,9 @@ int Client::sendResponse(Listener &listener)
 
     sended = send(sock, responseBuffer.c_str(), responseBuffer.size(), 0);
     
+    std::cout << responseBuffer;
+    std::cout << "sended " << responseBuffer.size() << std::endl;
+
     if (sended <= 0)
         return sended;
     return 1;
