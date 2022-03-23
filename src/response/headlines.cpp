@@ -82,7 +82,6 @@ void            Headlines::processingRange() {
     }
 }
 
-// FileGetContent(pathLocation)
 void            Headlines::processingChunk(std::string path) {
     std::string tmp;
     std::ifstream from(FileGetContent(path));
@@ -95,6 +94,7 @@ void            Headlines::processingChunk(std::string path) {
             tmp.erase(0);
         }
     }
+    from.close();
 }
 
 void            Headlines::searchKey(Request &requ, std::string &path) {
