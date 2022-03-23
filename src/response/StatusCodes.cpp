@@ -42,7 +42,6 @@ void         StatusCodes::BadRequest() {
     setCode(400, "Bad Request");
 }
 
-
 // Если сообщение получено без Transfer-Encoding и либо с несколькими полями
 // заголовка Content-Length , имеющими разные значения полей, либо с одним
 // полем заголовка Content-Length, имеющим недопустимое значение,

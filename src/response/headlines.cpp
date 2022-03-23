@@ -112,7 +112,7 @@ void            Headlines::searchKey(Request &requ, std::string &path) {
             contentLenght = ss.str();
         }
 //    }
-    if (req.head.find("Accept") != req.head.end()) {
+    if (req.head.find("Accept") != req.head.end() && req.query.method == "Get") {
         contentType = req.head["Accept"];
         if (std::string::npos != contentType.find(",")) {
             pos = contentType.find(",");

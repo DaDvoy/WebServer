@@ -105,8 +105,6 @@ void        Response::buildMap() {
 
     if (!headline.getRange().empty())
         headers["content-range: "] = headline.getRange() + "\r\n";
-//    if (!headline.getEncoding().empty())
-//        headers["content-encoding: "] = headline.getEncoding() + "\r\n";
     headers["content-length: "] =  headline.getLenght() + "\r\n";
     if (!body.empty())
         headers["content-length: "] = std::to_string(body.size()) + "\r\n";
