@@ -114,8 +114,14 @@ void            Headlines::searchKey(Request &requ, std::string &path) {
         }
     }
     if (req.head.find("Accept") != req.head.end()) {
-        if (req.query.method == "POST")
-            contentType = "text/html";
+        if (req.query.method == "POST") {
+//            contentType = req.head["Content-Type"];
+//            if (std::string::npos != contentType.find(",")) {
+//                pos = contentType.find(",");
+//                contentType.erase(pos);
+//            }
+            contentType = "*/*;q=0.8";
+        }
         else {
             contentType = req.head["Accept"];
             if (std::string::npos != contentType.find(",")) {
