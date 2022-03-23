@@ -103,7 +103,7 @@ void            Headlines::searchKey(Request &requ, std::string &path) {
 
     if (exists(path)) {
         intLenght = strlen(FileGetContent(path).c_str());
-        if (intLenght > conf.limitClientBodySize) {
+        if (req.head.find("Transfer-Encoding") != req.head.end()) {
             transferEncoding = "chunked";
             processingChunk(path);
         }
