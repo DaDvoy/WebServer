@@ -84,8 +84,11 @@ int Client::sendResponse(Listener &listener)
     {
         string host = request.head["Host"];
         server = &listener.FindServerByHost(host);
+        // std::cout << response.req.query.address << std::endl;
         server = &server->GetLocationServer(response.req.query.address);
+        // std::cout << "pass\n";
     }
+
 
     if (!server->configServer.cgiPath.empty())
     {
