@@ -16,14 +16,14 @@ int RequestParser::ReadRequest(int sock)
 {
 	long valueRead;
 
-	char *buffer = new char[READ_BUFFER + 1];
-	bzero(buffer, READ_BUFFER + 1);
+	char *buffer = new char[READ_BUFFER + 1];;
 	valueRead = recv(sock , buffer, READ_BUFFER, 0);
 	if (valueRead < 0 || valueRead > READ_BUFFER + 1)
 	{
 		delete[] buffer;
 		return (-1);
 	}
+	buffer[valueRead] = '\0';
 	saver += buffer;
 	delete[] buffer;
 

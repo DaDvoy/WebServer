@@ -16,7 +16,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <dirent.h>
-#define READ_BUFFER 32768
+#define READ_BUFFER 65534
 
 
 using namespace std;
