@@ -114,7 +114,7 @@ void            Headlines::searchKey(Request &requ, std::string &path) {
 //    }
     if (req.head.find("Accept") != req.head.end()) {
         if (req.query.method == "POST")
-            contentType = "multipart/form-data";
+            contentType = "text/html";
         else {
             contentType = req.head["Accept"];
             if (std::string::npos != contentType.find(",")) {
