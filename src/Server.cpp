@@ -71,6 +71,7 @@ Server &Server::GetLocationServer(string &uri)
         	if (tmp > maxExtLength || maxExtLength == -1 || (tmp == maxExtLength && coincidence->first.path.length() < locationsIter->first.path.length())) {
 		        coincidence = locationsIter;
 		        maxExtLength = tmp;
+
 	        }
         }
         locationsIter++;

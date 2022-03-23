@@ -26,13 +26,14 @@ std::string Response::SetupAutoIndex()
 {
     pathLocation = config->getIndexPath(req.query.address);
 
-    vector<string> *dirs = get_dir_content(pathLocation);
+    vector<string> *dirs = get_dir_content(config->rootDirectory);
     std::string body;
     
     if (dirs == nullptr){
-        response += FileGetContent("./public/error");
+        response += FileGetContent(config->errorPage);
         return "";
     }
+
     std::string webPath = "<a href=\"" + req.query.address;
 
     if (*(--req.query.address.end()) != '/')
@@ -77,11 +78,9 @@ void        Response::buildMap() {
     isAutoIndex = false;
     if (req.query.address == "/")
     {
-        pathLocation = config->rootDirectory + config->index;
-        // std::cout << exists(req.query.address) << std::endl;
-        if (config->autoindex)
+        pathLocation = config->rootDirectory + "/" + config->index;
+        if (config->confVar["autoindex"] == "on")
         {
-            std::cout << "pass1" << std::endl;
             body = SetupAutoIndex();
             isAutoIndex = true;
         }
@@ -113,6 +112,8 @@ void        Response::buildMap() {
         if (remove(pathLocation.c_str()) != 0)
             std::cerr << "DELETE error\n";
     }
+
+
     headline.searchKey(req, pathLocation);
     isPathExist = exists(pathLocation);
 
@@ -141,15 +142,13 @@ void        Response::buildResponse() {
         it_beg++;
     }
 
-    // std::cout << req.query.method << std::endl;
-    // std::cout << body.empty() << std::endl;
     if (!body.empty())
     {
         response += body;
+        body = "";
         return;
     }
 
-    // std::cout << pathLocation << std::endl;
     if (isPathExist)
         response += FileGetContent(pathLocation);
 }
