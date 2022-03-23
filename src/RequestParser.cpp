@@ -27,16 +27,13 @@ int RequestParser::ReadRequest(int sock)
 	saver += buffer;
 	delete[] buffer;
 
-	char *what = (char *)strstr(saver.c_str(), "\n\n"); // зачем это
+	char *what = (char *)strstr(saver.c_str(), "\r\n\r\n"); // зачем это
 	if (what)
 		request.body = what;
 	else
 		request.body = "";
 	if (ParseRequest() == -1)
-	{
-		std::cout << "request parse error" << std::endl;
 		return (-1);
-	}
 	return 1;
 }
 

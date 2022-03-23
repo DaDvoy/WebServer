@@ -13,6 +13,7 @@
 #include <unistd.h> // For read
 #include <fstream>
 #include <algorithm>
+#include <fcntl.h>
 #include <sys/stat.h>
 #include <dirent.h>
 #define READ_BUFFER 32768
@@ -35,10 +36,13 @@ int 						match(const char *s1, const char *s2);
 bool						isEmptySpace(int c);
 bool						isContain(string str);
 
+int							file_put_contents(string filename, const string &data, int rights);
 string						getIP(unsigned long ip);
 string						abs_path(string path);
 bool						exists(string const&path);
 vector<string>				*get_dir_content(string const &path);
 bool						is_file(string const&path);
+bool						is_dir(string const&path);
+int							create_dir(string path, int rights);
 
 #endif
