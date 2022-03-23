@@ -8,7 +8,6 @@ Headlines::Headlines() {
     this->expires = "";
     this->typeEncoding = "";
     this->transferEncoding = "";
-    this->chunked = "";
     intLenght = 0;
 }
 
@@ -82,20 +81,19 @@ void            Headlines::processingRange() {
     }
 }
 
-void            Headlines::processingChunk(std::string path) {
-    std::string tmp;
-    std::ifstream from(FileGetContent(path));
 
-    if (from.is_open()) {
-        while (getline(from, tmp)) {
-            chunked.append(std::to_string(strlen(tmp.c_str())));
-            chunked.append("\r\n");
-            chunked.append(tmp + "\r\n");
-            tmp.erase(0);
-        }
-    }
-    from.close();
-}
+//void            Headlines::processingChunk() {
+//    int             time;
+//    std::string     tmp;
+//    std::ifstream   from("../public/index.html") // todo: file html
+//
+//    if (from.is_open()) {
+//        while ((time == intLenght / conf.limitClientBodySize) > 0) {
+//            while (getline(tmp, ))
+//            intLenght -= conf.limitClientBodySize;
+//        }
+//    }
+
 
 void            Headlines::searchKey(Request &requ, std::string &path) {
     req = requ;
@@ -103,19 +101,20 @@ void            Headlines::searchKey(Request &requ, std::string &path) {
 
     if (exists(path)) {
         intLenght = strlen(FileGetContent(path).c_str());
-        if (req.head.find("Transfer-Encoding") != req.head.end()) {
-            transferEncoding = "chunked";
-            processingChunk(path);
-        }
-        else {
+//        if (intLenght > conf.limitClientBodySize) { //todo: от чего зависит чанк?
+//            transferEncoding = "chunked";
+//            processingChunk();
+//            // todo: method for chunked response
+//        }
+//        else {
             std::stringstream ss;
             ss << intLenght;
             contentLenght = ss.str();
         }
-    }
+//    }
     if (req.head.find("Accept") != req.head.end()) {
         if (req.query.method == "POST")
-            contentType = "text/html";
+            contentType = "multipart/form-data";
         else {
             contentType = req.head["Accept"];
             if (std::string::npos != contentType.find(",")) {
@@ -151,8 +150,4 @@ std::string     Headlines::getRange() {
 
 std::string     Headlines::getExpires() {
     return (this->expires);
-}
-
-std::string     Headlines::getChunked() {
-        return (this->chunked);
 }
