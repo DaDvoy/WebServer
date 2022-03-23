@@ -78,7 +78,8 @@ void        Response::buildMap() {
     if (req.query.address == "/")
     {
         pathLocation = config->rootDirectory + config->index;
-        if (!exists(pathLocation) && config->autoindex)
+        // std::cout << exists(req.query.address) << std::endl;
+        if (config->autoindex)
         {
             std::cout << "pass1" << std::endl;
             body = SetupAutoIndex();
@@ -87,7 +88,6 @@ void        Response::buildMap() {
     }
     else
         pathLocation = config->rootDirectory + req.query.address;
-
 
     // std::cout << isAutoIndex << std::endl;
 
@@ -103,13 +103,30 @@ void        Response::buildMap() {
 
     firstLine = req.query.protocol + " " + status + "\r\n";
 
+    if (req.query.method == "POST")
+    {
+        if (file_put_contents(config->rootDirectory + req.query.address, req.body, 0666) != -1)
+            pathLocation = config->rootDirectory + req.query.address;
+		headers["content-location: "] = req.query.address + "\r\n";
+    }
+    else if (req.query.method == "DELETE")
+    {
+        if (remove(pathLocation.c_str()) != 0)
+            std::cerr << "DELETE error\n";
+    }
+    isPathExist = exists(pathLocation);
+
     if (!headline.getRange().empty())
         headers["content-range: "] = headline.getRange() + "\r\n";
-    headers["content-length: "] =  headline.getLenght() + "\r\n";
+//    headers["content-length: "] =  headline.getLenght() + "\r\n";
+//    if (!headline.getEncoding().empty())
+//        headers["content-encoding: "] = headline.getEncoding() + "\r\n";
+    headers["content-length: "] =  std::to_string(FileGetContent(pathLocation).length()) + "\r\n";
     if (!body.empty())
         headers["content-length: "] = std::to_string(body.size()) + "\r\n";
-    headers["content-type: "] = headline.getType() + "\r\n";//"; charset=UTF-8\r\n";
-    headers["expires: "] = headline.getExpires() + "\r\n";
+    headers["content-type: "] = headline.getType() + "\r\n";
+    if (!headline.getExpires().empty())
+        headers["expires: "] = headline.getExpires() + "\r\n";
     headers["server: "] = "GuluGulu/v2.0\r\n\r\n";
 }
 
@@ -126,20 +143,17 @@ void        Response::buildResponse() {
         it_beg++;
     }
 
-    if (isAutoIndex)
+    // std::cout << req.query.method << std::endl;
+    // std::cout << body.empty() << std::endl;
+    if (!body.empty())
     {
         response += body;
         return;
     }
-    if (req.query.method == "POST")
-            response += FileGetContent(pathLocation);
-    // else if (req.query.method == "DELETE")
-        // response += FileGetContent(pathLocation);
-    else
-    {
-	    if (isPathExist)
-            response += FileGetContent(pathLocation);
-    }
+
+    // std::cout << pathLocation << std::endl;
+    if (isPathExist)
+        response += FileGetContent(pathLocation);
 }
 
 std::string     Response::getFirstLine() {

@@ -112,13 +112,17 @@ void            Headlines::searchKey(Request &requ, std::string &path) {
             contentLenght = ss.str();
         }
 //    }
-    if (req.head.find("Accept") != req.head.end() && req.query.method == "Get") {
-        contentType = req.head["Accept"];
-        if (std::string::npos != contentType.find(",")) {
-            pos = contentType.find(",");
-            contentType.erase(pos);
+    if (req.head.find("Accept") != req.head.end()) {
+        if (req.query.method == "POST")
+            contentType = "multipart/form-data";
+        else {
+            contentType = req.head["Accept"];
+            if (std::string::npos != contentType.find(",")) {
+                pos = contentType.find(",");
+                contentType.erase(pos);
             }
         }
+    }
     if (!contentType.empty()) {
         if (contentType == "image/png" || contentType == "image/jpeg" || \
             contentType == "image/gif" || contentType == "text/html" || contentType == "application/javascript")

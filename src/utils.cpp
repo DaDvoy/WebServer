@@ -201,3 +201,65 @@ bool is_file(string const&path)
 		return false;
 	return S_ISREG(buf.st_mode);
 }
+
+int create_dir(string path, int rights)
+{
+	int    index;
+	int         result;
+	string      target;
+
+	result = 0;
+	if (path[0] != '/')
+		path = abs_path(path);
+	if (is_dir(path))
+		return (0);
+	if (path == ".." || path == ".")
+		return (0);
+	index = path.find_last_of('/');
+	if (index != -1) {
+		target = path.substr(0, index);
+		if (!is_dir(target))
+			result = create_dir(target, rights);
+	}
+	if (result == -1)
+		return -1;
+	return mkdir(path.c_str(), rights);
+}
+
+int file_put_contents(string filename, const string &data, int rights)
+{
+	int    index;
+	int         fd;
+
+	if (filename.empty())
+		return -1;
+	filename = abs_path(filename);
+	if (!is_file(filename)) {
+		if (is_dir(filename))
+			return -1;
+		index = filename.find_last_of('/');
+		if (index != -1)
+			if (create_dir(filename.substr(0, index), rights) == -1)
+				return -1;
+
+	}
+	fd = open(filename.c_str(), O_CREAT | O_WRONLY | O_TRUNC, rights);
+	if (fd == -1)
+		return -1;
+	if (write(fd, data.c_str(), data.size()) == -1)
+	{
+		close(fd);
+		return -1;
+	}
+	close(fd);
+	return 0;
+}
+
+bool is_dir(string const&path)
+{
+	struct stat buf;
+	bzero(&buf, sizeof(struct stat));
+	if (stat(path.c_str(), &buf) == -1)
+		return false;
+	return S_ISDIR(buf.st_mode);
+}

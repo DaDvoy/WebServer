@@ -7,11 +7,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6339c941-1cb5-485c-b246-d7b2191f41f0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/upload.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/default_conf.conf" beforeDir="false" afterPath="$PROJECT_DIR$/config/default_conf.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/error" beforeDir="false" afterPath="$PROJECT_DIR$/public/error" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/upload" beforeDir="false" afterPath="$PROJECT_DIR$/public/upload" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RequestParser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/RequestParser.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Response.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Response.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/response/StatusCodes.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/response/StatusCodes.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/response/Headlines.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/response/Headlines.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +116,7 @@
       <workItem from="1647779924491" duration="7807000" />
       <workItem from="1647861030500" duration="4392000" />
       <workItem from="1648028773117" duration="1546000" />
-      <workItem from="1648035631581" duration="1000" />
+      <workItem from="1648035631581" duration="537000" />
     </task>
     <servers />
   </component>
