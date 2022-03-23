@@ -99,7 +99,6 @@ void        Response::buildMap() {
 
     isPathExist = exists(pathLocation);
 
-    headline.searchKey(req, pathLocation);
 
     firstLine = req.query.protocol + " " + status + "\r\n";
 
@@ -114,10 +113,12 @@ void        Response::buildMap() {
         if (remove(pathLocation.c_str()) != 0)
             std::cerr << "DELETE error\n";
     }
+    headline.searchKey(req, pathLocation);
     isPathExist = exists(pathLocation);
 
     if (!headline.getRange().empty())
         headers["content-range: "] = headline.getRange() + "\r\n";
+
     headers["content-length: "] =  std::to_string(FileGetContent(pathLocation).length()) + "\r\n";
     if (!body.empty())
         headers["content-length: "] = std::to_string(body.size()) + "\r\n";

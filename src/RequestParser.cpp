@@ -24,8 +24,6 @@ int RequestParser::ReadRequest(int sock)
 		delete[] buffer;
 		return (-1);
 	}
-
-	buffer[valueRead] = '\0';
 	saver += buffer;
 	delete[] buffer;
 
@@ -34,7 +32,6 @@ int RequestParser::ReadRequest(int sock)
 		request.body = what;
 	else
 		request.body = "";
-	// std::cout << saver;
 	if (ParseRequest() == -1)
 		return (-1);
 	return 1;
