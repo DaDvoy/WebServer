@@ -19,6 +19,7 @@ private:
     std::string     contentLenght;
     std::string     contentRange;
     std::string     transferEncoding;
+    std::string     chunked;
     std::string     expires;
     int             intLenght;
 public:
@@ -33,7 +34,7 @@ public:
     void            expiresTime();
 
     std::string     sortData(std::string tmp);
-    void            processingChunk();
+    void            processingChunk(std::string path);
 
     std::string     getType();
     std::string     getEncoding();
