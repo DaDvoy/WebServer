@@ -4,5 +4,5 @@
 
 make
 
-./gulugulu src/config/Default.conf (осторожно сега)
+./gulugulu src/config/Default.conf
 
