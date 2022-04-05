@@ -8,4 +8,8 @@
 
 Для запуска программы с дефолтным конфигом введите: `make && ./gulugulu config/default_conf.conf`.
 
+В качестве клиента мы выбрали: mozilla firefox, и отталкивались от его стандартов.
+
+В поисковой строке клиента нужно ввести: `http://localhost:8080`.
+
 <img width="683" alt="Diagram of the result" src="https://github.com/DaDvoy/WebServer/blob/main/public/StartPage.png">
